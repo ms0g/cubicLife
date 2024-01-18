@@ -1,6 +1,7 @@
 #pragma once
 
 #include "glm/glm.hpp"
+#include "../configs/configs.hpp"
 
 enum CameraMovement {
     FORWARD,
@@ -46,12 +47,4 @@ private:
     float m_movementSpeed;
     float m_mouseSensitivity;
     float m_zoom;
-
-    static constexpr float YAW{-90.0f};
-    static constexpr float PITCH{0.0f};
-    static constexpr float SPEED{2.5f};
-    static constexpr float SENSITIVITY{0.1f};
-    static constexpr float ZOOM{45.0f};
-
-
 };

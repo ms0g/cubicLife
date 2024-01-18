@@ -3,7 +3,7 @@
 #include "glm/glm.hpp"
 #include "image/stb_image.h"
 #include "filesystem/filesystem.h"
-#include "../model/texture.h"
+#include "../mesh/texture.h"
 #include "glad/glad.h"
 
 

@@ -4,7 +4,7 @@
 #include "../camera/camera.h"
 #include "../window//window.h"
 #include "../shader/shader.h"
-#include "../model/mesh.h"
+#include "../mesh/mesh.h"
 #include "../input/input.h"
 #include "../gui/gui.h"
 

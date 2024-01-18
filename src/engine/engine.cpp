@@ -61,6 +61,8 @@ void VoxelEngine::update() {
     m_gui->updateFpsCounter(m_deltaTime);
 #endif
 
+    m_camera->update();
+
     // Activate shader
     m_shader->activate();
     // View/projection transformations

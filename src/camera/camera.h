@@ -17,6 +17,8 @@ public:
 
     Camera(float posX, float posY, float posZ, float upX, float upY, float upZ, float yaw, float pitch);
 
+    void update();
+
     glm::mat4 getViewMatrix();
 
     [[nodiscard]] float getZoom() const;
@@ -32,8 +34,6 @@ public:
     void processMouseScroll(float yoffset);
 
 private:
-    void updateCameraVectors();
-
     // camera Attributes
     glm::vec3 m_position{};
     glm::vec3 m_front;

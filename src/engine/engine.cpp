@@ -85,7 +85,7 @@ void VoxelEngine::init(const char* modelName) {
 
     std::vector<Texture> textures;
     Texture texture;
-    texture.id = texture::load(fs::path(ASSET_DIR + "grass.jpeg").c_str());
+    texture.id = texture::load(fs::path(ASSET_DIR + "grass.png").c_str());
     texture.name = "texture1";
     texture.path = "container.jpg";
 
@@ -120,17 +120,10 @@ void VoxelEngine::update() {
 
     m_camera->update();
 
-    // Activate shader
-    m_shader->activate();
-    // View/projection transformations
-    glm::mat4 viewMat = m_camera->getViewMatrix();
-    glm::mat4 projectionMat = glm::perspective(glm::radians(m_camera->getZoom()),
-                                               ASPECT, ZNEAR, ZFAR);
-    m_shader->setMat4("projection", projectionMat);
-    m_shader->setMat4("view", viewMat);
-
-    glm::mat4 modelMat = glm::mat4(1.0f);
-    m_shader->setMat4("model", modelMat);
+    m_shader->update(m_camera->getViewMatrix(),
+                     glm::perspective(glm::radians(m_camera->getZoom()),
+                                      ASPECT, ZNEAR, ZFAR),
+                     glm::mat4(1.0f));
 }
 
 void VoxelEngine::render() {

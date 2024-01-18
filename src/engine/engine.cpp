@@ -69,7 +69,7 @@ void VoxelEngine::update() {
     glm::mat4 viewMat = m_camera->getViewMatrix();
     glm::vec3 viewPos = m_camera->getPosition();
     glm::mat4 projectionMat = glm::perspective(glm::radians(m_camera->getZoom()),
-                                               (float) SCR_WIDTH / (float) SCR_HEIGHT, 0.1f, 100.0f);
+                                               ASPECT, ZNEAR, ZFAR);
     m_shader->setMat4("projection", projectionMat);
     m_shader->setMat4("view", viewMat);
     m_shader->setVec3("viewPos", viewPos);

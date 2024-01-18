@@ -25,7 +25,6 @@ Camera::Camera(float posX, float posY, float posZ, float upX, float upY, float u
     this->m_pitch = pitch;
 
     update();
-
 }
 
 void Camera::update() {

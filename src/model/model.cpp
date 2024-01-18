@@ -12,7 +12,7 @@ Model::Model(const std::string& path, bool gamma) : gammaCorrection(gamma) {
 
 void Model::draw(Shader& shader) {
     for (auto& mesh: m_meshes)
-        mesh.draw(shader);
+        mesh.render(shader);
 }
 
 

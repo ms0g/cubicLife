@@ -3,6 +3,7 @@
 #include "glm/glm.hpp"
 #include "image/stb_image.h"
 #include "filesystem/filesystem.h"
+#include "../model/texture.h"
 #include "glad/glad.h"
 
 
@@ -28,16 +29,72 @@ void VoxelEngine::init(const char* modelName) {
 
     // Configure global opengl state
     glEnable(GL_DEPTH_TEST);
-    glEnable(GL_BLEND);
-    glEnable(GL_CULL_FACE);
-    glCullFace(GL_BACK);
-    glFrontFace(GL_CCW);
+    //glEnable(GL_BLEND);
+    //glEnable(GL_CULL_FACE);
+    //glCullFace(GL_BACK);
+    //glFrontFace(GL_CCW);
 
     m_shader = std::make_unique<Shader>(
-            Filesystem::path(SHADER_DIR + "toon.vert.glsl"),
-            Filesystem::path(SHADER_DIR + "toon.frag.glsl"));
+            fs::path(SHADER_DIR + "toon.vert.glsl"),
+            fs::path(SHADER_DIR + "toon.frag.glsl"));
 
-    m_model = std::make_unique<Model>(Filesystem::path(ASSET_DIR + modelName));
+    std::vector<float> vertices = {
+            -0.5f, -0.5f, -0.5f,  0.0f, 0.0f,
+            0.5f, -0.5f, -0.5f,  1.0f, 0.0f,
+            0.5f,  0.5f, -0.5f,  1.0f, 1.0f,
+            0.5f,  0.5f, -0.5f,  1.0f, 1.0f,
+            -0.5f,  0.5f, -0.5f,  0.0f, 1.0f,
+            -0.5f, -0.5f, -0.5f,  0.0f, 0.0f,
+
+            -0.5f, -0.5f,  0.5f,  0.0f, 0.0f,
+            0.5f, -0.5f,  0.5f,  1.0f, 0.0f,
+            0.5f,  0.5f,  0.5f,  1.0f, 1.0f,
+            0.5f,  0.5f,  0.5f,  1.0f, 1.0f,
+            -0.5f,  0.5f,  0.5f,  0.0f, 1.0f,
+            -0.5f, -0.5f,  0.5f,  0.0f, 0.0f,
+
+            -0.5f,  0.5f,  0.5f,  1.0f, 0.0f,
+            -0.5f,  0.5f, -0.5f,  1.0f, 1.0f,
+            -0.5f, -0.5f, -0.5f,  0.0f, 1.0f,
+            -0.5f, -0.5f, -0.5f,  0.0f, 1.0f,
+            -0.5f, -0.5f,  0.5f,  0.0f, 0.0f,
+            -0.5f,  0.5f,  0.5f,  1.0f, 0.0f,
+
+            0.5f,  0.5f,  0.5f,  1.0f, 0.0f,
+            0.5f,  0.5f, -0.5f,  1.0f, 1.0f,
+            0.5f, -0.5f, -0.5f,  0.0f, 1.0f,
+            0.5f, -0.5f, -0.5f,  0.0f, 1.0f,
+            0.5f, -0.5f,  0.5f,  0.0f, 0.0f,
+            0.5f,  0.5f,  0.5f,  1.0f, 0.0f,
+
+            -0.5f, -0.5f, -0.5f,  0.0f, 1.0f,
+            0.5f, -0.5f, -0.5f,  1.0f, 1.0f,
+            0.5f, -0.5f,  0.5f,  1.0f, 0.0f,
+            0.5f, -0.5f,  0.5f,  1.0f, 0.0f,
+            -0.5f, -0.5f,  0.5f,  0.0f, 0.0f,
+            -0.5f, -0.5f, -0.5f,  0.0f, 1.0f,
+
+            -0.5f,  0.5f, -0.5f,  0.0f, 1.0f,
+            0.5f,  0.5f, -0.5f,  1.0f, 1.0f,
+            0.5f,  0.5f,  0.5f,  1.0f, 0.0f,
+            0.5f,  0.5f,  0.5f,  1.0f, 0.0f,
+            -0.5f,  0.5f,  0.5f,  0.0f, 0.0f,
+            -0.5f,  0.5f, -0.5f,  0.0f, 1.0f
+    };
+
+
+    std::vector<Texture> textures;
+    Texture texture;
+    texture.id = texture::load(fs::path(ASSET_DIR + "grass.jpeg").c_str());
+    texture.name = "texture1";
+    texture.path = "container.jpg";
+
+    textures.push_back(texture);
+
+    m_shader->activate();
+    m_shader->setInt(texture.name, 0);
+
+    m_mesh = std::make_unique<Mesh>(vertices, textures);
 
     m_isRunning = true;
 }
@@ -67,25 +124,19 @@ void VoxelEngine::update() {
     m_shader->activate();
     // View/projection transformations
     glm::mat4 viewMat = m_camera->getViewMatrix();
-    glm::vec3 viewPos = m_camera->getPosition();
     glm::mat4 projectionMat = glm::perspective(glm::radians(m_camera->getZoom()),
                                                ASPECT, ZNEAR, ZFAR);
     m_shader->setMat4("projection", projectionMat);
     m_shader->setMat4("view", viewMat);
-    m_shader->setVec3("viewPos", viewPos);
-    // Render the loaded model
+
     glm::mat4 modelMat = glm::mat4(1.0f);
-    modelMat = glm::translate(modelMat,
-                              glm::vec3(0.0f, 0.0f, 0.0f)); // translate it down so it's at the center of the scene
-    modelMat = glm::scale(modelMat,
-                          glm::vec3(1.0f, 1.0f, 1.0f));    // it's a bit too big for our scene, so scale it down
     m_shader->setMat4("model", modelMat);
 }
 
 void VoxelEngine::render() {
     m_window->clear(0.2f, 0.3f, 0.3f, 1.0f);
 
-    m_model->draw(*m_shader);
+    m_mesh->render();
 #ifdef DEBUG
     m_gui->render();
 #endif

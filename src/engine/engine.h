@@ -4,7 +4,7 @@
 #include "../camera/camera.h"
 #include "../window//window.h"
 #include "../shader/shader.h"
-#include "../model/model.h"
+#include "../model/mesh.h"
 #include "../input/input.h"
 #include "../gui/gui.h"
 
@@ -31,7 +31,7 @@ private:
     std::unique_ptr<Camera> m_camera;
     std::unique_ptr<Input> m_input;
     std::unique_ptr<Shader> m_shader;
-    std::unique_ptr<Model> m_model;
+    std::unique_ptr<Mesh> m_mesh;
 
     float m_deltaTime{};
     uint32_t m_millisecsPreviousFrame{0};

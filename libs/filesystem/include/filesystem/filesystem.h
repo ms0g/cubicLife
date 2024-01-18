@@ -2,7 +2,7 @@
 
 #include <string>
 
-namespace Filesystem {
+namespace fs {
 
 std::string path(const std::string& p);
 }

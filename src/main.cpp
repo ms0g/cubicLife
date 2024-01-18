@@ -2,14 +2,10 @@
 
 
 int main() {
-    Engine glEngine;
-    glEngine.init("suzanne.glb");
+    VoxelEngine voxEngine;
 
-    while (glEngine.isRunning()) {
-        glEngine.processInput();
-        glEngine.update();
-        glEngine.render();
-    }
+    voxEngine.init("suzanne.glb");
+    voxEngine.run();
 
     return 0;
 }

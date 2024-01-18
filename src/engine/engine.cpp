@@ -6,7 +6,7 @@
 #include "glad/glad.h"
 
 
-void Engine::init(const char* modelName) {
+void VoxelEngine::init(const char* modelName) {
     m_window = std::make_unique<Window>();
     m_window->init("Voxel Engine");
 
@@ -42,11 +42,19 @@ void Engine::init(const char* modelName) {
     m_isRunning = true;
 }
 
-void Engine::processInput() {
+void VoxelEngine::run() {
+    while (m_isRunning) {
+        processInput();
+        update();
+        render();
+    }
+}
+
+void VoxelEngine::processInput() {
     m_input->process(*m_camera, m_window->nativeHandle(), m_deltaTime, m_isRunning);
 }
 
-void Engine::update() {
+void VoxelEngine::update() {
     m_deltaTime = (SDL_GetTicks() - m_millisecsPreviousFrame) / 1000.0f;
     m_millisecsPreviousFrame = SDL_GetTicks();
 #ifdef DEBUG
@@ -72,7 +80,7 @@ void Engine::update() {
     m_shader->setMat4("model", modelMat);
 }
 
-void Engine::render() {
+void VoxelEngine::render() {
     m_window->clear(0.2f, 0.3f, 0.3f, 1.0f);
 
     m_model->draw(*m_shader);

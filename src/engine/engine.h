@@ -9,21 +9,22 @@
 #include "../gui/gui.h"
 
 
-class Engine {
+class VoxelEngine {
 public:
-    Engine() = default;
-
-    [[nodiscard]] inline bool isRunning() const { return m_isRunning; }
+    VoxelEngine() = default;
 
     void init(const char* modelName);
 
+    void run();
+
+
+private:
     void processInput();
 
     void update();
 
     void render();
 
-private:
     bool m_isRunning{false};
     std::unique_ptr<Window> m_window;
     std::unique_ptr<Gui> m_gui;

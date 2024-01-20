@@ -13,7 +13,7 @@ class VoxelEngine {
 public:
     VoxelEngine() = default;
 
-    void init(const char* modelName);
+    void init();
 
     void run();
 

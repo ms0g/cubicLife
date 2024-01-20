@@ -4,7 +4,7 @@
 int main() {
     VoxelEngine voxEngine;
 
-    voxEngine.init("suzanne.glb");
+    voxEngine.init();
     voxEngine.run();
 
     return 0;

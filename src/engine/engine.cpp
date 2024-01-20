@@ -7,7 +7,7 @@
 #include "glad/glad.h"
 
 
-void VoxelEngine::init(const char* modelName) {
+void VoxelEngine::init() {
     m_window = std::make_unique<Window>();
     m_window->init("Voxel Engine");
 

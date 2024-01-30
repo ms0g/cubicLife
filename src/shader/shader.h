@@ -43,7 +43,9 @@ public:
     void setMat4(const std::string& name, const glm::mat4& mat) const;
 
 private:
-    void checkCompileErrors(unsigned int shader, const std::string& type);
+    unsigned int createShader(const char** source, unsigned int type);
+
+    void checkCompileErrors(unsigned int shader, unsigned int type);
 
     // the program ID
     unsigned int m_id;

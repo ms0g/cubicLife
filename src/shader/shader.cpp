@@ -37,24 +37,21 @@ Shader::Shader(const std::string& vertexPath, const std::string& fragmentPath) {
 
     const char* vShaderCode = vertexCode.c_str();
     const char* fShaderCode = fragmentCode.c_str();
-    // 2. compile shaders
+
     unsigned int vertex, fragment;
     // vertex shader
-    vertex = glCreateShader(GL_VERTEX_SHADER);
-    glShaderSource(vertex, 1, &vShaderCode, nullptr);
-    glCompileShader(vertex);
-    checkCompileErrors(vertex, "VERTEX");
+    vertex = createShader(&vShaderCode, GL_VERTEX_SHADER);
+
     // fragment Shader
-    fragment = glCreateShader(GL_FRAGMENT_SHADER);
-    glShaderSource(fragment, 1, &fShaderCode, nullptr);
-    glCompileShader(fragment);
-    checkCompileErrors(fragment, "FRAGMENT");
+    fragment = createShader(&fShaderCode, GL_FRAGMENT_SHADER);
+
     // shader Program
     m_id = glCreateProgram();
     glAttachShader(m_id, vertex);
     glAttachShader(m_id, fragment);
     glLinkProgram(m_id);
-    checkCompileErrors(m_id, "PROGRAM");
+    checkCompileErrors(m_id, 0);
+
     // delete the shaders as they're linked into our program now and no longer necessary
     glDeleteShader(vertex);
     glDeleteShader(fragment);
@@ -131,10 +128,22 @@ void Shader::setMat4(const std::string& name, const glm::mat4& mat) const {
     glUniformMatrix4fv(glGetUniformLocation(m_id, name.c_str()), 1, GL_FALSE, &mat[0][0]);
 }
 
-void Shader::checkCompileErrors(unsigned int shader, const std::string& type) {
+unsigned int Shader::createShader(const char** source, unsigned int type) {
+    unsigned int shader = glCreateShader(type);
+
+    glShaderSource(shader, 1, source, nullptr);
+    glCompileShader(shader);
+
+    checkCompileErrors(shader, type);
+
+    return shader;
+}
+
+void Shader::checkCompileErrors(unsigned int shader, unsigned int type) {
     int success;
     char infoLog[1024];
-    if (type != "PROGRAM") {
+
+    if (type == GL_VERTEX_SHADER || type == GL_FRAGMENT_SHADER) {
         glGetShaderiv(shader, GL_COMPILE_STATUS, &success);
         if (!success) {
             glGetShaderInfoLog(shader, 1024, nullptr, infoLog);

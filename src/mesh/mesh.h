@@ -32,7 +32,7 @@ struct Texture {
 
 class Mesh {
 public:
-    Mesh(std::vector<float> vertices, std::vector<Texture> textures);
+    Mesh(std::vector<float>& vertices, std::vector<Texture>& textures);
 
     // render the mesh
     void render();

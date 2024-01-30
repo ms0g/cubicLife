@@ -4,7 +4,7 @@
 #include "../shader/shader.h"
 
 
-Mesh::Mesh(std::vector<float> vertices, std::vector<Texture> textures) :
+Mesh::Mesh(std::vector<float>& vertices, std::vector<Texture>& textures) :
         m_vertices(std::move(vertices)),
         m_textures(std::move(textures)) {
     // now that we have all the required data, set the vertex buffers and its attribute pointers.

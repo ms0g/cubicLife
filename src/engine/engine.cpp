@@ -35,8 +35,8 @@ void VoxelEngine::init() {
     //glFrontFace(GL_CCW);
 
     m_shader = std::make_unique<Shader>(
-            fs::path(SHADER_DIR + "toon.vert.glsl"),
-            fs::path(SHADER_DIR + "toon.frag.glsl"));
+            fs::path(SHADER_DIR + "vox.vert.glsl"),
+            fs::path(SHADER_DIR + "vox.frag.glsl"));
 
     std::vector<float> vertices = {
             -0.5f, -0.5f, -0.5f,  0.0f, 0.0f,

@@ -6,6 +6,18 @@
 #include "../mesh/texture.h"
 #include "glad/glad.h"
 
+glm::vec3 cubePositions[] = {
+        glm::vec3(0.0f, 0.0f, 0.0f),
+        glm::vec3(2.0f, 5.0f, -15.0f),
+        glm::vec3(-1.5f, -2.2f, -2.5f),
+        glm::vec3(-3.8f, -2.0f, -12.3f),
+        glm::vec3(2.4f, -0.4f, -3.5f),
+        glm::vec3(-1.7f, 3.0f, -7.5f),
+        glm::vec3(1.3f, -2.0f, -2.5f),
+        glm::vec3(1.5f, 2.0f, -2.5f),
+        glm::vec3(1.5f, 0.2f, -1.5f),
+        glm::vec3(-1.3f, 1.0f, -1.5f)
+};
 
 void VoxelEngine::init() {
     m_window = std::make_unique<Window>();
@@ -30,69 +42,75 @@ void VoxelEngine::init() {
     // Configure global opengl state
     glEnable(GL_DEPTH_TEST);
     //glEnable(GL_BLEND);
-    //glEnable(GL_CULL_FACE);
-    //glCullFace(GL_BACK);
-    //glFrontFace(GL_CCW);
 
     m_shader = std::make_unique<Shader>(
             fs::path(SHADER_DIR + "vox.vert.glsl"),
             fs::path(SHADER_DIR + "vox.frag.glsl"));
-
+#define TEX1 0.0
+#define TEX2 1.0
     std::vector<float> vertices = {
-            -0.5f, -0.5f, -0.5f,  0.0f, 0.0f,
-            0.5f, -0.5f, -0.5f,  1.0f, 0.0f,
-            0.5f,  0.5f, -0.5f,  1.0f, 1.0f,
-            0.5f,  0.5f, -0.5f,  1.0f, 1.0f,
-            -0.5f,  0.5f, -0.5f,  0.0f, 1.0f,
-            -0.5f, -0.5f, -0.5f,  0.0f, 0.0f,
+            -0.5f, -0.5f, -0.5f, 0.0f, 0.0f, TEX1,
+            0.5f, -0.5f, -0.5f, 1.0f, 0.0f, TEX1,
+            0.5f, 0.5f, -0.5f, 1.0f, 1.0f, TEX1,
+            0.5f, 0.5f, -0.5f, 1.0f, 1.0f, TEX1,
+            -0.5f, 0.5f, -0.5f, 0.0f, 1.0f, TEX1,
+            -0.5f, -0.5f, -0.5f, 0.0f, 0.0f, TEX1,
 
-            -0.5f, -0.5f,  0.5f,  0.0f, 0.0f,
-            0.5f, -0.5f,  0.5f,  1.0f, 0.0f,
-            0.5f,  0.5f,  0.5f,  1.0f, 1.0f,
-            0.5f,  0.5f,  0.5f,  1.0f, 1.0f,
-            -0.5f,  0.5f,  0.5f,  0.0f, 1.0f,
-            -0.5f, -0.5f,  0.5f,  0.0f, 0.0f,
+            -0.5f, -0.5f, 0.5f, 0.0f, 0.0f, TEX1,
+            0.5f, -0.5f, 0.5f, 1.0f, 0.0f, TEX1,
+            0.5f, 0.5f, 0.5f, 1.0f, 1.0f, TEX1,
+            0.5f, 0.5f, 0.5f, 1.0f, 1.0f, TEX1,
+            -0.5f, 0.5f, 0.5f, 0.0f, 1.0f, TEX1,
+            -0.5f, -0.5f, 0.5f, 0.0f, 0.0f, TEX1,
 
-            -0.5f,  0.5f,  0.5f,  1.0f, 0.0f,
-            -0.5f,  0.5f, -0.5f,  1.0f, 1.0f,
-            -0.5f, -0.5f, -0.5f,  0.0f, 1.0f,
-            -0.5f, -0.5f, -0.5f,  0.0f, 1.0f,
-            -0.5f, -0.5f,  0.5f,  0.0f, 0.0f,
-            -0.5f,  0.5f,  0.5f,  1.0f, 0.0f,
+            -0.5f, 0.5f, 0.5f, 1.0f, 1.0f, TEX1,
+            -0.5f, 0.5f, -0.5f, 0.0f, 1.0f, TEX1,
+            -0.5f, -0.5f, -0.5f, 0.0f, 0.0f, TEX1,
+            -0.5f, -0.5f, -0.5f, 0.0f, 0.0f, TEX1,
+            -0.5f, -0.5f, 0.5f, 1.0f, 0.0f, TEX1,
+            -0.5f, 0.5f, 0.5f, 1.0f, 1.0f, TEX1,
 
-            0.5f,  0.5f,  0.5f,  1.0f, 0.0f,
-            0.5f,  0.5f, -0.5f,  1.0f, 1.0f,
-            0.5f, -0.5f, -0.5f,  0.0f, 1.0f,
-            0.5f, -0.5f, -0.5f,  0.0f, 1.0f,
-            0.5f, -0.5f,  0.5f,  0.0f, 0.0f,
-            0.5f,  0.5f,  0.5f,  1.0f, 0.0f,
+            0.5f, 0.5f, 0.5f, 1.0f, 1.0f, TEX1,
+            0.5f, 0.5f, -0.5f, 0.0f, 1.0f, TEX1,
+            0.5f, -0.5f, -0.5f, 0.0f, 0.0f, TEX1,
+            0.5f, -0.5f, -0.5f, 0.0f, 0.0f, TEX1,
+            0.5f, -0.5f, 0.5f, 1.0f, 0.0f, TEX1,
+            0.5f, 0.5f, 0.5f, 1.0f, 1.0f, TEX1,
 
-            -0.5f, -0.5f, -0.5f,  0.0f, 1.0f,
-            0.5f, -0.5f, -0.5f,  1.0f, 1.0f,
-            0.5f, -0.5f,  0.5f,  1.0f, 0.0f,
-            0.5f, -0.5f,  0.5f,  1.0f, 0.0f,
-            -0.5f, -0.5f,  0.5f,  0.0f, 0.0f,
-            -0.5f, -0.5f, -0.5f,  0.0f, 1.0f,
+            -0.5f, -0.5f, -0.5f, 0.0f, 1.0f, TEX2,
+            0.5f, -0.5f, -0.5f, 1.0f, 1.0f, TEX2,
+            0.5f, -0.5f, 0.5f, 1.0f, 0.0f, TEX2,
+            0.5f, -0.5f, 0.5f, 1.0f, 0.0f, TEX2,
+            -0.5f, -0.5f, 0.5f, 0.0f, 0.0f, TEX2,
+            -0.5f, -0.5f, -0.5f, 0.0f, 1.0f, TEX2,
 
-            -0.5f,  0.5f, -0.5f,  0.0f, 1.0f,
-            0.5f,  0.5f, -0.5f,  1.0f, 1.0f,
-            0.5f,  0.5f,  0.5f,  1.0f, 0.0f,
-            0.5f,  0.5f,  0.5f,  1.0f, 0.0f,
-            -0.5f,  0.5f,  0.5f,  0.0f, 0.0f,
-            -0.5f,  0.5f, -0.5f,  0.0f, 1.0f
+            -0.5f, 0.5f, -0.5f, 0.0f, 1.0f, TEX2,
+            0.5f, 0.5f, -0.5f, 1.0f, 1.0f, TEX2,
+            0.5f, 0.5f, 0.5f, 1.0f, 0.0f, TEX2,
+            0.5f, 0.5f, 0.5f, 1.0f, 0.0f, TEX2,
+            -0.5f, 0.5f, 0.5f, 0.0f, 0.0f, TEX2,
+            -0.5f, 0.5f, -0.5f, 0.0f, 1.0f, TEX2,
     };
 
 
     std::vector<Texture> textures;
-    Texture texture;
-    texture.id = texture::load(fs::path(ASSET_DIR + "grass.png").c_str());
-    texture.name = "texture1";
-    texture.path = "container.jpg";
+    Texture texture1;
+    texture1.id = texture::load(fs::path(ASSET_DIR + "grass.png").c_str());
+    texture1.name = "texture1";
+    texture1.path = "grass.png";
 
-    textures.push_back(texture);
+    textures.push_back(texture1);
+
+    Texture texture2;
+    texture2.id = texture::load(fs::path(ASSET_DIR + "grass_top.png").c_str());
+    texture2.name = "texture2";
+    texture2.path = "grass_top.png";
+
+    textures.push_back(texture2);
 
     m_shader->activate();
-    m_shader->setInt(texture.name, 0);
+    m_shader->setInt(texture1.name, 0);
+    m_shader->setInt(texture2.name, 1);
 
     m_mesh = std::make_unique<Mesh>(vertices, textures);
 
@@ -120,14 +138,26 @@ void VoxelEngine::update() {
 
     m_camera->update();
 
-    m_shader->update(m_camera->getViewMatrix(),
-                     glm::perspective(glm::radians(m_camera->getZoom()),
-                                      ASPECT, ZNEAR, ZFAR),
-                     glm::mat4(1.0f));
+
 }
 
 void VoxelEngine::render() {
     m_window->clear(0.2f, 0.3f, 0.3f, 1.0f);
+    glm::mat4 view = m_camera->getViewMatrix();
+    glm::mat4 projection = glm::perspective(glm::radians(m_camera->getZoom()), ASPECT, ZNEAR, ZFAR);
+
+    m_shader->activate();
+    m_shader->setMat4("view", view);
+    m_shader->setMat4("projection", projection);
+
+    for (auto& pos: cubePositions) {
+        glm::mat4 model = glm::mat4(1.0f);
+        model = glm::translate(model, pos);
+
+        m_shader->setMat4("model", model);
+
+        m_mesh->render();
+    }
 
     m_mesh->render();
 #ifdef DEBUG

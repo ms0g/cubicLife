@@ -8,7 +8,6 @@
 #include "../input/input.h"
 #include "../gui/gui.h"
 
-
 class VoxelEngine {
 public:
     VoxelEngine() = default;

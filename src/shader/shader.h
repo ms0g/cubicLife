@@ -15,8 +15,6 @@ public:
     // use/activate the shader
     void activate() const;
 
-    void update(glm::mat4 view, glm::mat4 projection, glm::mat4 model) const;
-
     // utility uniform functions
     void setBool(const std::string& name, bool value) const;
 

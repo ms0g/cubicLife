@@ -66,13 +66,6 @@ void Shader::activate() const {
     glUseProgram(m_id);
 }
 
-void Shader::update(glm::mat4 view, glm::mat4 projection, glm::mat4 model) const {
-    activate();
-    setMat4("view", view);
-    setMat4("projection", projection);
-    setMat4("model", model);
-}
-
 void Shader::setBool(const std::string& name, bool value) const {
     glUniform1i(glGetUniformLocation(m_id, name.c_str()), (int) value);
 }

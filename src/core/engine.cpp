@@ -10,7 +10,7 @@ void VoxelEngine::init() {
     m_window = std::make_unique<Window>();
     m_window->init("Voxel Engine");
 
-    m_camera = std::make_unique<Camera>(glm::vec3(0.0f, 0.0f, 3.0f));
+    m_camera = std::make_unique<Camera>(glm::vec3(0.0f, 0.0f, 20.0f));
 
     m_input = std::make_unique<Input>();
 #ifdef DEBUG
@@ -28,6 +28,9 @@ void VoxelEngine::init() {
 
     // Configure global opengl state
     glEnable(GL_DEPTH_TEST);
+//    glEnable(GL_CULL_FACE);
+//    glCullFace(GL_BACK);
+//    glFrontFace(GL_CW);
     //glEnable(GL_BLEND);
 
     m_isRunning = true;

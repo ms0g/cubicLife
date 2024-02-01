@@ -67,6 +67,7 @@ void Input::processMouse(Camera& camera) {
     m_lastX = xpos;
     m_lastY = ypos;
 
-    camera.processMouseMovement(xoffset, yoffset);
+    if (isClickedRight)
+        camera.processMouseMovement(xoffset, yoffset);
 
 }

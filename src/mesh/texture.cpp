@@ -3,7 +3,6 @@
 #include "glad/glad.h"
 #include "image/stb_image.h"
 
-
 unsigned int texture::load(const char* path) {
     unsigned int textureID;
 

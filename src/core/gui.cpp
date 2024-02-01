@@ -6,7 +6,6 @@
 #include "../../libs/imgui/imgui_impl_opengl3.h"
 #include "../../libs/imgui/imgui_internal.h"
 
-
 Gui::Gui(SDL_Window* window, SDL_GLContext gl_context) {
     // Initialize the ImGui context
     const char* glsl_version = "#version 410";

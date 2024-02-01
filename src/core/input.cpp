@@ -1,8 +1,7 @@
 #include "input.h"
 #include <SDL2/SDL.h>
-#include "../camera/camera.h"
+#include "camera.h"
 #include "../../libs/imgui/imgui_impl_sdl.h"
-
 
 void Input::process(Camera& camera, SDL_Window* window, float dt, bool& isRunning) {
     SDL_Event event;
@@ -22,7 +21,6 @@ void Input::process(Camera& camera, SDL_Window* window, float dt, bool& isRunnin
     processMouse(camera);
 
 }
-
 
 void Input::processKeyboard(Camera& camera, float dt, bool& isRunning) {
     auto* keystate = SDL_GetKeyboardState(nullptr);

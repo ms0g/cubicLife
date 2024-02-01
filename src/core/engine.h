@@ -1,10 +1,10 @@
 #pragma once
 
 #include <memory>
-#include "../camera/camera.h"
-#include "../window//window.h"
-#include "../input/input.h"
-#include "../gui/gui.h"
+#include "camera.h"
+#include "window.h"
+#include "input.h"
+#include "gui.h"
 #include "../world/worldBuilder.h"
 
 class VoxelEngine {
@@ -14,7 +14,6 @@ public:
     void init();
 
     void run(WorldBuilder& worldBuilder);
-
 
 private:
     void processInput();

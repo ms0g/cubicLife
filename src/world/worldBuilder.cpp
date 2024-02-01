@@ -1,18 +1,21 @@
 #include "worldBuilder.h"
+#include <random>
 #include "glm/gtc/matrix_transform.hpp"
 
-glm::vec3 cubePositions[] = {
-        glm::vec3(0.0f, 0.0f, 0.0f),
-        glm::vec3(2.0f, 5.0f, -15.0f),
-        glm::vec3(-1.5f, -2.2f, -2.5f),
-        glm::vec3(-3.8f, -2.0f, -12.3f),
-        glm::vec3(2.4f, -0.4f, -3.5f),
-        glm::vec3(-1.7f, 3.0f, -7.5f),
-        glm::vec3(1.3f, -2.0f, -2.5f),
-        glm::vec3(1.5f, 2.0f, -2.5f),
-        glm::vec3(1.5f, 0.2f, -1.5f),
-        glm::vec3(-1.3f, 1.0f, -1.5f)
-};
+WorldBuilder::WorldBuilder() {
+    std::random_device rd;
+    std::mt19937 gen(rd());
+    std::uniform_int_distribution<> dis(1, 10);
+
+    for (int x = 10; x > 0; --x) {
+        float xPos = x + 15;
+        float yPos = dis(gen);
+        for (int z = 10; z > 0; --z) {
+            cubePositions.emplace_back(glm::vec3{xPos, yPos, z});
+            yPos--;
+        }
+    }
+}
 
 void WorldBuilder::build(glm::mat4 view, glm::mat4 projection) {
     m_cube.updateViewMatrix(view);

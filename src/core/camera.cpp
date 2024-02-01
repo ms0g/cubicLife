@@ -6,10 +6,10 @@ Camera::Camera(const glm::vec3& position, const glm::vec3& up, float yaw, float 
         m_movementSpeed(SPEED),
         m_mouseSensitivity(SENSITIVITY),
         m_zoom(ZOOM) {
-    this->m_position = position;
-    this->m_worldUp = up;
-    this->m_yaw = yaw;
-    this->m_pitch = pitch;
+    m_position = position;
+    m_worldUp = up;
+    m_yaw = yaw;
+    m_pitch = pitch;
 
     update();
 }
@@ -19,10 +19,10 @@ Camera::Camera(float posX, float posY, float posZ, float upX, float upY, float u
         m_movementSpeed(SPEED),
         m_mouseSensitivity(SENSITIVITY),
         m_zoom(ZOOM) {
-    this->m_position = glm::vec3(posX, posY, posZ);
-    this->m_worldUp = glm::vec3(upX, upY, upZ);
-    this->m_yaw = yaw;
-    this->m_pitch = pitch;
+    m_position = glm::vec3(posX, posY, posZ);
+    m_worldUp = glm::vec3(upX, upY, upZ);
+    m_yaw = yaw;
+    m_pitch = pitch;
 
     update();
 }

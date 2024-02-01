@@ -1,20 +1,28 @@
 #pragma once
 
 #include <vector>
+#include <memory>
 #include "filesystem/filesystem.h"
+#include "mesh/mesh.h"
+#include "mesh/texture.h"
 #include "../configs/configs.hpp"
-#include "../mesh/mesh.h"
-#include "../mesh/texture.h"
+#include "../shader/shader.h"
 
-class Shader;
 class Cube {
 public:
-    explicit Cube(Shader& shader);
+    Cube();
 
     void draw();
 
+    void updateViewMatrix(glm::mat4 view);
+
+    void updateModelMatrix(glm::mat4 model);
+
+    void updateProjectionMatrix(glm::mat4 projection);
+
 private:
-    Mesh mesh;
+    std::unique_ptr<Mesh> m_mesh;
+    std::unique_ptr<Shader> m_shader;
 #define TEX1 0.0
 #define TEX2 1.0
     std::vector<float> vertices = {
@@ -60,6 +68,7 @@ private:
             -0.5f, 0.5f, 0.5f, 0.0f, 0.0f, TEX2,
             -0.5f, 0.5f, -0.5f, 0.0f, 1.0f, TEX2,
     };
+
     std::vector<Texture> textures = {
             {texture::load(fs::path(ASSET_DIR + "grass.png").c_str()),
                     "texture1",
@@ -68,5 +77,4 @@ private:
                     "texture2",
                     "grass_top.png"}
     };
-
 };

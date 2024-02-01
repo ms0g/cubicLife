@@ -6,19 +6,6 @@
 #include "filesystem/filesystem.h"
 #include "glad/glad.h"
 
-glm::vec3 cubePositions[] = {
-        glm::vec3(0.0f, 0.0f, 0.0f),
-        glm::vec3(2.0f, 5.0f, -15.0f),
-        glm::vec3(-1.5f, -2.2f, -2.5f),
-        glm::vec3(-3.8f, -2.0f, -12.3f),
-        glm::vec3(2.4f, -0.4f, -3.5f),
-        glm::vec3(-1.7f, 3.0f, -7.5f),
-        glm::vec3(1.3f, -2.0f, -2.5f),
-        glm::vec3(1.5f, 2.0f, -2.5f),
-        glm::vec3(1.5f, 0.2f, -1.5f),
-        glm::vec3(-1.3f, 1.0f, -1.5f)
-};
-
 void VoxelEngine::init() {
     m_window = std::make_unique<Window>();
     m_window->init("Voxel Engine");
@@ -43,21 +30,14 @@ void VoxelEngine::init() {
     glEnable(GL_DEPTH_TEST);
     //glEnable(GL_BLEND);
 
-    m_cubeShader = std::make_unique<Shader>(
-            fs::path(SHADER_DIR + "cube.vert.glsl"),
-            fs::path(SHADER_DIR + "cube.frag.glsl"));
-
-    m_cube = std::make_unique<Cube>(*m_cubeShader);
-
-
     m_isRunning = true;
 }
 
-void VoxelEngine::run() {
+void VoxelEngine::run(WorldBuilder& worldBuilder) {
     while (m_isRunning) {
         processInput();
         update();
-        render();
+        render(worldBuilder);
     }
 }
 
@@ -74,26 +54,15 @@ void VoxelEngine::update() {
 
     m_camera->update();
 
-
 }
 
-void VoxelEngine::render() {
+void VoxelEngine::render(WorldBuilder& worldBuilder) {
     m_window->clear(0.2f, 0.3f, 0.3f, 1.0f);
+
     glm::mat4 view = m_camera->getViewMatrix();
     glm::mat4 projection = glm::perspective(glm::radians(m_camera->getZoom()), ASPECT, ZNEAR, ZFAR);
 
-    m_cubeShader->activate();
-    m_cubeShader->setMat4("view", view);
-    m_cubeShader->setMat4("projection", projection);
-
-    for (auto& pos: cubePositions) {
-        glm::mat4 model = glm::mat4(1.0f);
-        model = glm::translate(model, pos);
-
-        m_cubeShader->setMat4("model", model);
-
-        m_cube->draw();
-    }
+    worldBuilder.build(view, projection);
 #ifdef DEBUG
     m_gui->render();
 #endif

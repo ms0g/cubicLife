@@ -2,14 +2,6 @@
 #include <utility>
 #include "glad/glad.h"
 
-Mesh::Mesh(std::vector<float>& vertices, std::vector<Texture>& textures) :
-        m_vertices(std::move(vertices)),
-        m_textures(std::move(textures)) {
-    // now that we have all the required data, set the vertex buffers and its attribute pointers.
-    setup();
-}
-
-
 void Mesh::render() {
     for (unsigned int i = 0; i < m_textures.size(); i++) {
         glActiveTexture(GL_TEXTURE0 + i); // active proper texture unit before binding
@@ -27,7 +19,8 @@ void Mesh::render() {
 }
 
 
-void Mesh::setup() {
+void Mesh::setup(std::vector<float>& vertices, std::vector<Texture>& textures) {
+    m_textures = std::move(textures);
     // create vao
     glGenVertexArrays(1, &m_VAO);
     glBindVertexArray(m_VAO);
@@ -37,7 +30,7 @@ void Mesh::setup() {
 
     // bind the buffer to be used
     glBindBuffer(GL_ARRAY_BUFFER, m_VBO);
-    glBufferData(GL_ARRAY_BUFFER, m_vertices.size() * sizeof(float), &m_vertices[0], GL_STATIC_DRAW);
+    glBufferData(GL_ARRAY_BUFFER, vertices.size() * sizeof(float), &vertices[0], GL_STATIC_DRAW);
 
     // Set the vertex attribute pointers
 

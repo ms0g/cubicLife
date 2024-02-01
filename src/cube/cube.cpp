@@ -1,4 +1,5 @@
 #include "cube.h"
+#include "../shader/shader.h"
 
 Cube::Cube(Shader& shader) {
     shader.activate();

@@ -5,8 +5,8 @@
 #include "../configs/configs.hpp"
 #include "../mesh/mesh.h"
 #include "../mesh/texture.h"
-#include "../shader/shader.h"
 
+class Shader;
 class Cube {
 public:
     explicit Cube(Shader& shader);

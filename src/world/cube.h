@@ -10,13 +10,11 @@
 
 class Cube {
 public:
-    Cube();
+    explicit Cube(std::vector<glm::mat4>& modelMatrices);
 
     void draw();
 
     void updateViewMatrix(glm::mat4 view);
-
-    void updateModelMatrix(glm::mat4 model);
 
     void updateProjectionMatrix(glm::mat4 projection);
 
@@ -25,7 +23,7 @@ private:
     std::unique_ptr<Shader> m_shader;
 #define TEX1 0.0
 #define TEX2 1.0
-    std::vector<float> vertices = {
+    std::vector<float> m_vertices = {
             // Back face
             -0.5f, -0.5f, -0.5f, 0.0f, 0.0f, TEX1, // Bottom-left
             0.5f, 0.5f, -0.5f, 1.0f, 1.0f, TEX1, // top-right
@@ -70,7 +68,7 @@ private:
             -0.5f, 0.5f, 0.5f, 0.0f, 0.0f, TEX2, // bottom-left
     };
 
-    std::vector<Texture> textures = {
+    std::vector<Texture> m_textures = {
             {texture::load(fs::path(ASSET_DIR + "grass.png").c_str()),
                     "texture1",
                     "grass.png"},

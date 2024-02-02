@@ -1,23 +1,18 @@
 #include "cube.h"
 
-Cube::Cube() :
+Cube::Cube(std::vector<glm::mat4>& modelMatrices) :
         m_shader(std::make_unique<Shader>(fs::path(SHADER_DIR + "cube.vert.glsl"),
                                           fs::path(SHADER_DIR + "cube.frag.glsl"))) {
     m_shader->activate();
-    m_shader->setInt(textures[0].name, 0);
-    m_shader->setInt(textures[1].name, 1);
+    m_shader->setInt(m_textures[0].name, 0);
+    m_shader->setInt(m_textures[1].name, 1);
 
-    m_mesh = std::make_unique<Mesh>(vertices, textures);
+    m_mesh = std::make_unique<Mesh>(m_vertices, m_textures, modelMatrices);
 }
 
 void Cube::updateViewMatrix(glm::mat4 view) {
     m_shader->activate();
     m_shader->setMat4("view", view);
-}
-
-void Cube::updateModelMatrix(glm::mat4 model) {
-    m_shader->activate();
-    m_shader->setMat4("model", model);
 }
 
 void Cube::updateProjectionMatrix(glm::mat4 projection) {

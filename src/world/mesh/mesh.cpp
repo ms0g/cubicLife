@@ -57,8 +57,8 @@ void Mesh::setup() {
 }
 
 void Mesh::setupInstancing() {
-    glGenBuffers(1, &m_instanceMatrixBuffer);
-    glBindBuffer(GL_ARRAY_BUFFER, m_instanceMatrixBuffer);
+    glGenBuffers(1, &m_instanceVBO);
+    glBindBuffer(GL_ARRAY_BUFFER, m_instanceVBO);
     glBufferData(GL_ARRAY_BUFFER, m_modelMatrices.size() * sizeof(glm::mat4), &m_modelMatrices[0], GL_STATIC_DRAW);
 
     glBindVertexArray(m_VAO);

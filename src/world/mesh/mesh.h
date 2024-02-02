@@ -30,7 +30,7 @@ private:
 
     unsigned int m_VAO{};
     unsigned int m_VBO{};
-    unsigned int m_instanceMatrixBuffer{};
+    unsigned int m_instanceVBO{};
 
 
 };

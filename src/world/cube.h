@@ -26,47 +26,48 @@ private:
 #define TEX1 0.0
 #define TEX2 1.0
     std::vector<float> vertices = {
-            -0.5f, -0.5f, -0.5f, 0.0f, 0.0f, TEX1,
-            0.5f, -0.5f, -0.5f, 1.0f, 0.0f, TEX1,
-            0.5f, 0.5f, -0.5f, 1.0f, 1.0f, TEX1,
-            0.5f, 0.5f, -0.5f, 1.0f, 1.0f, TEX1,
-            -0.5f, 0.5f, -0.5f, 0.0f, 1.0f, TEX1,
-            -0.5f, -0.5f, -0.5f, 0.0f, 0.0f, TEX1,
-
-            -0.5f, -0.5f, 0.5f, 0.0f, 0.0f, TEX1,
-            0.5f, -0.5f, 0.5f, 1.0f, 0.0f, TEX1,
-            0.5f, 0.5f, 0.5f, 1.0f, 1.0f, TEX1,
-            0.5f, 0.5f, 0.5f, 1.0f, 1.0f, TEX1,
-            -0.5f, 0.5f, 0.5f, 0.0f, 1.0f, TEX1,
-            -0.5f, -0.5f, 0.5f, 0.0f, 0.0f, TEX1,
-
-            -0.5f, 0.5f, 0.5f, 1.0f, 1.0f, TEX1,
-            -0.5f, 0.5f, -0.5f, 0.0f, 1.0f, TEX1,
-            -0.5f, -0.5f, -0.5f, 0.0f, 0.0f, TEX1,
-            -0.5f, -0.5f, -0.5f, 0.0f, 0.0f, TEX1,
-            -0.5f, -0.5f, 0.5f, 1.0f, 0.0f, TEX1,
-            -0.5f, 0.5f, 0.5f, 1.0f, 1.0f, TEX1,
-
-            0.5f, 0.5f, 0.5f, 1.0f, 1.0f, TEX1,
-            0.5f, 0.5f, -0.5f, 0.0f, 1.0f, TEX1,
-            0.5f, -0.5f, -0.5f, 0.0f, 0.0f, TEX1,
-            0.5f, -0.5f, -0.5f, 0.0f, 0.0f, TEX1,
-            0.5f, -0.5f, 0.5f, 1.0f, 0.0f, TEX1,
-            0.5f, 0.5f, 0.5f, 1.0f, 1.0f, TEX1,
-
-            -0.5f, -0.5f, -0.5f, 0.0f, 1.0f, TEX2,
-            0.5f, -0.5f, -0.5f, 1.0f, 1.0f, TEX2,
-            0.5f, -0.5f, 0.5f, 1.0f, 0.0f, TEX2,
-            0.5f, -0.5f, 0.5f, 1.0f, 0.0f, TEX2,
-            -0.5f, -0.5f, 0.5f, 0.0f, 0.0f, TEX2,
-            -0.5f, -0.5f, -0.5f, 0.0f, 1.0f, TEX2,
-
-            -0.5f, 0.5f, -0.5f, 0.0f, 1.0f, TEX2,
-            0.5f, 0.5f, -0.5f, 1.0f, 1.0f, TEX2,
-            0.5f, 0.5f, 0.5f, 1.0f, 0.0f, TEX2,
-            0.5f, 0.5f, 0.5f, 1.0f, 0.0f, TEX2,
-            -0.5f, 0.5f, 0.5f, 0.0f, 0.0f, TEX2,
-            -0.5f, 0.5f, -0.5f, 0.0f, 1.0f, TEX2,
+            // Back face
+            -0.5f, -0.5f, -0.5f, 0.0f, 0.0f, TEX1, // Bottom-left
+            0.5f, 0.5f, -0.5f, 1.0f, 1.0f, TEX1, // top-right
+            0.5f, -0.5f, -0.5f, 1.0f, 0.0f, TEX1, // bottom-right
+            0.5f, 0.5f, -0.5f, 1.0f, 1.0f, TEX1, // top-right
+            -0.5f, -0.5f, -0.5f, 0.0f, 0.0f, TEX1, // bottom-left
+            -0.5f, 0.5f, -0.5f, 0.0f, 1.0f, TEX1, // top-left
+            // Front face
+            -0.5f, -0.5f, 0.5f, 0.0f, 0.0f, TEX1, // bottom-left
+            0.5f, -0.5f, 0.5f, 1.0f, 0.0f, TEX1, // bottom-right
+            0.5f, 0.5f, 0.5f, 1.0f, 1.0f, TEX1, // top-right
+            0.5f, 0.5f, 0.5f, 1.0f, 1.0f, TEX1, // top-right
+            -0.5f, 0.5f, 0.5f, 0.0f, 1.0f, TEX1, // top-left
+            -0.5f, -0.5f, 0.5f, 0.0f, 0.0f, TEX1, // bottom-left
+            // Left face
+            -0.5f, 0.5f, 0.5f, 1.0f, 1.0f, TEX1, // top-right
+            -0.5f, 0.5f, -0.5f, 0.0f, 1.0f, TEX1, // top-left
+            -0.5f, -0.5f, -0.5f, 0.0f, 0.0f, TEX1, // bottom-left
+            -0.5f, -0.5f, -0.5f, 0.0f, 0.0f, TEX1, // bottom-left
+            -0.5f, -0.5f, 0.5f, 1.0f, 0.0f, TEX1, // bottom-right
+            -0.5f, 0.5f, 0.5f, 1.0f, 1.0f, TEX1, // top-right
+            // Right face
+            0.5f, 0.5f, 0.5f, 1.0f, 1.0f, TEX1, // top-left
+            0.5f, -0.5f, -0.5f, 0.0f, 0.0f, TEX1, // bottom-right
+            0.5f, 0.5f, -0.5f, 0.0f, 1.0f, TEX1, // top-right
+            0.5f, -0.5f, -0.5f, 0.0f, 0.0f, TEX1, // bottom-right
+            0.5f, 0.5f, 0.5f, 1.0f, 1.0f, TEX1, // top-left
+            0.5f, -0.5f, 0.5f, 1.0f, 0.0f, TEX1, // bottom-left
+            // Bottom face
+            -0.5f, -0.5f, -0.5f, 0.0f, 1.0f, TEX2, // top-right
+            0.5f, -0.5f, -0.5f, 1.0f, 1.0f, TEX2, // top-left
+            0.5f, -0.5f, 0.5f, 1.0f, 0.0f, TEX2, // bottom-left
+            0.5f, -0.5f, 0.5f, 1.0f, 0.0f, TEX2, // bottom-left
+            -0.5f, -0.5f, 0.5f, 0.0f, 0.0f, TEX2, // bottom-right
+            -0.5f, -0.5f, -0.5f, 0.0f, 1.0f, TEX2, // top-right
+            // Top face
+            -0.5f, 0.5f, -0.5f, 0.0f, 1.0f, TEX2, // top-left
+            0.5f, 0.5f, 0.5f, 1.0f, 0.0f, TEX2, // bottom-right
+            0.5f, 0.5f, -0.5f, 1.0f, 1.0f, TEX2, // top-right
+            0.5f, 0.5f, 0.5f, 1.0f, 0.0f, TEX2, // bottom-right
+            -0.5f, 0.5f, -0.5f, 0.0f, 1.0f, TEX2, // top-left
+            -0.5f, 0.5f, 0.5f, 0.0f, 0.0f, TEX2, // bottom-left
     };
 
     std::vector<Texture> textures = {

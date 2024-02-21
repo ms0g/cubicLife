@@ -1,10 +1,10 @@
 #include "engine.h"
 #include <iostream>
+#include "glad/glad.h"
 #include "glm/glm.hpp"
 #include "glm/gtc/matrix_transform.hpp"
 #include "image/stb_image.h"
-#include "filesystem/filesystem.h"
-#include "glad/glad.h"
+#include "../world/worldBuilder.h"
 
 void VoxelEngine::init() {
     m_window = std::make_unique<Window>();
@@ -28,9 +28,7 @@ void VoxelEngine::init() {
 
     // Configure global opengl state
     glEnable(GL_DEPTH_TEST);
-//    glEnable(GL_CULL_FACE);
-//    glCullFace(GL_BACK);
-//    glFrontFace(GL_CW);
+    glEnable(GL_CULL_FACE);
     //glEnable(GL_BLEND);
 
     m_isRunning = true;
@@ -56,7 +54,6 @@ void VoxelEngine::update() {
 #endif
 
     m_camera->update();
-
 }
 
 void VoxelEngine::render(WorldBuilder& worldBuilder) {

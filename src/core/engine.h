@@ -5,8 +5,8 @@
 #include "window.h"
 #include "input.h"
 #include "gui.h"
-#include "../world/worldBuilder.h"
 
+class WorldBuilder;
 class VoxelEngine {
 public:
     VoxelEngine() = default;

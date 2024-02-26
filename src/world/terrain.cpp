@@ -24,9 +24,9 @@ Terrain::Terrain() {
             // raw height at coordinate
             unsigned char y = texel[0];
 
-            cubePositions.emplace_back(glm::vec3{-height / 2.0f + height * i / (float) height,
+            cubePositions.emplace_back(glm::vec3{height / 2.0f - height * i  / (float) height,
                                                  (float) y * yScale - yShift,
-                                                 -width / 2.0f + width * j / (float) width});
+                                                 width / 2.0f - width * j / (float) width});
         }
     }
     stbi_image_free(data);

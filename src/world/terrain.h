@@ -4,9 +4,9 @@
 #include "glm/glm.hpp"
 #include "cube.h"
 
-class WorldBuilder {
+class Terrain {
 public:
-    WorldBuilder();
+    Terrain();
 
     void build(glm::mat4 view, glm::mat4 projection);
 

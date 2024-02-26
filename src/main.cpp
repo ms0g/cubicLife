@@ -1,14 +1,14 @@
 #include "core/engine.h"
-#include "world/worldBuilder.h"
+#include "world/terrain.h"
 
 
 int main() {
-    VoxelEngine voxEngine;
-    voxEngine.init();
+    VoxelEngine voxen;
+    voxen.init();
 
-    WorldBuilder worldBuilder;
+    Terrain terrain;
 
-    voxEngine.run(worldBuilder);
+    voxen.run(terrain);
 
     return 0;
 }

@@ -4,13 +4,13 @@
 #include "glm/glm.hpp"
 #include "glm/gtc/matrix_transform.hpp"
 #include "image/stb_image.h"
-#include "../world/worldBuilder.h"
+#include "../world/terrain.h"
 
 void VoxelEngine::init() {
     m_window = std::make_unique<Window>();
     m_window->init("Voxel Engine");
 
-    m_camera = std::make_unique<Camera>(glm::vec3(0.0f, 0.0f, 20.0f));
+    m_camera = std::make_unique<Camera>(glm::vec3(0.0f, 50.0f, 20.0f));
 
     m_input = std::make_unique<Input>();
 #ifdef DEBUG
@@ -34,11 +34,11 @@ void VoxelEngine::init() {
     m_isRunning = true;
 }
 
-void VoxelEngine::run(WorldBuilder& worldBuilder) {
+void VoxelEngine::run(Terrain& terrain) {
     while (m_isRunning) {
         processInput();
         update();
-        render(worldBuilder);
+        render(terrain);
     }
 }
 
@@ -56,13 +56,13 @@ void VoxelEngine::update() {
     m_camera->update();
 }
 
-void VoxelEngine::render(WorldBuilder& worldBuilder) {
+void VoxelEngine::render(Terrain& terrain) {
     m_window->clear(0.2f, 0.3f, 0.3f, 1.0f);
 
     glm::mat4 view = m_camera->getViewMatrix();
     glm::mat4 projection = glm::perspective(glm::radians(m_camera->getZoom()), ASPECT, ZNEAR, ZFAR);
 
-    worldBuilder.build(view, projection);
+    terrain.build(view, projection);
 #ifdef DEBUG
     m_gui->render();
 #endif

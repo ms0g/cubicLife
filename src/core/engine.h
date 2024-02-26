@@ -6,21 +6,21 @@
 #include "input.h"
 #include "gui.h"
 
-class WorldBuilder;
+class Terrain;
 class VoxelEngine {
 public:
     VoxelEngine() = default;
 
     void init();
 
-    void run(WorldBuilder& worldBuilder);
+    void run(Terrain& terrain);
 
 private:
     void processInput();
 
     void update();
 
-    void render(WorldBuilder& worldBuilder);
+    void render(Terrain& terrain);
 
     bool m_isRunning{false};
     std::unique_ptr<Window> m_window;

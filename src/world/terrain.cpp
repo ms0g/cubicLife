@@ -16,8 +16,9 @@ Terrain::Terrain() {
 
     std::vector<glm::vec3> cubePositions;
     float yScale = 64.0f / 256.0f, yShift = 16.0f;  // apply a scale+shift to the height data
-    for (unsigned int i = 0; i < height; i++) {
-        for (unsigned int j = 0; j < width; j++) {
+
+    for (int i = 0; i < height; i++) {
+        for (int j = 0; j < width; j++) {
             // retrieve texel for (i,j) tex coord
             unsigned char* texel = &data[(j + width * i) * nrComponents];
             // raw height at coordinate

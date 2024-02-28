@@ -7,20 +7,21 @@
 #include "gui.h"
 
 class Terrain;
+class Skybox;
 class VoxelEngine {
 public:
     VoxelEngine() = default;
 
     void init();
 
-    void run(Terrain& terrain);
+    void run(Terrain& terrain, Skybox& skybox);
 
 private:
     void processInput();
 
     void update();
 
-    void render(Terrain& terrain);
+    void render(Terrain& terrain, Skybox& skybox);
 
     bool m_isRunning{false};
     std::unique_ptr<Window> m_window;

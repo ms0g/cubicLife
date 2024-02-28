@@ -1,5 +1,6 @@
 #include "core/engine.h"
 #include "world/terrain.h"
+#include "world/skybox.h"
 
 
 int main() {
@@ -7,8 +8,9 @@ int main() {
     voxen.init();
 
     Terrain terrain;
+    Skybox skyBox;
 
-    voxen.run(terrain);
+    voxen.run(terrain, skyBox);
 
     return 0;
 }

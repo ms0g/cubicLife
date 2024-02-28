@@ -5,6 +5,7 @@
 #include "glm/gtc/matrix_transform.hpp"
 #include "image/stb_image.h"
 #include "../world/terrain.h"
+#include "../world/skybox.h"
 
 void VoxelEngine::init() {
     m_window = std::make_unique<Window>();
@@ -36,11 +37,11 @@ void VoxelEngine::init() {
     m_isRunning = true;
 }
 
-void VoxelEngine::run(Terrain& terrain) {
+void VoxelEngine::run(Terrain& terrain, Skybox& skybox) {
     while (m_isRunning) {
         processInput();
         update();
-        render(terrain);
+        render(terrain, skybox);
     }
 }
 
@@ -58,13 +59,19 @@ void VoxelEngine::update() {
     m_camera->update();
 }
 
-void VoxelEngine::render(Terrain& terrain) {
+void VoxelEngine::render(Terrain& terrain, Skybox& skybox) {
     m_window->clear(0.2f, 0.3f, 0.3f, 1.0f);
 
     glm::mat4 view = m_camera->getViewMatrix();
     glm::mat4 projection = glm::perspective(glm::radians(m_camera->getZoom()), ASPECT, ZNEAR, ZFAR);
 
     terrain.build(view, projection);
+
+    glm::mat4 skyview = glm::mat4(glm::mat3(m_camera->getViewMatrix()));
+    skybox.updateViewMatrix(skyview);
+
+    skybox.updateProjectionMatrix(projection);
+    skybox.draw();
 #ifdef DEBUG
     m_gui->render();
 #endif

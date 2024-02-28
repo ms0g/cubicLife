@@ -3,33 +3,23 @@
 #include <string>
 #include <vector>
 #include "glm/glm.hpp"
+#include "IMesh.hpp"
 
-struct Texture {
-    unsigned int id;
-    std::string name;
-    std::string path;
-};
-
-class Mesh {
+class Mesh : public IMesh {
 public:
     Mesh(std::vector<float>& vertices, std::vector<Texture>& textures, std::vector<glm::mat4>& modelMatrices);
 
-    // render the mesh
-    void render();
+    void setupInstancing();
 
 private:
     // initializes all the buffer objects/arrays
-    void setup();
+    void setupImpl() override;
 
-    void setupInstancing();
+    // render the mesh
+    void renderImpl() override;
 
-    // mesh Data
-    std::vector<float> m_vertices;
-    std::vector<Texture> m_textures;
     std::vector<glm::mat4> m_modelMatrices;
 
-    unsigned int m_VAO{};
-    unsigned int m_VBO{};
     unsigned int m_instanceVBO{};
 
 

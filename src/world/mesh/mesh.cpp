@@ -3,31 +3,10 @@
 #include "glad/glad.h"
 
 Mesh::Mesh(std::vector<float>& vertices, std::vector<Texture>& textures, std::vector<glm::mat4>& modelMatrices) :
-        m_vertices(std::move(vertices)),
-        m_textures(std::move(textures)),
-        m_modelMatrices(std::move(modelMatrices)){
-    setup();
-    setupInstancing();
-}
+        IMesh(vertices, textures),
+        m_modelMatrices(std::move(modelMatrices)) {}
 
-void Mesh::render() {
-    for (unsigned int i = 0; i < m_textures.size(); i++) {
-        glActiveTexture(GL_TEXTURE0 + i); // active proper texture unit before binding
-        // and finally bind the texture
-        glBindTexture(GL_TEXTURE_2D, m_textures[i].id);
-    }
-
-    // draw mesh
-    glBindVertexArray(m_VAO);
-    glDrawArraysInstanced(GL_TRIANGLES, 0, 36, m_modelMatrices.size());
-    glBindVertexArray(0);
-
-    // always good practice to set everything back to defaults once configured.
-    glActiveTexture(GL_TEXTURE0);
-}
-
-
-void Mesh::setup() {
+void Mesh::setupImpl() {
     // create vao
     glGenVertexArrays(1, &m_VAO);
     glBindVertexArray(m_VAO);
@@ -82,3 +61,21 @@ void Mesh::setupInstancing() {
 
     glBindVertexArray(0);
 }
+
+void Mesh::renderImpl() {
+    for (unsigned int i = 0; i < m_textures.size(); i++) {
+        glActiveTexture(GL_TEXTURE0 + i); // active proper texture unit before binding
+        // and finally bind the texture
+        glBindTexture(GL_TEXTURE_2D, m_textures[i].id);
+    }
+
+    // draw mesh
+    glBindVertexArray(m_VAO);
+    glDrawArraysInstanced(GL_TRIANGLES, 0, 36, m_modelMatrices.size());
+    glBindVertexArray(0);
+
+    // always good practice to set everything back to defaults once configured.
+    glActiveTexture(GL_TEXTURE0);
+}
+
+

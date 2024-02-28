@@ -8,6 +8,8 @@ Cube::Cube(std::vector<glm::mat4>& modelMatrices) :
     m_shader->setInt(m_textures[1].name, 1);
 
     m_mesh = std::make_unique<Mesh>(m_vertices, m_textures, modelMatrices);
+    m_mesh->setup();
+    m_mesh->setupInstancing();
 }
 
 void Cube::updateViewMatrix(glm::mat4 view) {

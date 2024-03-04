@@ -3,7 +3,7 @@
 #include <vector>
 #include <memory>
 #include "filesystem/filesystem.h"
-#include "mesh/mesh.h"
+#include "mesh/cubeMesh.h"
 #include "mesh/texture.h"
 #include "../configs/configs.hpp"
 #include "../shader/shader.h"
@@ -19,7 +19,7 @@ public:
     void updateProjectionMatrix(glm::mat4 projection);
 
 private:
-    std::unique_ptr<Mesh> m_mesh;
+    std::unique_ptr<CubeMesh> m_mesh;
     std::unique_ptr<Shader> m_shader;
 #define TEX1 0.0
 #define TEX2 1.0

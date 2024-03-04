@@ -1,12 +1,12 @@
-#include "mesh.h"
+#include "cubeMesh.h"
 #include <utility>
 #include "glad/glad.h"
 
-Mesh::Mesh(std::vector<float>& vertices, std::vector<Texture>& textures, std::vector<glm::mat4>& modelMatrices) :
+CubeMesh::CubeMesh(std::vector<float>& vertices, std::vector<Texture>& textures, std::vector<glm::mat4>& modelMatrices) :
         IMesh(vertices, textures),
         m_modelMatrices(std::move(modelMatrices)) {}
 
-void Mesh::setupImpl() {
+void CubeMesh::setupImpl() {
     // create vao
     glGenVertexArrays(1, &m_VAO);
     glBindVertexArray(m_VAO);
@@ -35,7 +35,7 @@ void Mesh::setupImpl() {
     glBindVertexArray(0);
 }
 
-void Mesh::setupInstancing() {
+void CubeMesh::setupInstancing() {
     glGenBuffers(1, &m_instanceVBO);
     glBindBuffer(GL_ARRAY_BUFFER, m_instanceVBO);
     glBufferData(GL_ARRAY_BUFFER, m_modelMatrices.size() * sizeof(glm::mat4), &m_modelMatrices[0], GL_STATIC_DRAW);
@@ -62,7 +62,7 @@ void Mesh::setupInstancing() {
     glBindVertexArray(0);
 }
 
-void Mesh::renderImpl() {
+void CubeMesh::renderImpl() {
     for (unsigned int i = 0; i < m_textures.size(); i++) {
         glActiveTexture(GL_TEXTURE0 + i); // active proper texture unit before binding
         // and finally bind the texture

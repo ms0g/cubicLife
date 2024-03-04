@@ -5,9 +5,9 @@
 #include "glm/glm.hpp"
 #include "IMesh.hpp"
 
-class Mesh : public IMesh {
+class CubeMesh : public IMesh {
 public:
-    Mesh(std::vector<float>& vertices, std::vector<Texture>& textures, std::vector<glm::mat4>& modelMatrices);
+    CubeMesh(std::vector<float>& vertices, std::vector<Texture>& textures, std::vector<glm::mat4>& modelMatrices);
 
     void setupInstancing();
 

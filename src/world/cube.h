@@ -12,11 +12,9 @@ class Cube {
 public:
     explicit Cube(std::vector<glm::mat4>& modelMatrices);
 
+    void update(glm::mat4 view, glm::mat4 projection, glm::vec3 cameraPos);
+
     void draw();
-
-    void updateViewMatrix(glm::mat4 view);
-
-    void updateProjectionMatrix(glm::mat4 projection);
 
 private:
     std::unique_ptr<CubeMesh> m_mesh;
@@ -70,10 +68,10 @@ private:
 
     std::vector<Texture> m_textures = {
             {texture::load(fs::path(ASSET_DIR + "grass.png").c_str()),
-                    "texture1",
+                    "_texture.texture1",
                     "grass.png"},
             {texture::load(fs::path(ASSET_DIR + "grass_top.png").c_str()),
-                    "texture2",
+                    "_texture.texture2",
                     "grass_top.png"}
     };
 };

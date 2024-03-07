@@ -42,8 +42,7 @@ Terrain::Terrain() {
     m_cube = std::make_unique<Cube>(modelMatrices);
 }
 
-void Terrain::build(glm::mat4 view, glm::mat4 projection) {
-    m_cube->updateViewMatrix(view);
-    m_cube->updateProjectionMatrix(projection);
+void Terrain::build(glm::mat4 view, glm::mat4 projection, glm::vec3 cameraPos) {
+    m_cube->update(view, projection, cameraPos);
     m_cube->draw();
 }

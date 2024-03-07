@@ -15,13 +15,9 @@ void Skybox::draw() {
     m_mesh->render();
 }
 
-void Skybox::updateViewMatrix(glm::mat4 view) {
+void Skybox::update(glm::mat4 view, glm::mat4 projection) {
     m_shader->activate();
     m_shader->setMat4("view", view);
-}
-
-void Skybox::updateProjectionMatrix(glm::mat4 projection) {
-    m_shader->activate();
     m_shader->setMat4("projection", projection);
 }
 

@@ -23,9 +23,9 @@ public:
 
     [[nodiscard]] float getZoom() const;
 
-    [[nodiscard]] const glm::vec3& getPosition() const;
+    [[nodiscard]] const glm::vec3 getPosition() const;
 
-    [[nodiscard]] const glm::vec3& getFront() const;
+    [[nodiscard]] const glm::vec3 getFront() const;
 
     void processKeyboard(CameraMovement direction, float deltaTime);
 

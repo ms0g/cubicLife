@@ -48,11 +48,11 @@ float Camera::getZoom() const {
     return m_zoom;
 }
 
-const glm::vec3& Camera::getPosition() const {
+const glm::vec3 Camera::getPosition() const {
     return m_position;
 }
 
-const glm::vec3& Camera::getFront() const {
+const glm::vec3 Camera::getFront() const {
     return m_front;
 }
 

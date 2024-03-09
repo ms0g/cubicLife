@@ -12,7 +12,7 @@ class Cube {
 public:
     explicit Cube(std::vector<glm::mat4>& modelMatrices);
 
-    void update(glm::mat4 view, glm::mat4 projection, glm::vec3 cameraPos);
+    void update(glm::mat4 view, glm::mat4 projection);
 
     void draw();
 
@@ -28,7 +28,7 @@ private:
              0.5f, -0.5f, -0.5f,  0.0f, 0.0f, -1.0f,  1.0f, 0.0f, TEX1, // bottom-right
              0.5f,  0.5f, -0.5f,  0.0f, 0.0f, -1.0f,  1.0f, 1.0f, TEX1, // top-right
             -0.5f, -0.5f, -0.5f,  0.0f, 0.0f, -1.0f,  0.0f, 0.0f, TEX1, // bottom-left
-            -0.5f,  0.5f, -0.5f,  0.0f, 0.0f,  0.0f, -1.0f, 1.0f, TEX1, // top-left
+            -0.5f,  0.5f, -0.5f,  0.0f, 0.0f, -1.0f,  0.0f, 1.0f, TEX1, // top-left
             // Front face
             -0.5f, -0.5f,  0.5f,  0.0f, 0.0f,  1.0f,  0.0f, 0.0f, TEX1, // bottom-left
              0.5f, -0.5f,  0.5f,  0.0f, 0.0f,  1.0f,  1.0f, 0.0f, TEX1, // bottom-right
@@ -68,10 +68,10 @@ private:
 
     std::vector<Texture> m_textures = {
             {texture::load(fs::path(ASSET_DIR + "grass.png").c_str()),
-                    "_texture.texture1",
+                    "tex.texture1",
                     "grass.png"},
             {texture::load(fs::path(ASSET_DIR + "grass_top.png").c_str()),
-                    "_texture.texture2",
+                    "tex.texture2",
                     "grass_top.png"}
     };
 };

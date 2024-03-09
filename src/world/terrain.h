@@ -8,7 +8,7 @@ class Terrain {
 public:
     Terrain();
 
-    void build(glm::mat4 view, glm::mat4 projection, glm::vec3 cameraPos);
+    void build(glm::mat4 view, glm::mat4 projection);
 
 private:
     std::unique_ptr<Cube> m_cube;

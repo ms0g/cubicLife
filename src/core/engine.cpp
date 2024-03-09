@@ -65,7 +65,7 @@ void VoxelEngine::render(Terrain& terrain, Skybox& skybox) {
     glm::mat4 view = m_camera->getViewMatrix();
     glm::mat4 projection = glm::perspective(glm::radians(m_camera->getZoom()), ASPECT, ZNEAR, ZFAR);
 
-    terrain.build(view, projection, m_camera->getPosition());
+    terrain.build(view, projection);
 
     glm::mat4 skyview = glm::mat4(glm::mat3(m_camera->getViewMatrix()));
     skybox.update(skyview, projection);

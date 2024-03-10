@@ -20,4 +20,4 @@ constexpr float SPEED{20.0f};
 constexpr float SENSITIVITY{0.1f};
 constexpr float ZOOM{45.0f};
 constexpr float ZNEAR{0.1f};
-constexpr float ZFAR{100000.0f};
+constexpr float ZFAR{100.0f};

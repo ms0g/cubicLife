@@ -11,14 +11,16 @@ Skybox::Skybox() :
     m_mesh->setup();
 }
 
-void Skybox::draw() {
-    m_mesh->render();
-}
-
 void Skybox::update(glm::mat4 view, glm::mat4 projection) {
     m_shader->activate();
     m_shader->setMat4("view", view);
     m_shader->setMat4("projection", projection);
 }
+
+void Skybox::draw() {
+    m_mesh->render();
+}
+
+
 
 

@@ -4,7 +4,7 @@
 SkyboxMesh::SkyboxMesh(std::vector<float>& vertices, std::vector<Texture>& textures) :
         IMesh(vertices, textures) {}
 
-void SkyboxMesh::setupImpl() {
+void SkyboxMesh::setup() {
     // create vao
     glGenVertexArrays(1, &m_VAO);
     glBindVertexArray(m_VAO);
@@ -25,7 +25,7 @@ void SkyboxMesh::setupImpl() {
     glBindVertexArray(0);
 }
 
-void SkyboxMesh::renderImpl() {
+void SkyboxMesh::render() {
     for (unsigned int i = 0; i < m_textures.size(); i++) {
         glActiveTexture(GL_TEXTURE0 + i); // active proper texture unit before binding
         // and finally bind the texture

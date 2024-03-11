@@ -1,4 +1,3 @@
-//
 #pragma once
 
 #include <string>
@@ -13,27 +12,17 @@ struct Texture {
 
 class IMesh {
 public:
-
     IMesh(std::vector<float>& vertices, std::vector<Texture>& textures) :
             m_vertices(std::move(vertices)),
             m_textures(std::move(textures)){}
 
     virtual ~IMesh() = default;
 
-    void setup() {
-        setupImpl();
-    }
+    virtual void setup() = 0;
 
-    void render() {
-        renderImpl();
-    }
+    virtual void render() = 0;
 
 protected:
-    // render the mesh
-    virtual void renderImpl() = 0;
-
-    virtual void setupImpl() = 0;
-
     unsigned int m_VAO{};
     unsigned int m_VBO{};
     // mesh Data

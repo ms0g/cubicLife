@@ -6,7 +6,7 @@ CubeMesh::CubeMesh(std::vector<float>& vertices, std::vector<Texture>& textures,
         IMesh(vertices, textures),
         m_modelMatrices(std::move(modelMatrices)) {}
 
-void CubeMesh::setupImpl() {
+void CubeMesh::setup() {
     // create vao
     glGenVertexArrays(1, &m_VAO);
     glBindVertexArray(m_VAO);
@@ -66,7 +66,7 @@ void CubeMesh::setupInstancing() {
     glBindVertexArray(0);
 }
 
-void CubeMesh::renderImpl() {
+void CubeMesh::render() {
     for (unsigned int i = 0; i < m_textures.size(); i++) {
         glActiveTexture(GL_TEXTURE0 + i); // active proper texture unit before binding
         // and finally bind the texture

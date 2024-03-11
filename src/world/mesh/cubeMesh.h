@@ -9,15 +9,15 @@ class CubeMesh : public IMesh {
 public:
     CubeMesh(std::vector<float>& vertices, std::vector<Texture>& textures, std::vector<glm::mat4>& modelMatrices);
 
+    // initializes all the buffer objects/arrays
+    void setup() override;
+
     void setupInstancing();
 
-private:
-    // initializes all the buffer objects/arrays
-    void setupImpl() override;
-
     // render the mesh
-    void renderImpl() override;
+    void render() override;
 
+private:
     std::vector<glm::mat4> m_modelMatrices;
 
     unsigned int m_instanceVBO{};

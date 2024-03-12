@@ -2,7 +2,8 @@
 #include "glad/glad.h"
 
 SkyboxMesh::SkyboxMesh(std::vector<float>& vertices, std::vector<Texture>& textures) :
-        IMesh(vertices, textures) {}
+        IMesh(vertices),
+        m_textures(std::move(textures)){}
 
 void SkyboxMesh::setup() {
     // create vao

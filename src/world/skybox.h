@@ -2,7 +2,6 @@
 
 #include <vector>
 #include "mesh/skyboxMesh.h"
-#include "mesh/texture.h"
 #include "filesystem/filesystem.h"
 #include "../configs/configs.hpp"
 #include "../shader/shader.h"

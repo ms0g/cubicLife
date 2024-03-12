@@ -3,6 +3,7 @@
 #include <vector>
 #include <string>
 #include "IMesh.hpp"
+#include "texture.h"
 
 class SkyboxMesh : public IMesh {
 public:
@@ -12,6 +13,9 @@ public:
 
     // render the mesh
     void render() override;
+
+private:
+    std::vector<Texture> m_textures;
 };
 
 

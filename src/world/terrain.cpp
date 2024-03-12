@@ -3,6 +3,8 @@
 #include <random>
 #include "glm/gtc/matrix_transform.hpp"
 #include "image/stb_image.h"
+#include "filesystem/filesystem.h"
+#include "../configs/configs.hpp"
 
 
 Terrain::Terrain() {

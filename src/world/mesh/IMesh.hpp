@@ -4,17 +4,10 @@
 #include <vector>
 #include "glm/glm.hpp"
 
-struct Texture {
-    unsigned int id;
-    std::string name;
-    std::string path;
-};
-
 class IMesh {
 public:
-    IMesh(std::vector<float>& vertices, std::vector<Texture>& textures) :
-            m_vertices(std::move(vertices)),
-            m_textures(std::move(textures)){}
+    IMesh(std::vector<float>& vertices) :
+            m_vertices(std::move(vertices)) {}
 
     virtual ~IMesh() = default;
 
@@ -27,5 +20,4 @@ protected:
     unsigned int m_VBO{};
     // mesh Data
     std::vector<float> m_vertices;
-    std::vector<Texture> m_textures;
 };

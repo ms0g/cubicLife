@@ -10,7 +10,7 @@ public:
     }
 
     inline T* nativeHandle() const {
-        return m_window;
+        return mWindow;
     }
 
     void clear(float r = 0.0f, float g = 0.0f, float b = 0.0f, float a = 0.0f) {
@@ -25,5 +25,5 @@ protected:
 
     virtual void swapBuffer() = 0;
 
-    T* m_window;
+    T* mWindow;
 };

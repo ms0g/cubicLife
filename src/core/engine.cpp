@@ -8,15 +8,15 @@
 #include "../world/skybox.h"
 
 void VoxelEngine::init() {
-    m_window = std::make_unique<Window>();
-    m_window->init("Voxel Engine");
+    mWindow = std::make_unique<Window>();
+    mWindow->init("Voxel Engine");
 
-    m_camera = std::make_unique<Camera>(glm::vec3(0.0f, 50.0f, 20.0f));
+    mCamera = std::make_unique<Camera>(glm::vec3(0.0f, 50.0f, 20.0f));
 
-    m_input = std::make_unique<Input>();
+    mInput = std::make_unique<Input>();
 #ifdef DEBUG
-    m_gui = std::make_unique<Gui>(m_window->nativeHandle(),
-                                  m_window->glContext());
+    mGui = std::make_unique<Gui>(mWindow->nativeHandle(),
+                                 mWindow->glContext());
 #endif
     // glad: load all OpenGL function pointers
     if (!gladLoadGLLoader(SDL_GL_GetProcAddress)) {
@@ -34,11 +34,11 @@ void VoxelEngine::init() {
     glFrontFace(GL_CCW);
     //glEnable(GL_BLEND);
 
-    m_isRunning = true;
+    mIsRunning = true;
 }
 
 void VoxelEngine::run(Terrain& terrain, Skybox& skybox) {
-    while (m_isRunning) {
+    while (mIsRunning) {
         processInput();
         update();
         render(terrain, skybox);
@@ -46,34 +46,34 @@ void VoxelEngine::run(Terrain& terrain, Skybox& skybox) {
 }
 
 void VoxelEngine::processInput() {
-    m_input->process(*m_camera, m_window->nativeHandle(), m_deltaTime, m_isRunning);
+    mInput->process(*mCamera, mWindow->nativeHandle(), mDeltaTime, mIsRunning);
 }
 
 void VoxelEngine::update() {
-    m_deltaTime = (SDL_GetTicks() - m_millisecsPreviousFrame) / 1000.0f;
-    m_millisecsPreviousFrame = SDL_GetTicks();
+    mDeltaTime = (SDL_GetTicks() - mMillisecsPreviousFrame) / 1000.0f;
+    mMillisecsPreviousFrame = SDL_GetTicks();
 #ifdef DEBUG
-    m_gui->updateFpsCounter(m_deltaTime);
+    mGui->updateFpsCounter(mDeltaTime);
 #endif
 
-    m_camera->update();
+    mCamera->update();
 }
 
 void VoxelEngine::render(Terrain& terrain, Skybox& skybox) {
-    m_window->clear(0.2f, 0.3f, 0.3f, 1.0f);
+    mWindow->clear(0.2f, 0.3f, 0.3f, 1.0f);
 
-    glm::mat4 view = m_camera->getViewMatrix();
-    glm::mat4 projection = glm::perspective(glm::radians(m_camera->getZoom()), ASPECT, ZNEAR, ZFAR);
+    glm::mat4 view = mCamera->getViewMatrix();
+    glm::mat4 projection = glm::perspective(glm::radians(mCamera->getZoom()), ASPECT, ZNEAR, ZFAR);
 
     terrain.build(view, projection);
 
-    glm::mat4 skyview = glm::mat4(glm::mat3(m_camera->getViewMatrix()));
+    glm::mat4 skyview = glm::mat4(glm::mat3(mCamera->getViewMatrix()));
     skybox.update(skyview, projection);
 
     skybox.draw();
 #ifdef DEBUG
-    m_gui->render();
+    mGui->render();
 #endif
     // SDL swap buffers
-    m_window->swapBuffer();
+    mWindow->swapBuffer();
 }

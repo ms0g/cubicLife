@@ -15,10 +15,10 @@ public:
     void draw();
 
 private:
-    std::unique_ptr<SkyboxMesh> m_mesh;
-    std::unique_ptr<Shader> m_shader;
+    std::unique_ptr<SkyboxMesh> mMesh;
+    std::unique_ptr<Shader> mShader;
 
-    std::vector<float> m_vertices = {
+    std::vector<float> mVertices = {
             -1.0f,  1.0f, -1.0f,
             -1.0f, -1.0f, -1.0f,
              1.0f, -1.0f, -1.0f,
@@ -62,7 +62,7 @@ private:
              1.0f, -1.0f,  1.0f
     };
 
-    std::vector<std::string> m_faces = {
+    std::vector<std::string> mFaces = {
             fs::path(ASSET_DIR + "skybox/right.jpg"),
             fs::path(ASSET_DIR + "skybox/left.jpg"),
             fs::path(ASSET_DIR + "skybox/top.jpg"),
@@ -71,8 +71,8 @@ private:
             fs::path(ASSET_DIR + "skybox/back.jpg")
     };
 
-    std::vector<Texture> m_textures = {
-            {texture::loadCubemap(m_faces), "skybox", "skybox.jpg"}
+    std::vector<Texture> mTextures = {
+            {texture::loadCubemap(mFaces), "skybox", "skybox.jpg"}
     };
 };
 

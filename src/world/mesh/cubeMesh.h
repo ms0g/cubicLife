@@ -19,9 +19,9 @@ public:
     void render() override;
 
 private:
-    std::vector<glm::mat4> m_modelMatrices;
-    std::vector<Texture> m_textures;
-    unsigned int m_instanceVBO{};
+    std::vector<glm::mat4> mModelMatrices;
+    std::vector<Texture> mTextures;
+    unsigned int mInstanceVbo{};
 
 
 };

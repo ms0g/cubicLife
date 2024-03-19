@@ -3,7 +3,7 @@
 
 SkyboxMesh::SkyboxMesh(std::vector<float>& vertices, std::vector<Texture>& textures) :
         IMesh(vertices),
-        m_textures(std::move(textures)){}
+        mTextures(std::move(textures)){}
 
 void SkyboxMesh::setup() {
     // create vao
@@ -15,7 +15,7 @@ void SkyboxMesh::setup() {
 
     // bind the buffer to be used
     glBindBuffer(GL_ARRAY_BUFFER, m_VBO);
-    glBufferData(GL_ARRAY_BUFFER, m_vertices.size() * sizeof(float), &m_vertices[0], GL_STATIC_DRAW);
+    glBufferData(GL_ARRAY_BUFFER, mVertices.size() * sizeof(float), &mVertices[0], GL_STATIC_DRAW);
 
     // Set the vertex attribute pointers
 
@@ -27,10 +27,10 @@ void SkyboxMesh::setup() {
 }
 
 void SkyboxMesh::render() {
-    for (unsigned int i = 0; i < m_textures.size(); i++) {
+    for (unsigned int i = 0; i < mTextures.size(); i++) {
         glActiveTexture(GL_TEXTURE0 + i); // active proper texture unit before binding
         // and finally bind the texture
-        glBindTexture(GL_TEXTURE_CUBE_MAP, m_textures[i].id);
+        glBindTexture(GL_TEXTURE_CUBE_MAP, mTextures[i].id);
     }
 
     // draw mesh

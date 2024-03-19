@@ -15,9 +15,9 @@ public:
 private:
     void renderGraphicsInfo() const;
 
-    double m_previousSeconds{0.0};
-    double m_currentSeconds{0.0};
-    int m_frameCount{0};
-    double m_fps{0.0};
+    double mPreviousSeconds{0.0};
+    double mCurrentSeconds{0.0};
+    int mFrameCount{0};
+    double mFps{0.0};
 
 };

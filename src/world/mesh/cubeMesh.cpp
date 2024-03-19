@@ -4,8 +4,8 @@
 
 CubeMesh::CubeMesh(std::vector<float>& vertices, std::vector<Texture>& textures, std::vector<glm::mat4>& modelMatrices) :
         IMesh(vertices),
-        m_textures(std::move(textures)),
-        m_modelMatrices(std::move(modelMatrices)) {}
+        mTextures(std::move(textures)),
+        mModelMatrices(std::move(modelMatrices)) {}
 
 void CubeMesh::setup() {
     // create vao
@@ -17,7 +17,7 @@ void CubeMesh::setup() {
 
     // bind the buffer to be used
     glBindBuffer(GL_ARRAY_BUFFER, m_VBO);
-    glBufferData(GL_ARRAY_BUFFER, m_vertices.size() * sizeof(float), &m_vertices[0], GL_STATIC_DRAW);
+    glBufferData(GL_ARRAY_BUFFER, mVertices.size() * sizeof(float), &mVertices[0], GL_STATIC_DRAW);
 
     // Set the vertex attribute pointers
 
@@ -41,9 +41,9 @@ void CubeMesh::setup() {
 }
 
 void CubeMesh::setupInstancing() {
-    glGenBuffers(1, &m_instanceVBO);
-    glBindBuffer(GL_ARRAY_BUFFER, m_instanceVBO);
-    glBufferData(GL_ARRAY_BUFFER, m_modelMatrices.size() * sizeof(glm::mat4), &m_modelMatrices[0], GL_STATIC_DRAW);
+    glGenBuffers(1, &mInstanceVbo);
+    glBindBuffer(GL_ARRAY_BUFFER, mInstanceVbo);
+    glBufferData(GL_ARRAY_BUFFER, mModelMatrices.size() * sizeof(glm::mat4), &mModelMatrices[0], GL_STATIC_DRAW);
 
     glBindVertexArray(m_VAO);
     // set attribute pointers for matrix (4 times vec4)
@@ -68,15 +68,15 @@ void CubeMesh::setupInstancing() {
 }
 
 void CubeMesh::render() {
-    for (unsigned int i = 0; i < m_textures.size(); i++) {
+    for (unsigned int i = 0; i < mTextures.size(); i++) {
         glActiveTexture(GL_TEXTURE0 + i); // active proper texture unit before binding
         // and finally bind the texture
-        glBindTexture(GL_TEXTURE_2D, m_textures[i].id);
+        glBindTexture(GL_TEXTURE_2D, mTextures[i].id);
     }
 
     // draw mesh
     glBindVertexArray(m_VAO);
-    glDrawArraysInstanced(GL_TRIANGLES, 0, 36, m_modelMatrices.size());
+    glDrawArraysInstanced(GL_TRIANGLES, 0, 36, mModelMatrices.size());
     glBindVertexArray(0);
 
     // always good practice to set everything back to defaults once configured.

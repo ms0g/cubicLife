@@ -17,11 +17,11 @@ public:
     void draw();
 
 private:
-    std::unique_ptr<CubeMesh> m_mesh;
-    std::unique_ptr<Shader> m_shader;
+    std::unique_ptr<CubeMesh> mMesh;
+    std::unique_ptr<Shader> mShader;
 #define TEX1 0.0
 #define TEX2 1.0
-    std::vector<float> m_vertices = {
+    std::vector<float> mVertices = {
             // Back face
             -0.5f, -0.5f, -0.5f,  0.0f, 0.0f, -1.0f,  0.0f, 0.0f, TEX1, // Bottom-left
              0.5f,  0.5f, -0.5f,  0.0f, 0.0f, -1.0f,  1.0f, 1.0f, TEX1, // top-right
@@ -66,7 +66,7 @@ private:
             -0.5f,  0.5f,  0.5f, 0.0f,  1.0f,  0.0f,  0.0f, 0.0f, TEX2, // bottom-left
     };
 
-    std::vector<Texture> m_textures = {
+    std::vector<Texture> mTextures = {
             {texture::load(fs::path(ASSET_DIR + "grass.png").c_str()),
                     "tex.texture1",
                     "grass.png"},

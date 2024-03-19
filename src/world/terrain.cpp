@@ -4,8 +4,6 @@
 #include "glm/gtc/matrix_transform.hpp"
 #include "image/stb_image.h"
 #include "filesystem/filesystem.h"
-#include "../configs/configs.hpp"
-
 
 Terrain::Terrain() {
     int width, height, nrComponents;
@@ -41,10 +39,10 @@ Terrain::Terrain() {
         modelMatrices.push_back(model);
     }
 
-    m_cube = std::make_unique<Cube>(modelMatrices);
+    mCube = std::make_unique<Cube>(modelMatrices);
 }
 
 void Terrain::build(glm::mat4 view, glm::mat4 projection) {
-    m_cube->update(view, projection);
-    m_cube->draw();
+    mCube->update(view, projection);
+    mCube->draw();
 }

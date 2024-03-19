@@ -10,7 +10,7 @@ public:
 
     ~Shader();
 
-    [[nodiscard]] inline unsigned int getId() const { return m_id; };
+    [[nodiscard]] inline unsigned int getId() const { return mID; };
 
     // use/activate the shader
     void activate() const;
@@ -46,6 +46,6 @@ private:
     void checkCompileErrors(unsigned int shader, unsigned int type);
 
     // the program ID
-    unsigned int m_id;
+    unsigned int mID;
 
 };

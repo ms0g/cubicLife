@@ -15,7 +15,7 @@ public:
     void render() override;
 
 private:
-    std::vector<Texture> m_textures;
+    std::vector<Texture> mTextures;
 };
 
 

@@ -2,27 +2,27 @@
 #include "glm/gtc/matrix_transform.hpp"
 
 Camera::Camera(const glm::vec3& position, const glm::vec3& up, float yaw, float pitch) :
-        m_front(glm::vec3(0.0f, 0.0f, -1.0f)),
-        m_movementSpeed(SPEED),
-        m_mouseSensitivity(SENSITIVITY),
-        m_zoom(ZOOM) {
-    m_position = position;
-    m_worldUp = up;
-    m_yaw = yaw;
-    m_pitch = pitch;
+        mFront(glm::vec3(0.0f, 0.0f, -1.0f)),
+        mMovementSpeed(SPEED),
+        mMouseSensitivity(SENSITIVITY),
+        mZoom(ZOOM) {
+    mPosition = position;
+    mWorldUp = up;
+    mYaw = yaw;
+    mPitch = pitch;
 
     update();
 }
 
 Camera::Camera(float posX, float posY, float posZ, float upX, float upY, float upZ, float yaw, float pitch) :
-        m_front(glm::vec3(0.0f, 0.0f, -1.0f)),
-        m_movementSpeed(SPEED),
-        m_mouseSensitivity(SENSITIVITY),
-        m_zoom(ZOOM) {
-    m_position = glm::vec3(posX, posY, posZ);
-    m_worldUp = glm::vec3(upX, upY, upZ);
-    m_yaw = yaw;
-    m_pitch = pitch;
+        mFront(glm::vec3(0.0f, 0.0f, -1.0f)),
+        mMovementSpeed(SPEED),
+        mMouseSensitivity(SENSITIVITY),
+        mZoom(ZOOM) {
+    mPosition = glm::vec3(posX, posY, posZ);
+    mWorldUp = glm::vec3(upX, upY, upZ);
+    mYaw = yaw;
+    mPitch = pitch;
 
     update();
 }
@@ -30,64 +30,64 @@ Camera::Camera(float posX, float posY, float posZ, float upX, float upY, float u
 void Camera::update() {
     // calculate the new Front vector
     glm::vec3 _front;
-    _front.x = cos(glm::radians(m_yaw)) * cos(glm::radians(m_pitch));
-    _front.y = sin(glm::radians(m_pitch));
-    _front.z = sin(glm::radians(m_yaw)) * cos(glm::radians(m_pitch));
-    m_front = glm::normalize(_front);
+    _front.x = cos(glm::radians(mYaw)) * cos(glm::radians(mPitch));
+    _front.y = sin(glm::radians(mPitch));
+    _front.z = sin(glm::radians(mYaw)) * cos(glm::radians(mPitch));
+    mFront = glm::normalize(_front);
     // also re-calculate the Right and Up vector
     // normalize the vectors, because their length gets closer to 0 the more you look up or down which results in slower movement.
-    m_right = glm::normalize(glm::cross(m_front, m_worldUp));
-    m_up = glm::normalize(glm::cross(m_right, m_front));
+    mRight = glm::normalize(glm::cross(mFront, mWorldUp));
+    mUp = glm::normalize(glm::cross(mRight, mFront));
 }
 
 glm::mat4 Camera::getViewMatrix() {
-    return glm::lookAt(m_position, m_position + m_front, m_up);
+    return glm::lookAt(mPosition, mPosition + mFront, mUp);
 }
 
 float Camera::getZoom() const {
-    return m_zoom;
+    return mZoom;
 }
 
-const glm::vec3 Camera::getPosition() const {
-    return m_position;
+glm::vec3 Camera::getPosition() const {
+    return mPosition;
 }
 
-const glm::vec3 Camera::getFront() const {
-    return m_front;
+glm::vec3 Camera::getFront() const {
+    return mFront;
 }
 
 void Camera::processKeyboard(CameraMovement direction, float deltaTime) {
-    float velocity = m_movementSpeed * deltaTime;
+    float velocity = mMovementSpeed * deltaTime;
     if (direction == FORWARD)
-        m_position += m_front * velocity;
+        mPosition += mFront * velocity;
     if (direction == BACKWARD)
-        m_position -= m_front * velocity;
+        mPosition -= mFront * velocity;
     if (direction == LEFT)
-        m_position -= m_right * velocity;
+        mPosition -= mRight * velocity;
     if (direction == RIGHT)
-        m_position += m_right * velocity;
+        mPosition += mRight * velocity;
 }
 
 void Camera::processMouseMovement(float xoffset, float yoffset) {
-    xoffset *= m_mouseSensitivity;
-    yoffset *= m_mouseSensitivity;
+    xoffset *= mMouseSensitivity;
+    yoffset *= mMouseSensitivity;
 
-    m_yaw += xoffset;
-    m_pitch += yoffset;
+    mYaw += xoffset;
+    mPitch += yoffset;
 
     // make sure that when pitch is out of bounds, screen doesn't get flipped
-    if (m_pitch > 89.0f)
-        m_pitch = 89.0f;
-    if (m_pitch < -89.0f)
-        m_pitch = -89.0f;
+    if (mPitch > 89.0f)
+        mPitch = 89.0f;
+    if (mPitch < -89.0f)
+        mPitch = -89.0f;
 }
 
 void Camera::processMouseScroll(float yoffset) {
-    m_zoom -= (float) yoffset;
-    if (m_zoom < 1.0f)
-        m_zoom = 1.0f;
-    if (m_zoom > 45.0f)
-        m_zoom = 45.0f;
+    mZoom -= (float) yoffset;
+    if (mZoom < 1.0f)
+        mZoom = 1.0f;
+    if (mZoom > 45.0f)
+        mZoom = 45.0f;
 }
 
 

@@ -7,7 +7,7 @@
 class IMesh {
 public:
     explicit IMesh(std::vector<float>& vertices) :
-            m_vertices(std::move(vertices)) {}
+            mVertices(std::move(vertices)) {}
 
     virtual ~IMesh() = default;
 
@@ -19,5 +19,5 @@ protected:
     unsigned int m_VAO{};
     unsigned int m_VBO{};
     // mesh Data
-    std::vector<float> m_vertices;
+    std::vector<float> mVertices;
 };

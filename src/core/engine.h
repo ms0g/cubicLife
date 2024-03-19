@@ -23,13 +23,13 @@ private:
 
     void render(Terrain& terrain, Skybox& skybox);
 
-    bool m_isRunning{false};
-    std::unique_ptr<Window> m_window;
-    std::unique_ptr<Gui> m_gui;
-    std::unique_ptr<Camera> m_camera;
-    std::unique_ptr<Input> m_input;
+    bool mIsRunning{false};
+    std::unique_ptr<Window> mWindow;
+    std::unique_ptr<Gui> mGui;
+    std::unique_ptr<Camera> mCamera;
+    std::unique_ptr<Input> mInput;
 
-    float m_deltaTime{};
-    uint32_t m_millisecsPreviousFrame{0};
+    float mDeltaTime{};
+    uint32_t mMillisecsPreviousFrame{0};
 
 };

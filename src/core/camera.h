@@ -23,9 +23,9 @@ public:
 
     [[nodiscard]] float getZoom() const;
 
-    [[nodiscard]] const glm::vec3 getPosition() const;
+    [[nodiscard]] glm::vec3 getPosition() const;
 
-    [[nodiscard]] const glm::vec3 getFront() const;
+    [[nodiscard]] glm::vec3 getFront() const;
 
     void processKeyboard(CameraMovement direction, float deltaTime);
 
@@ -35,16 +35,16 @@ public:
 
 private:
     // camera Attributes
-    glm::vec3 m_position{};
-    glm::vec3 m_front;
-    glm::vec3 m_up{};
-    glm::vec3 m_right{};
-    glm::vec3 m_worldUp{};
+    glm::vec3 mPosition{};
+    glm::vec3 mFront;
+    glm::vec3 mUp{};
+    glm::vec3 mRight{};
+    glm::vec3 mWorldUp{};
     // euler Angles
-    float m_yaw;
-    float m_pitch;
+    float mYaw;
+    float mPitch;
     // camera options
-    float m_movementSpeed;
-    float m_mouseSensitivity;
-    float m_zoom;
+    float mMovementSpeed;
+    float mMouseSensitivity;
+    float mZoom;
 };

@@ -4,8 +4,8 @@
 
 
 Window::~Window() {
-    SDL_GL_DeleteContext(m_glContext);
-    SDL_DestroyWindow(m_window);
+    SDL_GL_DeleteContext(mGlContext);
+    SDL_DestroyWindow(mWindow);
     SDL_Quit();
 }
 
@@ -15,7 +15,7 @@ void Window::initImpl(const char* title, int width, int height, bool fullscreen)
         return;
     }
 
-    m_title = title;
+    mTitle = title;
 
     int flags = SDL_WINDOW_OPENGL;
     if (fullscreen)
@@ -34,22 +34,22 @@ void Window::initImpl(const char* title, int width, int height, bool fullscreen)
     SDL_DisplayMode displayMode;
     SDL_GetCurrentDisplayMode(0, &displayMode);
 
-    m_window = SDL_CreateWindow(
-            m_title.c_str(),
+    mWindow = SDL_CreateWindow(
+            mTitle.c_str(),
             SDL_WINDOWPOS_CENTERED,
             SDL_WINDOWPOS_CENTERED,
             displayMode.w,
             displayMode.h,
             flags);
 
-    if (!m_window) {
+    if (!mWindow) {
         std::cerr << "Error creating SDL Window";
         return;
     }
 
-    SDL_SetWindowFullscreen(m_window, flags);
+    SDL_SetWindowFullscreen(mWindow, flags);
 
-    m_glContext = SDL_GL_CreateContext(m_window);
+    mGlContext = SDL_GL_CreateContext(mWindow);
 }
 
 void Window::clearImpl(float r, float g, float b, float a) {
@@ -59,6 +59,6 @@ void Window::clearImpl(float r, float g, float b, float a) {
 
 
 void Window::swapBuffer() {
-    SDL_GL_SwapWindow(m_window);
+    SDL_GL_SwapWindow(mWindow);
 }
 

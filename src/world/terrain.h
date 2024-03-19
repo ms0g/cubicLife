@@ -11,5 +11,5 @@ public:
     void build(glm::mat4 view, glm::mat4 projection);
 
 private:
-    std::unique_ptr<Cube> m_cube;
+    std::unique_ptr<Cube> mCube;
 };

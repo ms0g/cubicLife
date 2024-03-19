@@ -28,15 +28,15 @@ Gui::~Gui() {
 void Gui::updateFpsCounter(float dt) {
     double elapsedSeconds;
 
-    m_currentSeconds += dt;
-    elapsedSeconds = m_currentSeconds - m_previousSeconds;
+    mCurrentSeconds += dt;
+    elapsedSeconds = mCurrentSeconds - mPreviousSeconds;
     // limit text updates to 4 per second
     if (elapsedSeconds > 0.25) {
-        m_previousSeconds = m_currentSeconds;
-        m_fps = (double) m_frameCount / elapsedSeconds;
-        m_frameCount = 0;
+        mPreviousSeconds = mCurrentSeconds;
+        mFps = (double) mFrameCount / elapsedSeconds;
+        mFrameCount = 0;
     }
-    m_frameCount++;
+    mFrameCount++;
 }
 
 void Gui::render() const {
@@ -57,7 +57,7 @@ void Gui::render() const {
 
 void Gui::renderGraphicsInfo() const {
     if (ImGui::Begin("Graphics")) {
-        ImGui::Text("%s FPS", std::to_string(m_fps).c_str());
+        ImGui::Text("%s FPS", std::to_string(mFps).c_str());
         ImGui::Text("OpenGL version: %s", glGetString(GL_VERSION));
         ImGui::Text("GLSL Version: %s", glGetString(GL_SHADING_LANGUAGE_VERSION));
         ImGui::Text("OpenGL Driver Vendor: %s", glGetString(GL_VENDOR));

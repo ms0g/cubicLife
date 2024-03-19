@@ -10,7 +10,7 @@ public:
 
     ~Window() override;
 
-    [[nodiscard]] inline SDL_GLContext glContext() const { return m_glContext; };
+    [[nodiscard]] inline SDL_GLContext glContext() const { return mGlContext; };
 
     void swapBuffer() override;
 
@@ -19,6 +19,6 @@ private:
 
     void clearImpl(float r, float g, float b, float a) override;
 
-    std::string m_title;
-    SDL_GLContext m_glContext{};
+    std::string mTitle;
+    SDL_GLContext mGlContext{};
 };

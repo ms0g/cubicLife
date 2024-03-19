@@ -55,17 +55,17 @@ void Input::processMouse(Camera& camera) {
     auto xpos = static_cast<float>(x);
     auto ypos = static_cast<float>(y);
 
-    if (m_firstMouse) {
-        m_lastX = xpos;
-        m_lastY = ypos;
-        m_firstMouse = false;
+    if (mFirstMouse) {
+        mLastX = xpos;
+        mLastY = ypos;
+        mFirstMouse = false;
     }
 
-    float xoffset = xpos - m_lastX;
-    float yoffset = m_lastY - ypos; // reversed since y-coordinates go from bottom to top
+    float xoffset = xpos - mLastX;
+    float yoffset = mLastY - ypos; // reversed since y-coordinates go from bottom to top
 
-    m_lastX = xpos;
-    m_lastY = ypos;
+    mLastX = xpos;
+    mLastY = ypos;
 
     if (isClickedRight)
         camera.processMouseMovement(xoffset, yoffset);

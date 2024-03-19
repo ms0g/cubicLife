@@ -4,6 +4,7 @@
 #include <vector>
 #include "glm/glm.hpp"
 #include "IMesh.hpp"
+#include "texture.h"
 
 class CubeMesh : public IMesh {
 public:
@@ -19,7 +20,7 @@ public:
 
 private:
     std::vector<glm::mat4> m_modelMatrices;
-
+    std::vector<Texture> m_textures;
     unsigned int m_instanceVBO{};
 
 

@@ -6,7 +6,7 @@
 
 class IMesh {
 public:
-    IMesh(std::vector<float>& vertices) :
+    explicit IMesh(std::vector<float>& vertices) :
             m_vertices(std::move(vertices)) {}
 
     virtual ~IMesh() = default;

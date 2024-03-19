@@ -3,7 +3,8 @@
 #include "glad/glad.h"
 
 CubeMesh::CubeMesh(std::vector<float>& vertices, std::vector<Texture>& textures, std::vector<glm::mat4>& modelMatrices) :
-        IMesh(vertices, textures),
+        IMesh(vertices),
+        m_textures(std::move(textures)),
         m_modelMatrices(std::move(modelMatrices)) {}
 
 void CubeMesh::setup() {

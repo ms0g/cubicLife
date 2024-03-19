@@ -1,4 +1,6 @@
 #include "cube.h"
+#include "mesh/cubeMesh.h"
+#include "../shader/shader.h"
 
 Cube::Cube(std::vector<glm::mat4>& modelMatrices) :
         mShader(std::make_unique<Shader>(fs::path(SHADER_DIR + "cube.vert.glsl"),
@@ -12,6 +14,8 @@ Cube::Cube(std::vector<glm::mat4>& modelMatrices) :
     mMesh->setup();
     mMesh->setupInstancing();
 }
+
+Cube::~Cube() = default;
 
 void Cube::update(glm::mat4 view, glm::mat4 projection) {
     mShader->activate();

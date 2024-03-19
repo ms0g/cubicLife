@@ -1,14 +1,19 @@
 #pragma once
 
 #include <vector>
-#include "mesh/skyboxMesh.h"
+#include <string>
+#include "glm/glm.hpp"
 #include "filesystem/filesystem.h"
+#include "mesh/texture.h"
 #include "../configs/configs.hpp"
-#include "../shader/shader.h"
 
+class Shader;
+class SkyboxMesh;
 class Skybox {
 public:
     Skybox();
+
+    ~Skybox();
 
     void update(glm::mat4 view, glm::mat4 projection);
 

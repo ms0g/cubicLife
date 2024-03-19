@@ -2,11 +2,13 @@
 
 #include <vector>
 #include "glm/glm.hpp"
-#include "cube.h"
 
+class Cube;
 class Terrain {
 public:
     Terrain();
+
+    ~Terrain();
 
     void build(glm::mat4 view, glm::mat4 projection);
 

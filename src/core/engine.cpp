@@ -4,8 +4,15 @@
 #include "glm/glm.hpp"
 #include "glm/gtc/matrix_transform.hpp"
 #include "image/stb_image.h"
+#include "camera.h"
+#include "window.h"
+#include "input.h"
+#include "gui.h"
 #include "../world/terrain.h"
 #include "../world/skybox.h"
+
+VoxelEngine::VoxelEngine() = default;
+VoxelEngine::~VoxelEngine() = default;
 
 void VoxelEngine::init() {
     mWindow = std::make_unique<Window>();

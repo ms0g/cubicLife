@@ -1,4 +1,6 @@
 #include "skybox.h"
+#include "mesh/skyboxMesh.h"
+#include "../shader/shader.h"
 
 Skybox::Skybox() :
         mShader(std::make_unique<Shader>(fs::path(SHADER_DIR + "skybox.vert.glsl"),
@@ -10,6 +12,8 @@ Skybox::Skybox() :
     mMesh = std::make_unique<SkyboxMesh>(mVertices, mTextures);
     mMesh->setup();
 }
+
+Skybox::~Skybox() = default;
 
 void Skybox::update(glm::mat4 view, glm::mat4 projection) {
     mShader->activate();

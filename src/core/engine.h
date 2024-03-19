@@ -1,16 +1,18 @@
 #pragma once
 
 #include <memory>
-#include "camera.h"
-#include "window.h"
-#include "input.h"
-#include "gui.h"
 
 class Terrain;
 class Skybox;
+class Camera;
+class Window;
+class Input;
+class Gui;
 class VoxelEngine {
 public:
-    VoxelEngine() = default;
+    VoxelEngine();
+
+    ~VoxelEngine();
 
     void init();
 

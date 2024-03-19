@@ -2,15 +2,18 @@
 
 #include <vector>
 #include <memory>
+#include "glm/glm.hpp"
 #include "filesystem/filesystem.h"
-#include "mesh/cubeMesh.h"
 #include "mesh/texture.h"
 #include "../configs/configs.hpp"
-#include "../shader/shader.h"
 
+class Shader;
+class CubeMesh;
 class Cube {
 public:
     explicit Cube(std::vector<glm::mat4>& modelMatrices);
+
+    ~Cube();
 
     void update(glm::mat4 view, glm::mat4 projection);
 

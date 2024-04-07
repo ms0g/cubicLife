@@ -10,7 +10,7 @@ public:
 
     ~Terrain();
 
-    void build(glm::mat4 view, glm::mat4 projection);
+    void build(glm::mat4 view, glm::mat4 modelMat, glm::mat4 projection);
 
 private:
     std::unique_ptr<Cube> mCube;

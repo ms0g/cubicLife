@@ -6,46 +6,11 @@
 #include "filesystem/filesystem.h"
 #include "cube.h"
 
-Terrain::Terrain() {
-    int width, height, nrComponents;
-    unsigned char* data = stbi_load(fs::path(ASSET_DIR + "heightmap.png").c_str(), &width, &height, &nrComponents, 0);
-
-    if (!data) {
-        stbi_image_free(data);
-        throw std::runtime_error("Heightmap failed to load\n");
-    }
-
-    std::vector<glm::vec3> cubePositions;
-    float yScale = 64.0f / 256.0f, yShift = 16.0f;  // apply a scale+shift to the height data
-
-    for (int i = 0; i < height; i++) {
-        for (int j = 0; j < width; j++) {
-            // retrieve texel for (i,j) tex coord
-            unsigned char* texel = &data[(j + width * i) * nrComponents];
-            // raw height at coordinate
-            unsigned char y = texel[0];
-
-            cubePositions.emplace_back(glm::vec3{height / 2.0f - height * i  / (float) height,
-                                                 (float) y * yScale - yShift,
-                                                 width / 2.0f - width * j / (float) width});
-        }
-    }
-    stbi_image_free(data);
-
-    std::vector<glm::mat4> modelMatrices;
-    for (auto& pos: cubePositions) {
-        glm::mat4 model = glm::mat4(1.0f);
-        model = glm::translate(model, pos);
-
-        modelMatrices.push_back(model);
-    }
-
-    mCube = std::make_unique<Cube>(modelMatrices);
-}
+Terrain::Terrain() : mCube(std::make_unique<Cube>()) {}
 
 Terrain::~Terrain() = default;
 
-void Terrain::build(glm::mat4 view, glm::mat4 projection) {
-    mCube->update(view, projection);
+void Terrain::build(glm::mat4 view, glm::mat4 modelMat, glm::mat4 projection) {
+    mCube->update(view, modelMat, projection);
     mCube->draw();
 }

@@ -18,9 +18,9 @@ public:
     void draw(glm::mat4 view, glm::mat4 projection);
 
 private:
-    void findAliveNeighbors(Cell& cell);
+    void processNeighbors(Cell& cell);
 
-    void checkIf(Cell& currentAlive, Cell& neigh);
+    void checkNeighbor(Cell& currentAlive, Cell& neigh);
 
     std::unordered_map<int, Cell> mAliveCells;
     std::vector<Cell> mNeighboringDeadCells;

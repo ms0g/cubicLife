@@ -28,7 +28,7 @@ void World::update() {
     for (auto& cellPair: mAliveCells) {
         auto& cell = cellPair.second;
 
-        findAliveNeighbors(cell);
+        processNeighbors(cell);
 
         if (cell.aliveNeighborsCount() < 2 || cell.aliveNeighborsCount() > 3) {
             mCurrentDeadCellIndexes.insert(cellPair.first);
@@ -61,48 +61,48 @@ void World::draw(glm::mat4 view, glm::mat4 projection) {
     }
 }
 
-void World::findAliveNeighbors(Cell& cell) {
+void World::processNeighbors(Cell& cell) {
     // right neighbor
     glm::vec3 neighPos = {cell.mPos.x + ADJ, 0.0, cell.mPos.z};
     Cell neigh{neighPos};
 
-    checkIf(cell, neigh);
+    checkNeighbor(cell, neigh);
 
     // left neighbor
     neigh.mPos.x = cell.mPos.x - ADJ;
-    checkIf(cell, neigh);
+    checkNeighbor(cell, neigh);
 
     // top neighbor
     neigh.mPos.x = cell.mPos.x;
     neigh.mPos.z = cell.mPos.z - ADJ;
-    checkIf(cell, neigh);
+    checkNeighbor(cell, neigh);
 
     // bottom neighbor
     neigh.mPos.z = cell.mPos.z + ADJ;
-    checkIf(cell, neigh);
+    checkNeighbor(cell, neigh);
 
     // top right neighbor
     neigh.mPos.x = cell.mPos.x + ADJ;
     neigh.mPos.z = cell.mPos.z - ADJ;
-    checkIf(cell, neigh);
+    checkNeighbor(cell, neigh);
 
     // top left neighbor
     neigh.mPos.x = cell.mPos.x - ADJ;
     neigh.mPos.z = cell.mPos.z - ADJ;
-    checkIf(cell, neigh);
+    checkNeighbor(cell, neigh);
 
     // bottom right neighbor
     neigh.mPos.x = cell.mPos.x + ADJ;
     neigh.mPos.z = cell.mPos.z + ADJ;
-    checkIf(cell, neigh);
+    checkNeighbor(cell, neigh);
 
     // bottom left neighbor
     neigh.mPos.x = cell.mPos.x - ADJ;
     neigh.mPos.z = cell.mPos.z + ADJ;
-    checkIf(cell, neigh);
+    checkNeighbor(cell, neigh);
 }
 
-void World::checkIf(Cell& currentAlive, Cell& neigh) {
+void World::checkNeighbor(Cell& currentAlive, Cell& neigh) {
     bool found = false;
 
     for (auto& aliveCell: mAliveCells) {

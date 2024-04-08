@@ -3,11 +3,11 @@
 #include "world/skybox.h"
 
 int main() {
-    CellularAutomatonEngine cae;
+    CAEngine cae;
     cae.init();
 
-    World world;
-    Skybox skyBox;
+    World world{};
+    Skybox skyBox{};
 
     cae.run(world, skyBox);
 

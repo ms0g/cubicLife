@@ -8,11 +8,11 @@ class Camera;
 class Window;
 class Input;
 class Gui;
-class CellularAutomatonEngine {
+class CAEngine {
 public:
-    CellularAutomatonEngine();
+    CAEngine();
 
-    ~CellularAutomatonEngine();
+    ~CAEngine();
 
     void init();
 

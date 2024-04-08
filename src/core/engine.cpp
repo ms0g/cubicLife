@@ -10,13 +10,11 @@
 #include "gui.h"
 #include "../world/world.h"
 #include "../world/skybox.h"
-#include <chrono>
-#include <thread>
 
-VoxelEngine::VoxelEngine() = default;
-VoxelEngine::~VoxelEngine() = default;
+CellularAutomatonEngine::CellularAutomatonEngine() = default;
+CellularAutomatonEngine::~CellularAutomatonEngine() = default;
 
-void VoxelEngine::init() {
+void CellularAutomatonEngine::init() {
     mWindow = std::make_unique<Window>();
     mWindow->init("Voxel Engine");
 
@@ -46,7 +44,7 @@ void VoxelEngine::init() {
     mIsRunning = true;
 }
 
-void VoxelEngine::run(World& world, Skybox& skybox) {
+void CellularAutomatonEngine::run(World& world, Skybox& skybox) {
     while (mIsRunning) {
         processInput();
         update(world);
@@ -54,11 +52,11 @@ void VoxelEngine::run(World& world, Skybox& skybox) {
     }
 }
 
-void VoxelEngine::processInput() {
+void CellularAutomatonEngine::processInput() {
     mInput->process(*mCamera, mWindow->nativeHandle(), mDeltaTime, mIsRunning);
 }
 
-void VoxelEngine::update(World& world) {
+void CellularAutomatonEngine::update(World& world) {
     mDeltaTime = (SDL_GetTicks() - mMillisecsPreviousFrame) / 1000.0f;
     mMillisecsPreviousFrame = SDL_GetTicks();
 #ifdef DEBUG
@@ -70,7 +68,7 @@ void VoxelEngine::update(World& world) {
     mCamera->update();
 }
 
-void VoxelEngine::render(World& world, Skybox& skybox) {
+void CellularAutomatonEngine::render(World& world, Skybox& skybox) {
     mWindow->clear(0.2f, 0.3f, 0.3f, 1.0f);
 
     glm::mat4 view = mCamera->getViewMatrix();

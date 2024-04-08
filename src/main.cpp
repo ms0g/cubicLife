@@ -2,15 +2,14 @@
 #include "world/world.h"
 #include "world/skybox.h"
 
-
 int main() {
-    VoxelEngine voxen;
-    voxen.init();
+    CellularAutomatonEngine cae;
+    cae.init();
 
     World world;
     Skybox skyBox;
 
-    voxen.run(world, skyBox);
+    cae.run(world, skyBox);
 
     return 0;
 }

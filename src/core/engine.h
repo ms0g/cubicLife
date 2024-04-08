@@ -8,11 +8,11 @@ class Camera;
 class Window;
 class Input;
 class Gui;
-class VoxelEngine {
+class CellularAutomatonEngine {
 public:
-    VoxelEngine();
+    CellularAutomatonEngine();
 
-    ~VoxelEngine();
+    ~CellularAutomatonEngine();
 
     void init();
 

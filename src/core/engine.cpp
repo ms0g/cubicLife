@@ -16,7 +16,7 @@ CAEngine::~CAEngine() = default;
 
 void CAEngine::init() {
     mWindow = std::make_unique<Window>();
-    mWindow->init("Voxel Engine");
+    mWindow->init("CAEngine");
 
     mCamera = std::make_unique<Camera>(glm::vec3(0.0f, 20.0f, 20.0f));
 
@@ -39,7 +39,6 @@ void CAEngine::init() {
     glEnable(GL_CULL_FACE);
     glCullFace(GL_BACK);
     glFrontFace(GL_CCW);
-    //glEnable(GL_BLEND);
 
     mIsRunning = true;
 }

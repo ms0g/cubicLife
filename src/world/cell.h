@@ -18,10 +18,6 @@ public:
 
     [[nodiscard]] int aliveNeighborsCount() const { return mAliveNeighbors; }
 
-    [[nodiscard]] bool isActive() const { return mIsActive; }
-
-    void deactivate() { mIsActive = false; }
-
     void resetAliveNeighbors() { mAliveNeighbors = 0;}
 
     void incAliveNeighbors() { mAliveNeighbors++; }
@@ -37,7 +33,6 @@ public:
     glm::vec3 mPos{};
 
 private:
-    bool mIsActive{false};
     int mAliveNeighbors{0};
     glm::mat4 mModelMat{1.0f};
     std::unique_ptr<CellMesh> mMesh;

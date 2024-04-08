@@ -5,7 +5,6 @@
 #include "../shader/shader.h"
 
 Cell::Cell(glm::vec3 pos) : mPos(pos) {
-    mIsActive = true;
     mModelMat = glm::translate(mModelMat, mPos);
     mMesh = std::make_unique<CellMesh>(mVertices);
     mMesh->setup();
@@ -14,7 +13,6 @@ Cell::Cell(glm::vec3 pos) : mPos(pos) {
 Cell::~Cell() = default;
 
 Cell::Cell(Cell&& other) noexcept {
-    mIsActive = other.mIsActive;
     mAliveNeighbors = other.mAliveNeighbors;
     mModelMat = other.mModelMat;
     mPos = other.mPos;
@@ -23,7 +21,6 @@ Cell::Cell(Cell&& other) noexcept {
 }
 
 Cell& Cell::operator=(Cell&& other) noexcept {
-    mIsActive = other.mIsActive;
     mAliveNeighbors = other.mAliveNeighbors;
     mModelMat = other.mModelMat;
     mPos = other.mPos;

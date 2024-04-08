@@ -7,7 +7,6 @@
 #define ADJ 1
 
 namespace kv {
-
 static int index;
 
 int getIndex() {
@@ -16,8 +15,8 @@ int getIndex() {
 }
 
 World::World() :
-        mShader(std::make_unique<Shader>(fs::path(SHADER_DIR + "cube.vert.glsl"),
-                                         fs::path(SHADER_DIR + "cube.frag.glsl"))) {
+        mShader(std::make_unique<Shader>(fs::path(SHADER_DIR + "cell.vert.glsl"),
+                                         fs::path(SHADER_DIR + "cell.frag.glsl"))) {
     for (auto& pos: cellPositions) {
         mAliveCells.emplace(kv::getIndex(), Cell{pos});
     }

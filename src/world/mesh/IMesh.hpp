@@ -14,8 +14,8 @@ public:
     virtual void render() = 0;
 
 protected:
-    unsigned int m_VAO{};
-    unsigned int m_VBO{};
+    unsigned int mVAO{};
+    unsigned int mVBO{};
     // mesh Data
     std::vector<float> mVertices;
 };

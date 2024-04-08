@@ -7,14 +7,14 @@ CellMesh::CellMesh(std::vector<float>& vertices) :
 
 void CellMesh::setup() {
     // create vao
-    glGenVertexArrays(1, &m_VAO);
-    glBindVertexArray(m_VAO);
+    glGenVertexArrays(1, &mVAO);
+    glBindVertexArray(mVAO);
 
     // create buffers
-    glGenBuffers(1, &m_VBO);
+    glGenBuffers(1, &mVBO);
 
     // bind the buffer to be used
-    glBindBuffer(GL_ARRAY_BUFFER, m_VBO);
+    glBindBuffer(GL_ARRAY_BUFFER, mVBO);
     glBufferData(GL_ARRAY_BUFFER, mVertices.size() * sizeof(float), &mVertices[0], GL_STATIC_DRAW);
 
     // Set the vertex attribute pointers
@@ -28,7 +28,7 @@ void CellMesh::setup() {
 
 void CellMesh::render() {
     // draw mesh
-    glBindVertexArray(m_VAO);
+    glBindVertexArray(mVAO);
     glDrawArrays(GL_TRIANGLES, 0, 36);
     glBindVertexArray(0);
 

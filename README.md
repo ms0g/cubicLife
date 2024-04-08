@@ -1,7 +1,9 @@
 # CAEngine - Cellular Automaton Engine
 ### Overview
 CAEngine is a powerful Cellular Automaton Engine designed to simulate Conway's Game of Life in 3D dimension. This engine provides a flexible framework for running and visualizing complex cellular automata simulations in a 3D environment.
+
 <img src="assets/screenshot.gif" alt="image" width="700" height="auto">
+
 ### Features
 + Infinite Grid: No grid size limitation.
 + Conway's Game of Life: CAEngine is specifically designed to run Conway's Game of Life, a classic cellular automaton with simple rules but complex emergent behavior.

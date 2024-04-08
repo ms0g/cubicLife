@@ -1,6 +1,6 @@
-# CAEngine - Cellular Automaton Engine
+# CubicLife
 ### Overview
-CAEngine is a powerful Cellular Automaton Engine designed to simulate Conway's Game of Life in 3D dimension. This engine provides a flexible framework for running and visualizing complex cellular automata simulations in a 3D environment.
+CubicLife is a powerful cellular automaton engine designed to simulate Conway's Game of Life in 3D dimension. This engine provides a flexible framework for running and visualizing complex cellular automata simulations in a 3D environment.
 
 <img src="assets/screenshot.gif" alt="image" width="700" height="auto">
 

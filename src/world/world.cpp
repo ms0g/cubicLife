@@ -15,8 +15,9 @@ int getIndex() {
 }
 }
 
-World::World() : mShader(std::make_unique<Shader>(fs::path(SHADER_DIR + "cube.vert.glsl"),
-                                                  fs::path(SHADER_DIR + "cube.frag.glsl"))) {
+World::World() :
+        mShader(std::make_unique<Shader>(fs::path(SHADER_DIR + "cube.vert.glsl"),
+                                         fs::path(SHADER_DIR + "cube.frag.glsl"))) {
     for (auto& pos: cellPositions) {
         mAliveCells.emplace(kv::getIndex(), Cell{pos});
     }

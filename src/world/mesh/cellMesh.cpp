@@ -1,11 +1,11 @@
-#include "cubeMesh.h"
+#include "cellMesh.h"
 #include <utility>
 #include "glad/glad.h"
 
-CubeMesh::CubeMesh(std::vector<float>& vertices) :
+CellMesh::CellMesh(std::vector<float>& vertices) :
         IMesh(vertices) {}
 
-void CubeMesh::setup() {
+void CellMesh::setup() {
     // create vao
     glGenVertexArrays(1, &m_VAO);
     glBindVertexArray(m_VAO);
@@ -26,7 +26,7 @@ void CubeMesh::setup() {
     glBindVertexArray(0);
 }
 
-void CubeMesh::render() {
+void CellMesh::render() {
     // draw mesh
     glBindVertexArray(m_VAO);
     glDrawArrays(GL_TRIANGLES, 0, 36);

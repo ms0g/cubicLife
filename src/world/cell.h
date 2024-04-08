@@ -5,20 +5,42 @@
 #include "glm/glm.hpp"
 
 class Shader;
-class CubeMesh;
-class Cube {
+class CellMesh;
+class Cell {
 public:
-    Cube();
+    explicit Cell(glm::vec3 pos);
 
-    ~Cube();
+    ~Cell();
 
-    void update(glm::mat4 view, glm::mat4 modelMat, glm::mat4 projection);
+    Cell(Cell&& other) noexcept;
+
+    Cell& operator=(Cell&& other) noexcept;
+
+    [[nodiscard]] int aliveNeighborsCount() const { return mAliveNeighbors; }
+
+    [[nodiscard]] bool isActive() const { return mIsActive; }
+
+    void deactivate() { mIsActive = false; }
+
+    void resetAliveNeighbors() { mAliveNeighbors = 0;}
+
+    void incAliveNeighbors() { mAliveNeighbors++; }
+
+    void update(glm::mat4 view, glm::mat4 projection, Shader& shader);
 
     void draw();
 
+    bool operator==(const Cell &other) const {
+        return (mPos.x == other.mPos.x && mPos.y == other.mPos.y && mPos.z == other.mPos.z) ;
+    }
+
+    glm::vec3 mPos{};
+
 private:
-    std::unique_ptr<CubeMesh> mMesh;
-    std::unique_ptr<Shader> mShader;
+    bool mIsActive{false};
+    int mAliveNeighbors{0};
+    glm::mat4 mModelMat{1.0f};
+    std::unique_ptr<CellMesh> mMesh;
 
     std::vector<float> mVertices = {
             // Back face

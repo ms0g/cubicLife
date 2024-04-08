@@ -1,5 +1,5 @@
 #include "core/engine.h"
-#include "world/terrain.h"
+#include "world/world.h"
 #include "world/skybox.h"
 
 
@@ -7,10 +7,10 @@ int main() {
     VoxelEngine voxen;
     voxen.init();
 
-    Terrain terrain;
+    World world;
     Skybox skyBox;
 
-    voxen.run(terrain, skyBox);
+    voxen.run(world, skyBox);
 
     return 0;
 }

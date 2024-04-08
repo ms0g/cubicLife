@@ -6,9 +6,9 @@
 #include "IMesh.hpp"
 #include "texture.h"
 
-class CubeMesh : public IMesh {
+class CellMesh : public IMesh {
 public:
-    explicit CubeMesh(std::vector<float>& vertices);
+    explicit CellMesh(std::vector<float>& vertices);
 
     // initializes all the buffer objects/arrays
     void setup() override;

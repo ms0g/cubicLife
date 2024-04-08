@@ -8,8 +8,10 @@
 #include "window.h"
 #include "input.h"
 #include "gui.h"
-#include "../world/terrain.h"
+#include "../world/world.h"
 #include "../world/skybox.h"
+#include <chrono>
+#include <thread>
 
 VoxelEngine::VoxelEngine() = default;
 VoxelEngine::~VoxelEngine() = default;
@@ -18,7 +20,7 @@ void VoxelEngine::init() {
     mWindow = std::make_unique<Window>();
     mWindow->init("Voxel Engine");
 
-    mCamera = std::make_unique<Camera>(glm::vec3(0.0f, 50.0f, 20.0f));
+    mCamera = std::make_unique<Camera>(glm::vec3(0.0f, 20.0f, 20.0f));
 
     mInput = std::make_unique<Input>();
 #ifdef DEBUG
@@ -44,11 +46,11 @@ void VoxelEngine::init() {
     mIsRunning = true;
 }
 
-void VoxelEngine::run(Terrain& terrain, Skybox& skybox) {
+void VoxelEngine::run(World& world, Skybox& skybox) {
     while (mIsRunning) {
         processInput();
-        update();
-        render(terrain, skybox);
+        update(world);
+        render(world, skybox);
     }
 }
 
@@ -56,23 +58,25 @@ void VoxelEngine::processInput() {
     mInput->process(*mCamera, mWindow->nativeHandle(), mDeltaTime, mIsRunning);
 }
 
-void VoxelEngine::update() {
+void VoxelEngine::update(World& world) {
     mDeltaTime = (SDL_GetTicks() - mMillisecsPreviousFrame) / 1000.0f;
     mMillisecsPreviousFrame = SDL_GetTicks();
 #ifdef DEBUG
     mGui->updateFpsCounter(mDeltaTime);
 #endif
 
+    world.update();
+
     mCamera->update();
 }
 
-void VoxelEngine::render(Terrain& terrain, Skybox& skybox) {
+void VoxelEngine::render(World& world, Skybox& skybox) {
     mWindow->clear(0.2f, 0.3f, 0.3f, 1.0f);
 
     glm::mat4 view = mCamera->getViewMatrix();
     glm::mat4 projection = glm::perspective(glm::radians(mCamera->getZoom()), ASPECT, ZNEAR, ZFAR);
-    glm::mat4 modelMat = glm::mat4(1.0f);
-    terrain.build(view, modelMat, projection);
+
+    world.draw(view, projection);
 
     glm::mat4 skyview = glm::mat4(glm::mat3(mCamera->getViewMatrix()));
     skybox.update(skyview, projection);

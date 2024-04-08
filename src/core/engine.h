@@ -2,7 +2,7 @@
 
 #include <memory>
 
-class Terrain;
+class World;
 class Skybox;
 class Camera;
 class Window;
@@ -16,14 +16,14 @@ public:
 
     void init();
 
-    void run(Terrain& terrain, Skybox& skybox);
+    void run(World& world, Skybox& skybox);
 
 private:
     void processInput();
 
-    void update();
+    void update(World& world);
 
-    void render(Terrain& terrain, Skybox& skybox);
+    void render(World& world, Skybox& skybox);
 
     bool mIsRunning{false};
     std::unique_ptr<Window> mWindow;
@@ -33,5 +33,4 @@ private:
 
     float mDeltaTime{};
     uint32_t mMillisecsPreviousFrame{0};
-
 };

@@ -56,7 +56,7 @@ void CAEngine::processInput() {
 }
 
 void CAEngine::update(World& world) {
-    mDeltaTime = (SDL_GetTicks() - mMillisecsPreviousFrame) / 1000.0f;
+    mDeltaTime = (float)(SDL_GetTicks() - mMillisecsPreviousFrame) / 1000.0f;
     mMillisecsPreviousFrame = SDL_GetTicks();
 #ifdef DEBUG
     mGui->updateFpsCounter(mDeltaTime);
@@ -76,9 +76,8 @@ void CAEngine::render(World& world, Skybox& skybox) {
     world.draw(view, projection);
 
     glm::mat4 skyview = glm::mat4(glm::mat3(mCamera->getViewMatrix()));
-    skybox.update(skyview, projection);
 
-    skybox.draw();
+    skybox.draw(skyview, projection);
 #ifdef DEBUG
     mGui->render();
 #endif

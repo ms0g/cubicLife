@@ -19,5 +19,4 @@ private:
     double mCurrentSeconds{0.0};
     int mFrameCount{0};
     double mFps{0.0};
-
 };

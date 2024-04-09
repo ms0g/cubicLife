@@ -25,21 +25,27 @@ Gui::~Gui() {
     ImGui::DestroyContext();
 }
 
-void Gui::updateFpsCounter(float dt) {
-    double elapsedSeconds;
+void Gui::renderConfigurationUI(bool& stop, bool& next, float& speed) {
+    static float _speed = 0.98;
 
-    mCurrentSeconds += dt;
-    elapsedSeconds = mCurrentSeconds - mPreviousSeconds;
-    // limit text updates to 4 per second
-    if (elapsedSeconds > 0.25) {
-        mPreviousSeconds = mCurrentSeconds;
-        mFps = (double) mFrameCount / elapsedSeconds;
-        mFrameCount = 0;
+    if (ImGui::Begin("Controls")) {
+        if (ImGui::Button("Start")) {
+            stop = false;
+        }
+        if (ImGui::Button("Stop")) {
+            stop = true;
+        }
+        if (ImGui::Button("Next")) {
+            next = true;
+        }
+        if (ImGui::SliderFloat("Speed", &_speed, 0.01, 0.98)) {
+            speed = (float)0.99 - _speed;
+        }
     }
-    mFrameCount++;
+    ImGui::End();
 }
 
-void Gui::render() const {
+void Gui::render(bool& stop, bool& next, float& speed) {
     // Start the Dear ImGui frame
     ImGui_ImplOpenGL3_NewFrame();
     ImGui_ImplSDL2_NewFrame();
@@ -49,6 +55,7 @@ void Gui::render() const {
 //    ImGui::ShowDemoWindow(&show_demo_window);
 
     renderGraphicsInfo();
+    renderConfigurationUI(stop, next, speed);
 
     //Render ImGui
     ImGui::Render();
@@ -57,7 +64,7 @@ void Gui::render() const {
 
 void Gui::renderGraphicsInfo() const {
     if (ImGui::Begin("Graphics")) {
-        ImGui::Text("%s FPS", std::to_string(mFps).c_str());
+        ImGui::Text("%s FPS", std::to_string(mFPS).c_str());
         ImGui::Text("OpenGL version: %s", glGetString(GL_VERSION));
         ImGui::Text("GLSL Version: %s", glGetString(GL_SHADING_LANGUAGE_VERSION));
         ImGui::Text("OpenGL Driver Vendor: %s", glGetString(GL_VENDOR));

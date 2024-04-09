@@ -12,6 +12,7 @@
 #include "../world/skybox.h"
 
 CAEngine::CAEngine() = default;
+
 CAEngine::~CAEngine() = default;
 
 void CAEngine::init() {
@@ -56,13 +57,24 @@ void CAEngine::processInput() {
 }
 
 void CAEngine::update(World& world) {
-    mDeltaTime = (float)(SDL_GetTicks() - mMillisecsPreviousFrame) / 1000.0f;
-    mMillisecsPreviousFrame = SDL_GetTicks();
+    mDeltaTime = (float) (SDL_GetTicks() - mMsPreviousFrame) / 1000.0f;
+    mMsPreviousFrame = SDL_GetTicks();
+
+    updateFpsCounter();
 #ifdef DEBUG
-    mGui->updateFpsCounter(mDeltaTime);
+    mGui->setFPS(mFPS);
 #endif
 
-    world.update();
+    if (mNext) {
+        world.update();
+        mNext = false;
+    }
+
+    if (!mStop) {
+        int updatePerFrameCount = static_cast<int>(mFPS * mSpeed);
+        if (mFrameCount % (updatePerFrameCount < 1 ? 1 : updatePerFrameCount) == 0)
+            world.update();
+    }
 
     mCamera->update();
 }
@@ -78,9 +90,24 @@ void CAEngine::render(World& world, Skybox& skybox) {
     glm::mat4 skyview = glm::mat4(glm::mat3(mCamera->getViewMatrix()));
 
     skybox.draw(skyview, projection);
+
 #ifdef DEBUG
-    mGui->render();
+    mGui->render(mStop, mNext, mSpeed);
 #endif
     // SDL swap buffers
     mWindow->swapBuffer();
+}
+
+void CAEngine::updateFpsCounter() {
+    double elapsedSeconds;
+
+    mFrameCount++;
+    mCurrentSeconds += mDeltaTime;
+    elapsedSeconds = mCurrentSeconds - mPreviousSeconds;
+    // limit text updates to 4 per second
+    if (elapsedSeconds > 0.25) {
+        mPreviousSeconds = mCurrentSeconds;
+        mFPS = mFrameCount / elapsedSeconds;
+        mFrameCount = 0;
+    }
 }

@@ -18,6 +18,8 @@ public:
 
     [[nodiscard]] int aliveNeighborsCount() const { return mAliveNeighbors; }
 
+    [[nodiscard]] glm::vec3 pos() const { return mPos; }
+
     void resetAliveNeighbors() { mAliveNeighbors = 0;}
 
     void incAliveNeighbors() { mAliveNeighbors++; }
@@ -30,10 +32,9 @@ public:
         return (mPos.x == other.mPos.x && mPos.y == other.mPos.y && mPos.z == other.mPos.z) ;
     }
 
-    glm::vec3 mPos{};
-
 private:
     int mAliveNeighbors{0};
+    glm::vec3 mPos{};
     glm::mat4 mModelMat{1.0f};
     std::unique_ptr<CellMesh> mMesh;
 

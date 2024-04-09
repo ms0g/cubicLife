@@ -30,6 +30,10 @@ void World::update() {
 
         processNeighbors(cell);
 
+        if (cell.pos().z >= 1000) {
+            mCurrentDeadCellIndexes.insert(cellPair.first);
+        }
+
         if (cell.aliveNeighborsCount() < 2 || cell.aliveNeighborsCount() > 3) {
             mCurrentDeadCellIndexes.insert(cellPair.first);
         } else {
@@ -63,50 +67,52 @@ void World::draw(glm::mat4 view, glm::mat4 projection) {
 
 void World::processNeighbors(Cell& cell) {
     // right neighbor
-    glm::vec3 neighPos = {cell.mPos.x + ADJ, 0.0, cell.mPos.z};
-    Cell neigh{neighPos};
+    glm::vec3 neighPos = {cell.pos().x + ADJ, 0.0, cell.pos().z};
 
-    checkNeighbor(cell, neigh);
+    checkNeighbor(cell, neighPos);
 
     // left neighbor
-    neigh.mPos.x = cell.mPos.x - ADJ;
-    checkNeighbor(cell, neigh);
+    neighPos.x = cell.pos().x - ADJ;
+    checkNeighbor(cell, neighPos);
 
     // top neighbor
-    neigh.mPos.x = cell.mPos.x;
-    neigh.mPos.z = cell.mPos.z - ADJ;
-    checkNeighbor(cell, neigh);
+    neighPos.x = cell.pos().x;
+    neighPos.z = cell.pos().z - ADJ;
+    checkNeighbor(cell, neighPos);
 
     // bottom neighbor
-    neigh.mPos.z = cell.mPos.z + ADJ;
-    checkNeighbor(cell, neigh);
+    neighPos.z = cell.pos().z + ADJ;
+    checkNeighbor(cell, neighPos);
 
     // top right neighbor
-    neigh.mPos.x = cell.mPos.x + ADJ;
-    neigh.mPos.z = cell.mPos.z - ADJ;
-    checkNeighbor(cell, neigh);
+    neighPos.x = cell.pos().x + ADJ;
+    neighPos.z = cell.pos().z - ADJ;
+    checkNeighbor(cell, neighPos);
 
     // top left neighbor
-    neigh.mPos.x = cell.mPos.x - ADJ;
-    neigh.mPos.z = cell.mPos.z - ADJ;
-    checkNeighbor(cell, neigh);
+    neighPos.x = cell.pos().x - ADJ;
+    neighPos.z = cell.pos().z - ADJ;
+    checkNeighbor(cell, neighPos);
 
     // bottom right neighbor
-    neigh.mPos.x = cell.mPos.x + ADJ;
-    neigh.mPos.z = cell.mPos.z + ADJ;
-    checkNeighbor(cell, neigh);
+    neighPos.x = cell.pos().x + ADJ;
+    neighPos.z = cell.pos().z + ADJ;
+    checkNeighbor(cell, neighPos);
 
     // bottom left neighbor
-    neigh.mPos.x = cell.mPos.x - ADJ;
-    neigh.mPos.z = cell.mPos.z + ADJ;
-    checkNeighbor(cell, neigh);
+    neighPos.x = cell.pos().x - ADJ;
+    neighPos.z = cell.pos().z + ADJ;
+    checkNeighbor(cell, neighPos);
 }
 
-void World::checkNeighbor(Cell& currentAlive, Cell& neigh) {
+void World::checkNeighbor(Cell& currentAlive, glm::vec3 neighPos) {
     bool found = false;
 
-    for (auto& aliveCell: mAliveCells) {
-        if (aliveCell.second == neigh) {
+    for (auto& cellPair: mAliveCells) {
+        auto& aliveCell = cellPair.second;
+
+        if ((aliveCell.pos().x == neighPos.x) &&
+            (aliveCell.pos().z == neighPos.z)) {
             found = true;
             currentAlive.incAliveNeighbors();
             break;
@@ -114,17 +120,17 @@ void World::checkNeighbor(Cell& currentAlive, Cell& neigh) {
     }
     if (!found) {
         for (auto& neighboringDeadCell: mNeighboringDeadCells) {
-            if (neighboringDeadCell == neigh) {
+            if ((neighboringDeadCell.pos().x == neighPos.x) &&
+                (neighboringDeadCell.pos().z == neighPos.z)) {
                 found = true;
                 neighboringDeadCell.incAliveNeighbors();
                 break;
             }
         }
         if (!found) {
-            auto neighDeadCell = Cell{glm::vec3(neigh.mPos.x, neigh.mPos.y, neigh.mPos.z)};
+            auto neighDeadCell = Cell{neighPos};
             neighDeadCell.incAliveNeighbors();
             mNeighboringDeadCells.emplace_back(std::move(neighDeadCell));
         }
-        neigh.resetAliveNeighbors();
     }
 }

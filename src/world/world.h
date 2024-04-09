@@ -20,7 +20,7 @@ public:
 private:
     void processNeighbors(Cell& cell);
 
-    void checkNeighbor(Cell& currentAlive, Cell& neigh);
+    void checkNeighbor(Cell& currentAlive, glm::vec3 neighPos);
 
     std::unordered_map<int, Cell> mAliveCells;
     std::unordered_set<int> mCurrentDeadCellIndexes;

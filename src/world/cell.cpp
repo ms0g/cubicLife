@@ -30,14 +30,12 @@ Cell& Cell::operator=(Cell&& other) noexcept {
     return *this;
 }
 
-void Cell::update(glm::mat4 view, glm::mat4 projection, Shader& shader) {
+void Cell::draw(glm::mat4 view, glm::mat4 projection, Shader& shader) {
     shader.activate();
     shader.setMat4("view", view);
     shader.setMat4("model", mModelMat);
     shader.setMat4("projection", projection);
-}
 
-void Cell::draw() {
     mMesh->render();
 }
 

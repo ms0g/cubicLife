@@ -60,15 +60,13 @@ void World::update() {
 void World::draw(glm::mat4 view, glm::mat4 projection) {
     for (auto& cellPair: mAliveCells) {
         auto& cell = cellPair.second;
-        cell.update(view, projection, *mShader);
-        cell.draw();
+        cell.draw(view, projection, *mShader);
     }
 }
 
 void World::processNeighbors(Cell& cell) {
     // right neighbor
     glm::vec3 neighPos = {cell.pos().x + ADJ, 0.0, cell.pos().z};
-
     checkNeighbor(cell, neighPos);
 
     // left neighbor

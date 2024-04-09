@@ -24,9 +24,7 @@ public:
 
     void incAliveNeighbors() { mAliveNeighbors++; }
 
-    void update(glm::mat4 view, glm::mat4 projection, Shader& shader);
-
-    void draw();
+    void draw(glm::mat4 view, glm::mat4 projection, Shader& shader);
 
     bool operator==(const Cell &other) const {
         return (mPos.x == other.mPos.x && mPos.y == other.mPos.y && mPos.z == other.mPos.z) ;

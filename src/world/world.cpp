@@ -30,8 +30,9 @@ void World::update() {
 
         processNeighbors(cell);
 
-        if (cell.pos().z >= 1000) {
+        if (cell.pos().z >= 300) {
             mCurrentDeadCellIndexes.insert(cellPair.first);
+            continue;
         }
 
         if (cell.aliveNeighborsCount() < 2 || cell.aliveNeighborsCount() > 3) {

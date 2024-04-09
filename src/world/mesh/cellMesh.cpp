@@ -1,5 +1,4 @@
 #include "cellMesh.h"
-#include <utility>
 #include "glad/glad.h"
 
 CellMesh::CellMesh(std::vector<float>& vertices) :

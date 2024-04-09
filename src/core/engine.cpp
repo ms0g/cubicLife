@@ -1,5 +1,4 @@
 #include "engine.h"
-#include <iostream>
 #include "glad/glad.h"
 #include "glm/glm.hpp"
 #include "glm/gtc/matrix_transform.hpp"
@@ -28,8 +27,7 @@ void CAEngine::init() {
 #endif
     // glad: load all OpenGL function pointers
     if (!gladLoadGLLoader(SDL_GL_GetProcAddress)) {
-        std::cerr << "Failed to initialize GLAD" << std::endl;
-        return;
+        throw std::runtime_error("Failed to initialize GLAD");
     }
 
     // Tell stb_image.h to flip loaded texture's on the y-axis (before loading model).

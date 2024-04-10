@@ -23,7 +23,7 @@ private:
     void checkNeighbor(Cell& currentAlive, glm::vec3 neighPos);
 
     std::unordered_map<int, Cell> mAliveCells;
-    std::unordered_set<int> mCurrentDeadCellIndexes;
+    std::vector<int> mCurrentDeadCellIndexes;
     std::vector<Cell> mNeighboringDeadCells;
     std::unique_ptr<Shader> mShader;
     std::unique_ptr<CellMesh> mMesh;
@@ -73,7 +73,7 @@ private:
             -0.5f,  0.5f,  0.5f, // bottom-left
     };
 
-    std::vector<glm::vec3> cellPositions = {
+    std::vector<glm::vec3> mCellPositions = {
             // Left Cube
             {0.0f,   0.0f,  0.0f},
             {1.0f,   0.0f,  0.0f},

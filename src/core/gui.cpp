@@ -63,7 +63,7 @@ void Gui::renderWorldInfo() const {
 }
 
 void Gui::renderControlUI(bool& stop, bool& next, float& speed) {
-    static float _speed = 0.98f;
+    static float _speed = 0.50f;
 
     if (ImGui::Begin("Controls")) {
         if (ImGui::Button("Start")) {

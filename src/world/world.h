@@ -18,7 +18,7 @@ public:
         uint32_t aliveCellCount;
     };
 
-    Info getInfo() const { return mInfo; }
+    [[nodiscard]] Info getInfo() const { return mInfo; }
 
     void update();
 

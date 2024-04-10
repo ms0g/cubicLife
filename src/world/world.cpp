@@ -36,7 +36,7 @@ void World::update() {
 
         processNeighbors(cell);
 
-        if (cell.pos().z >= 300) {
+        if (cell.pos().z >= 200) {
             mCurrentDeadCellIndexes.push_back(cellPair.first);
             continue;
         }
@@ -70,6 +70,10 @@ void World::update() {
     }
 
     mMesh->setupInstancing(modelMatrices);
+
+    mGenerationCount++;
+    mInfo.aliveCellCount = mAliveCells.size();
+    mInfo.generationCount = mGenerationCount;
 
     mNeighboringDeadCells.clear();
     mCurrentDeadCellIndexes.clear();

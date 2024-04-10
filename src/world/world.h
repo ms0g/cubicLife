@@ -13,18 +13,32 @@ public:
 
     ~World();
 
+    struct Info {
+        uint64_t generationCount;
+        uint32_t aliveCellCount;
+    };
+
+    Info getInfo() const { return mInfo; }
+
     void update();
 
     void draw(glm::mat4 view, glm::mat4 projection);
+
+
 
 private:
     void processNeighbors(Cell& cell);
 
     void checkNeighbor(Cell& currentAlive, glm::vec3 neighPos);
 
+    Info mInfo{};
+    uint64_t mGenerationCount{0};
+
     std::unordered_map<int, Cell> mAliveCells;
     std::vector<int> mCurrentDeadCellIndexes;
     std::vector<Cell> mNeighboringDeadCells;
+
+    // For instancing
     std::unique_ptr<Shader> mShader;
     std::unique_ptr<CellMesh> mMesh;
 

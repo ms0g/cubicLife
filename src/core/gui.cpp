@@ -25,6 +25,43 @@ Gui::~Gui() {
     ImGui::DestroyContext();
 }
 
+void Gui::render(bool& stop, bool& next, float& speed) {
+    // Start the Dear ImGui frame
+    ImGui_ImplOpenGL3_NewFrame();
+    ImGui_ImplSDL2_NewFrame();
+    ImGui::NewFrame();
+
+//    bool show_demo_window = true;
+//    ImGui::ShowDemoWindow(&show_demo_window);
+
+    renderGraphicsInfo();
+    renderWorldInfo();
+    renderControlUI(stop, next, speed);
+
+    //Render ImGui
+    ImGui::Render();
+    ImGui_ImplOpenGL3_RenderDrawData(ImGui::GetDrawData());
+}
+
+void Gui::renderGraphicsInfo() const {
+    if (ImGui::Begin("Graphics")) {
+        ImGui::Text("%s FPS", std::to_string(mFPS).c_str());
+        ImGui::Text("OpenGL version: %s", glGetString(GL_VERSION));
+        ImGui::Text("GLSL Version: %s", glGetString(GL_SHADING_LANGUAGE_VERSION));
+        ImGui::Text("OpenGL Driver Vendor: %s", glGetString(GL_VENDOR));
+        ImGui::Text("OpenGL Renderer: %s", glGetString(GL_RENDERER));
+    }
+    ImGui::End();
+}
+
+void Gui::renderWorldInfo() const {
+    if (ImGui::Begin("Info")) {
+        ImGui::Text("%sth Generation", std::to_string(mGenerationCount).c_str());
+        ImGui::Text("%s Alive Cell", std::to_string(mAliveCellCount).c_str());
+    }
+    ImGui::End();
+}
+
 void Gui::renderControlUI(bool& stop, bool& next, float& speed) {
     static float _speed = 0.98f;
 
@@ -43,34 +80,6 @@ void Gui::renderControlUI(bool& stop, bool& next, float& speed) {
         if (ImGui::SliderFloat("Speed", &_speed, 0.01, 0.98)) {
             speed = (float)0.99 - _speed;
         }
-    }
-    ImGui::End();
-}
-
-void Gui::render(bool& stop, bool& next, float& speed) {
-    // Start the Dear ImGui frame
-    ImGui_ImplOpenGL3_NewFrame();
-    ImGui_ImplSDL2_NewFrame();
-    ImGui::NewFrame();
-
-//    bool show_demo_window = true;
-//    ImGui::ShowDemoWindow(&show_demo_window);
-
-    renderGraphicsInfo();
-    renderControlUI(stop, next, speed);
-
-    //Render ImGui
-    ImGui::Render();
-    ImGui_ImplOpenGL3_RenderDrawData(ImGui::GetDrawData());
-}
-
-void Gui::renderGraphicsInfo() const {
-    if (ImGui::Begin("Graphics")) {
-        ImGui::Text("%s FPS", std::to_string(mFPS).c_str());
-        ImGui::Text("OpenGL version: %s", glGetString(GL_VERSION));
-        ImGui::Text("GLSL Version: %s", glGetString(GL_SHADING_LANGUAGE_VERSION));
-        ImGui::Text("OpenGL Driver Vendor: %s", glGetString(GL_VENDOR));
-        ImGui::Text("OpenGL Renderer: %s", glGetString(GL_RENDERER));
     }
     ImGui::End();
 }

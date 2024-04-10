@@ -3,13 +3,13 @@
 #include "../shader/shader.h"
 
 Skybox::Skybox() {
-    mMesh = std::make_unique<SkyboxMesh>(mVertices, mTextures);
-    mMesh->setup();
-
     mShader = std::make_unique<Shader>(fs::path(SHADER_DIR + "skybox.vert.glsl"),
                                        fs::path(SHADER_DIR + "skybox.frag.glsl"));
     mShader->activate();
     mShader->setInt(mTextures[0].name, 0);
+
+    mMesh = std::make_unique<SkyboxMesh>(mVertices, mTextures);
+    mMesh->setup();
 }
 
 Skybox::~Skybox() = default;

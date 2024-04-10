@@ -13,6 +13,12 @@ public:
     // initializes all the buffer objects/arrays
     void setup() override;
 
+    void setupInstancing(std::vector<glm::mat4>& modelMatrices);
+
     // render the mesh
     void render() override;
+
+private:
+    std::vector<glm::mat4> mModelMatrices;
+    unsigned int mInstanceMatrixBuffer{};
 };

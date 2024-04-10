@@ -1,5 +1,7 @@
 #include "world.h"
+#include "glm/gtc/matrix_transform.hpp"
 #include "cell.h"
+#include "mesh/cellMesh.h"
 #include "filesystem/filesystem.h"
 #include "../configs/configs.hpp"
 #include "../shader/shader.h"
@@ -14,10 +16,14 @@ int getIndex() {
 }
 }
 
-World::World() :
-        mShader(std::make_unique<Shader>(fs::path(SHADER_DIR + "cell.vert.glsl"),
-                                         fs::path(SHADER_DIR + "cell.frag.glsl"))) {
-    for (auto& pos: cellPositions) {
+World::World() {
+    mMesh = std::make_unique<CellMesh>(mVertices);
+    mMesh->setup();
+
+    mShader = std::make_unique<Shader>(fs::path(SHADER_DIR + "cell.vert.glsl"),
+                                       fs::path(SHADER_DIR + "cell.frag.glsl"));
+
+    for (auto& pos: mCellPositions) {
         mAliveCells.emplace(kv::getIndex(), Cell{pos});
     }
 }
@@ -31,12 +37,12 @@ void World::update() {
         processNeighbors(cell);
 
         if (cell.pos().z >= 300) {
-            mCurrentDeadCellIndexes.insert(cellPair.first);
+            mCurrentDeadCellIndexes.push_back(cellPair.first);
             continue;
         }
 
         if (cell.aliveNeighborsCount() < 2 || cell.aliveNeighborsCount() > 3) {
-            mCurrentDeadCellIndexes.insert(cellPair.first);
+            mCurrentDeadCellIndexes.push_back(cellPair.first);
         } else {
             cell.resetAliveNeighbors();
         }
@@ -54,15 +60,27 @@ void World::update() {
         mAliveCells.erase(it);
     }
 
+    // Setup model matrices
+    std::vector<glm::mat4> modelMatrices;
+    for (auto& aliveCell: mAliveCells) {
+        glm::mat4 model = glm::mat4(1.0f);
+        model = glm::translate(model, aliveCell.second.pos());
+
+        modelMatrices.push_back(model);
+    }
+
+    mMesh->setupInstancing(modelMatrices);
+
     mNeighboringDeadCells.clear();
     mCurrentDeadCellIndexes.clear();
 }
 
 void World::draw(glm::mat4 view, glm::mat4 projection) {
-    for (auto& cellPair: mAliveCells) {
-        auto& cell = cellPair.second;
-        cell.draw(view, projection, *mShader);
-    }
+    mShader->activate();
+    mShader->setMat4("view", view);
+    mShader->setMat4("projection", projection);
+
+    mMesh->render();
 }
 
 void World::processNeighbors(Cell& cell) {

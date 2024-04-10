@@ -36,7 +36,7 @@ void World::update() {
 
         processNeighbors(cell);
 
-        if (cell.pos().z >= 200) {
+        if (cell.pos().z >= ZFAR) {
             mCurrentDeadCellIndexes.push_back(cellPair.first);
             continue;
         }

@@ -70,8 +70,8 @@ void CAEngine::update(World& world) {
     }
 
     if (!mStop) {
-        int updatePerFrameCount = static_cast<int>(mFPS * mSpeed);
-        if (mFrameCount % (updatePerFrameCount < 1 ? 1 : updatePerFrameCount) == 0)
+        int updateFrameCount = static_cast<int>(mFPS * mSpeed);
+        if (mCurrentFrameCount % (updateFrameCount < 1 ? 1 : updateFrameCount) == 0)
             world.update();
     }
 
@@ -100,13 +100,14 @@ void CAEngine::render(World& world, Skybox& skybox) {
 void CAEngine::updateFpsCounter() {
     double elapsedSeconds;
 
-    mFrameCount++;
+    mCurrentFrameCount++;
+
     mCurrentSeconds += mDeltaTime;
     elapsedSeconds = mCurrentSeconds - mPreviousSeconds;
     // limit text updates to 4 per second
     if (elapsedSeconds > 0.25) {
         mPreviousSeconds = mCurrentSeconds;
-        mFPS = mFrameCount / elapsedSeconds;
-        mFrameCount = 0;
+        mFPS = mCurrentFrameCount / elapsedSeconds;
+        mCurrentFrameCount = 0;
     }
 }

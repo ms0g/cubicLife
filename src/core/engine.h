@@ -36,7 +36,7 @@ private:
     // Frame
     double mPreviousSeconds{0.0};
     double mCurrentSeconds{0.0};
-    uint32_t mFrameCount{0};
+    uint32_t mCurrentFrameCount{0};
     uint32_t mFPS{0};
 
     std::unique_ptr<Window> mWindow;

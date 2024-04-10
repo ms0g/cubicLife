@@ -15,7 +15,7 @@ public:
 private:
     void renderGraphicsInfo() const;
 
-    void renderConfigurationUI(bool& stop, bool& next, float& speed);
+    void renderControlUI(bool& stop, bool& next, float& speed);
 
     double mFPS{0.0};
 };

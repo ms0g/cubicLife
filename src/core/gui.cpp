@@ -25,16 +25,18 @@ Gui::~Gui() {
     ImGui::DestroyContext();
 }
 
-void Gui::renderConfigurationUI(bool& stop, bool& next, float& speed) {
-    static float _speed = 0.98;
+void Gui::renderControlUI(bool& stop, bool& next, float& speed) {
+    static float _speed = 0.98f;
 
     if (ImGui::Begin("Controls")) {
         if (ImGui::Button("Start")) {
             stop = false;
         }
+        ImGui::SameLine();
         if (ImGui::Button("Stop")) {
             stop = true;
         }
+        ImGui::SameLine();
         if (ImGui::Button("Next")) {
             next = true;
         }
@@ -55,7 +57,7 @@ void Gui::render(bool& stop, bool& next, float& speed) {
 //    ImGui::ShowDemoWindow(&show_demo_window);
 
     renderGraphicsInfo();
-    renderConfigurationUI(stop, next, speed);
+    renderControlUI(stop, next, speed);
 
     //Render ImGui
     ImGui::Render();

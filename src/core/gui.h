@@ -10,7 +10,7 @@ public:
 
     void setFPS(double fps) { mFPS = fps; }
 
-    void setWorldInfo(uint64_t generationCount, uint32_t aliceCellCount) {
+    void setWorldStateInfo(uint64_t generationCount, uint32_t aliceCellCount) {
         mGenerationCount = generationCount;
         mAliveCellCount = aliceCellCount;
     }
@@ -20,7 +20,7 @@ public:
 private:
     void renderGraphicsInfo() const;
 
-    void renderWorldInfo() const;
+    void renderWorldState() const;
 
     void renderControlUI(bool& stop, bool& next, float& speed);
 

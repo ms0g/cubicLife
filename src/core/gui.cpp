@@ -35,7 +35,7 @@ void Gui::render(bool& stop, bool& next, float& speed) {
 //    ImGui::ShowDemoWindow(&show_demo_window);
 
     renderGraphicsInfo();
-    renderWorldInfo();
+    renderWorldState();
     renderControlUI(stop, next, speed);
 
     //Render ImGui
@@ -54,8 +54,8 @@ void Gui::renderGraphicsInfo() const {
     ImGui::End();
 }
 
-void Gui::renderWorldInfo() const {
-    if (ImGui::Begin("Info")) {
+void Gui::renderWorldState() const {
+    if (ImGui::Begin("State")) {
         ImGui::Text("%sth Generation", std::to_string(mGenerationCount).c_str());
         ImGui::Text("%s Alive Cell", std::to_string(mAliveCellCount).c_str());
     }

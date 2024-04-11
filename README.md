@@ -12,7 +12,11 @@ Cubic Life is a powerful cellular automaton engine designed to simulate Conway's
 + **Visualization:** CAEngine includes built-in visualization tools to observe the evolution of the cellular automaton in real-time, providing insights into the emergent patterns and dynamics.
 + **Configurability:** Users can adjust various parameters such as initial configurations, and simulation speed to tailor the behavior of the cellular automaton to their specific needs.
 + **Cross-Platform:** CAEngine is designed to be cross-platform, ensuring compatibility with various operating systems.
-
+### Controls
+| Key  | Action        |
+|------|---------------|
+| WASD | Move          |
+| RMB  | Rotate camera |
 ### License
 
 This project is licensed under the MIT License. See the LICENSE file for details.

@@ -28,8 +28,8 @@ void CellMesh::setup() {
 void CellMesh::setupInstancing(std::vector<glm::mat4>& modelMatrices) {
     mModelMatrices = std::move(modelMatrices);
 
-    glGenBuffers(1, &mInstanceMatrixBuffer);
-    glBindBuffer(GL_ARRAY_BUFFER, mInstanceMatrixBuffer);
+    glGenBuffers(1, &mIBO);
+    glBindBuffer(GL_ARRAY_BUFFER, mIBO);
     glBufferData(GL_ARRAY_BUFFER, mModelMatrices.size() * sizeof(glm::mat4), &mModelMatrices[0], GL_STATIC_DRAW);
 
     glBindVertexArray(mVAO);

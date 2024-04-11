@@ -20,5 +20,5 @@ public:
 
 private:
     std::vector<glm::mat4> mModelMatrices;
-    unsigned int mInstanceMatrixBuffer{};
+    unsigned int mIBO{};
 };

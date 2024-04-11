@@ -61,7 +61,7 @@ void CAEngine::update(World& world) {
     updateFpsCounter();
 #ifdef DEBUG
     mGui->setFPS(mFPS);
-    mGui->setWorldStateInfo(world.getInfo().generationCount, world.getInfo().aliveCellCount);
+    mGui->setWorldStateInfo(world.state().generationCount, world.state().aliveCellCount);
 #endif
 
     if (mNext) {

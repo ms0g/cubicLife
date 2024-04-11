@@ -72,8 +72,8 @@ void World::update() {
     mMesh->setupInstancing(modelMatrices);
 
     mGenerationCount++;
-    mInfo.aliveCellCount = mAliveCells.size();
-    mInfo.generationCount = mGenerationCount;
+    mState.aliveCellCount = mAliveCells.size();
+    mState.generationCount = mGenerationCount;
 
     mNeighboringDeadCells.clear();
     mCurrentDeadCellIndexes.clear();

@@ -13,12 +13,12 @@ public:
 
     ~World();
 
-    struct Info {
+    struct State {
         uint64_t generationCount;
         uint32_t aliveCellCount;
     };
 
-    [[nodiscard]] Info getInfo() const { return mInfo; }
+    [[nodiscard]] State state() const { return mState; }
 
     void update();
 
@@ -31,7 +31,7 @@ private:
 
     void checkNeighbor(Cell& currentAlive, glm::vec3 neighPos);
 
-    Info mInfo{};
+    State mState{};
     uint64_t mGenerationCount{0};
 
     std::unordered_map<int, Cell> mAliveCells;

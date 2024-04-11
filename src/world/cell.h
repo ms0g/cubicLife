@@ -21,7 +21,7 @@ public:
     void incAliveNeighbors() { mAliveNeighbors++; }
 
     bool operator==(const Cell &other) const {
-        return (mPos.x == other.mPos.x && mPos.y == other.mPos.y && mPos.z == other.mPos.z) ;
+        return (mPos.x == other.pos().x && mPos.y == other.pos().y && mPos.z == other.pos().z) ;
     }
 
 private:

@@ -96,31 +96,31 @@ void World::processNeighbors(Cell& cell) {
     neighPos.x = cell.pos().x - ADJ;
     checkNeighbor(cell, neighPos);
 
-    // top neighbor
+    // forward neighbor
     neighPos.x = cell.pos().x;
     neighPos.z = cell.pos().z - ADJ;
     checkNeighbor(cell, neighPos);
 
-    // bottom neighbor
+    // backward neighbor
     neighPos.z = cell.pos().z + ADJ;
     checkNeighbor(cell, neighPos);
 
-    // top right neighbor
+    // forward right neighbor
     neighPos.x = cell.pos().x + ADJ;
     neighPos.z = cell.pos().z - ADJ;
     checkNeighbor(cell, neighPos);
 
-    // top left neighbor
+    // forward left neighbor
     neighPos.x = cell.pos().x - ADJ;
     neighPos.z = cell.pos().z - ADJ;
     checkNeighbor(cell, neighPos);
 
-    // bottom right neighbor
+    // backward right neighbor
     neighPos.x = cell.pos().x + ADJ;
     neighPos.z = cell.pos().z + ADJ;
     checkNeighbor(cell, neighPos);
 
-    // bottom left neighbor
+    // backward left neighbor
     neighPos.x = cell.pos().x - ADJ;
     neighPos.z = cell.pos().z + ADJ;
     checkNeighbor(cell, neighPos);

@@ -1,22 +1,14 @@
 #include "world.h"
 #include "glm/gtc/matrix_transform.hpp"
 #include "cell.h"
+#include "hash.hpp"
 #include "mesh/cellMesh.h"
 #include "filesystem/filesystem.h"
 #include "../configs/configs.hpp"
 #include "../shader/shader.h"
 
 #define ADJ 1
-
-namespace kv {
-
-uint64_t getIndex(const glm::vec3 pos) {
-    uint64_t hashCode = 0;
-    hashCode |= static_cast<uint32_t>(pos.x);
-    hashCode |= static_cast<uint32_t>(pos.z) << 27;
-    return std::hash<uint64_t>()(hashCode);
-}
-}
+#define MAX_CELL_NUM 500
 
 World::World() {
     mMesh = std::make_unique<CellMesh>(mVertices);
@@ -26,24 +18,28 @@ World::World() {
                                        fs::path(SHADER_DIR + "cell.frag.glsl"));
 
     for (auto& pos: mCellPositions) {
-        mAliveCells.emplace(kv::getIndex(pos), Cell{pos});
+        mAliveCells.emplace(hash::hasher(pos), Cell{pos});
     }
 }
 
 World::~World() = default;
 
 void World::update() {
+    if (mAliveCells.size() >= MAX_CELL_NUM) return;
+
     for (auto& cellPair: mAliveCells) {
         auto& cell = cellPair.second;
 
-        processNeighbors(cell);
+        for (int i = -1; i <= 1; ++i) {
+            processNeighbors(cell, cell.pos().y + (float)i);
+        }
 
         if (cell.pos().z >= ZFAR) {
             mCurrentDeadCellIndexes.push_back(cellPair.first);
             continue;
         }
 
-        if (cell.aliveNeighborsCount() < 2 || cell.aliveNeighborsCount() > 3) {
+        if (cell.aliveNeighborsCount() < 5 || cell.aliveNeighborsCount() > 6) {
             mCurrentDeadCellIndexes.push_back(cellPair.first);
         } else {
             cell.resetAliveNeighbors();
@@ -51,9 +47,9 @@ void World::update() {
     }
 
     for (auto& neighboringDeadCell: mNeighboringDeadCells) {
-        if (neighboringDeadCell.aliveNeighborsCount() == 3) {
+        if (neighboringDeadCell.aliveNeighborsCount() == 4) {
             neighboringDeadCell.resetAliveNeighbors();
-            mAliveCells.emplace(kv::getIndex(neighboringDeadCell.pos()), std::move(neighboringDeadCell));
+            mAliveCells.emplace(hash::hasher(neighboringDeadCell.pos()), std::move(neighboringDeadCell));
         }
     }
 
@@ -89,9 +85,13 @@ void World::draw(glm::mat4 view, glm::mat4 projection) {
     mMesh->render();
 }
 
-void World::processNeighbors(Cell& cell) {
+void World::processNeighbors(Cell& cell, float y) {
+    // self
+    glm::vec3 neighPos = {cell.pos().x, y, cell.pos().z};
+    checkNeighbor(cell, neighPos);
+
     // right neighbor
-    glm::vec3 neighPos = {cell.pos().x + ADJ, 0.0, cell.pos().z};
+    neighPos.x = cell.pos().x + ADJ;
     checkNeighbor(cell, neighPos);
 
     // left neighbor
@@ -131,7 +131,11 @@ void World::processNeighbors(Cell& cell) {
 void World::checkNeighbor(Cell& currentAlive, glm::vec3 neighPos) {
     bool found = false;
 
-    uint64_t index = kv::getIndex(neighPos);
+    auto candidateCell = Cell{neighPos};
+    if (currentAlive == candidateCell)
+        return;
+
+    uint64_t index = hash::hasher(neighPos);
     if (auto it = mAliveCells.find(index); it != mAliveCells.end()) {
         currentAlive.incAliveNeighbors();
         found = true;
@@ -139,17 +143,15 @@ void World::checkNeighbor(Cell& currentAlive, glm::vec3 neighPos) {
 
     if (!found) {
         for (auto& neighboringDeadCell: mNeighboringDeadCells) {
-            if ((neighboringDeadCell.pos().x == neighPos.x) &&
-                (neighboringDeadCell.pos().z == neighPos.z)) {
+            if (neighboringDeadCell == candidateCell) {
                 found = true;
                 neighboringDeadCell.incAliveNeighbors();
                 break;
             }
         }
         if (!found) {
-            auto neighDeadCell = Cell{neighPos};
-            neighDeadCell.incAliveNeighbors();
-            mNeighboringDeadCells.emplace_back(std::move(neighDeadCell));
+            candidateCell.incAliveNeighbors();
+            mNeighboringDeadCells.emplace_back(std::move(candidateCell));
         }
     }
 }

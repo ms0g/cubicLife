@@ -24,8 +24,6 @@ public:
 
     void draw(glm::mat4 view, glm::mat4 projection);
 
-
-
 private:
     void processNeighbors(Cell& cell);
 

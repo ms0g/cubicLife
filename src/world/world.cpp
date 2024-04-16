@@ -9,10 +9,12 @@
 #define ADJ 1
 
 namespace kv {
-static int index;
 
-int getIndex() {
-    return index++;
+uint64_t getIndex(const glm::vec3 pos) {
+    uint64_t hashCode = 0;
+    hashCode |= static_cast<uint32_t>(pos.x);
+    hashCode |= static_cast<uint32_t>(pos.z) << 27;
+    return std::hash<uint64_t>()(hashCode);
 }
 }
 
@@ -24,7 +26,7 @@ World::World() {
                                        fs::path(SHADER_DIR + "cell.frag.glsl"));
 
     for (auto& pos: mCellPositions) {
-        mAliveCells.emplace(kv::getIndex(), Cell{pos});
+        mAliveCells.emplace(kv::getIndex(pos), Cell{pos});
     }
 }
 
@@ -51,7 +53,7 @@ void World::update() {
     for (auto& neighboringDeadCell: mNeighboringDeadCells) {
         if (neighboringDeadCell.aliveNeighborsCount() == 3) {
             neighboringDeadCell.resetAliveNeighbors();
-            mAliveCells.emplace(kv::getIndex(), std::move(neighboringDeadCell));
+            mAliveCells.emplace(kv::getIndex(neighboringDeadCell.pos()), std::move(neighboringDeadCell));
         }
     }
 
@@ -129,16 +131,12 @@ void World::processNeighbors(Cell& cell) {
 void World::checkNeighbor(Cell& currentAlive, glm::vec3 neighPos) {
     bool found = false;
 
-    for (auto& cellPair: mAliveCells) {
-        auto& aliveCell = cellPair.second;
-
-        if ((aliveCell.pos().x == neighPos.x) &&
-            (aliveCell.pos().z == neighPos.z)) {
-            found = true;
-            currentAlive.incAliveNeighbors();
-            break;
-        }
+    uint64_t index = kv::getIndex(neighPos);
+    if (auto it = mAliveCells.find(index); it != mAliveCells.end()) {
+        currentAlive.incAliveNeighbors();
+        found = true;
     }
+
     if (!found) {
         for (auto& neighboringDeadCell: mNeighboringDeadCells) {
             if ((neighboringDeadCell.pos().x == neighPos.x) &&

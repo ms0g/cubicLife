@@ -62,6 +62,15 @@ void World::update() {
         mAliveCells.erase(it);
     }
 
+    mGenerationCount++;
+    mState.aliveCellCount = mAliveCells.size();
+    mState.generationCount = mGenerationCount;
+
+    mNeighboringDeadCells.clear();
+    mCurrentDeadCellIndexes.clear();
+}
+
+void World::draw(glm::mat4 view, glm::mat4 projection) {
     // Setup model matrices
     std::vector<glm::mat4> modelMatrices;
     for (auto& aliveCell: mAliveCells) {
@@ -73,15 +82,6 @@ void World::update() {
 
     mMesh->setupInstancing(modelMatrices);
 
-    mGenerationCount++;
-    mState.aliveCellCount = mAliveCells.size();
-    mState.generationCount = mGenerationCount;
-
-    mNeighboringDeadCells.clear();
-    mCurrentDeadCellIndexes.clear();
-}
-
-void World::draw(glm::mat4 view, glm::mat4 projection) {
     mShader->activate();
     mShader->setMat4("view", view);
     mShader->setMat4("projection", projection);

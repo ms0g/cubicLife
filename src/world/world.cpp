@@ -3,13 +3,12 @@
 #include "cell.h"
 #include "hash.hpp"
 #include "mesh/cellMesh.h"
-
 #include "../shader/shader.h"
 
 #define ADJ 1
 #define MAX_CELL_NUM 500
 
-World::World() {
+World::World(const std::vector<glm::vec3>& initialState) {
     mMesh = std::make_unique<CellMesh>(mVertices, mTextures);
     mMesh->setup();
 
@@ -19,7 +18,7 @@ World::World() {
     mShader->activate();
     mShader->setInt(mTextures[0].name, 0);
 
-    for (auto& pos: mCellPositions) {
+    for (auto& pos: initialState) {
         mAliveCells.emplace(hash::hasher(pos), Cell{pos});
     }
 }

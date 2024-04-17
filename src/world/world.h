@@ -12,7 +12,7 @@ class CellMesh;
 class Shader;
 class World {
 public:
-    World();
+    World(const std::vector<glm::vec3>& initialState);
 
     ~World();
 
@@ -86,39 +86,6 @@ private:
              0.5f,  0.5f,  0.5f, 0.0f,  1.0f,  0.0f,  1.0f, 0.0f, // bottom-right
             -0.5f,  0.5f, -0.5f, 0.0f,  1.0f,  0.0f,  0.0f, 1.0f, // top-left
             -0.5f,  0.5f,  0.5f, 0.0f,  1.0f,  0.0f,  0.0f, 0.0f, // bottom-left
-    };
-
-    std::vector<glm::vec3> mCellPositions = {
-            // Cube
-            {0.0f,   0.0f,  0.0f},
-            {1.0f,   0.0f,  0.0f},
-            {2.0f,   0.0f,  0.0f},
-            {0.0f,   0.0f,  1.0f},
-            {1.0f,   0.0f,  1.0f},
-            {2.0f,   0.0f,  1.0f},
-            {0.0f,   0.0f,  2.0f},
-            {1.0f,   0.0f,  2.0f},
-            {2.0f,   0.0f,  2.0f},
-
-            {0.0f,   1.0f,  0.0f},
-            {1.0f,   1.0f,  0.0f},
-            {2.0f,   1.0f,  0.0f},
-            {0.0f,   1.0f,  1.0f},
-            {1.0f,   1.0f,  1.0f},
-            {2.0f,   1.0f,  1.0f},
-            {0.0f,   1.0f,  2.0f},
-            {1.0f,   1.0f,  2.0f},
-            {2.0f,   1.0f,  2.0f},
-
-            {0.0f,   -1.0f,  0.0f},
-            {1.0f,   -1.0f,  0.0f},
-            {2.0f,   -1.0f,  0.0f},
-            {0.0f,   -1.0f,  1.0f},
-            {1.0f,   -1.0f,  1.0f},
-            {2.0f,   -1.0f,  1.0f},
-            {0.0f,   -1.0f,  2.0f},
-            {1.0f,   -1.0f,  2.0f},
-            {2.0f,   -1.0f,  2.0f},
     };
 
     std::vector<Texture> mTextures = {

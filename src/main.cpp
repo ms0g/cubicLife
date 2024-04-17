@@ -2,12 +2,44 @@
 #include "world/world.h"
 #include "world/skybox.h"
 
+const std::vector<glm::vec3> initialState = {
+        {0.0f,   0.0f,  0.0f},
+        {1.0f,   0.0f,  0.0f},
+        {2.0f,   0.0f,  0.0f},
+        {0.0f,   0.0f,  1.0f},
+        {1.0f,   0.0f,  1.0f},
+        {2.0f,   0.0f,  1.0f},
+        {0.0f,   0.0f,  2.0f},
+        {1.0f,   0.0f,  2.0f},
+        {2.0f,   0.0f,  2.0f},
+
+        {0.0f,   1.0f,  0.0f},
+        {1.0f,   1.0f,  0.0f},
+        {2.0f,   1.0f,  0.0f},
+        {0.0f,   1.0f,  1.0f},
+        {1.0f,   1.0f,  1.0f},
+        {2.0f,   1.0f,  1.0f},
+        {0.0f,   1.0f,  2.0f},
+        {1.0f,   1.0f,  2.0f},
+        {2.0f,   1.0f,  2.0f},
+
+        {0.0f,  -1.0f,  0.0f},
+        {1.0f,  -1.0f,  0.0f},
+        {2.0f,  -1.0f,  0.0f},
+        {0.0f,  -1.0f,  1.0f},
+        {1.0f,  -1.0f,  1.0f},
+        {2.0f,  -1.0f,  1.0f},
+        {0.0f,  -1.0f,  2.0f},
+        {1.0f,  -1.0f,  2.0f},
+        {2.0f,  -1.0f,  2.0f},
+};
+
 int main() {
     CAEngine cae;
     cae.init();
 
-    World world{};
     Skybox skyBox{};
+    World world{initialState};
 
     cae.run(world, skyBox);
 

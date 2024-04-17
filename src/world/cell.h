@@ -16,12 +16,13 @@ public:
 
     [[nodiscard]] glm::vec3 pos() const { return mPos; }
 
-    void resetAliveNeighbors() { mAliveNeighbors = 0;}
+    void resetAliveNeighbors() { mAliveNeighbors = 0; }
 
     void incAliveNeighbors() { mAliveNeighbors++; }
 
-    bool operator==(const Cell &other) const {
-        return (mPos.x == other.pos().x && mPos.y == other.pos().y && mPos.z == other.pos().z) ;
+    bool operator==(const Cell& other) const {
+        return (abs(mPos.x - other.pos().x) < FLT_EPSILON && abs(mPos.y - other.pos().y) < FLT_EPSILON &&
+                abs(mPos.z - other.pos().z) < FLT_EPSILON);
     }
 
 private:

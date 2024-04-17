@@ -3,19 +3,21 @@
 #include "cell.h"
 #include "hash.hpp"
 #include "mesh/cellMesh.h"
-#include "filesystem/filesystem.h"
-#include "../configs/configs.hpp"
+
 #include "../shader/shader.h"
 
 #define ADJ 1
 #define MAX_CELL_NUM 500
 
 World::World() {
-    mMesh = std::make_unique<CellMesh>(mVertices);
+    mMesh = std::make_unique<CellMesh>(mVertices, mTextures);
     mMesh->setup();
 
     mShader = std::make_unique<Shader>(fs::path(SHADER_DIR + "cell.vert.glsl"),
                                        fs::path(SHADER_DIR + "cell.frag.glsl"));
+
+    mShader->activate();
+    mShader->setInt(mTextures[0].name, 0);
 
     for (auto& pos: mCellPositions) {
         mAliveCells.emplace(hash::hasher(pos), Cell{pos});
@@ -31,7 +33,7 @@ void World::update() {
         auto& cell = cellPair.second;
 
         for (int i = -1; i <= 1; ++i) {
-            processNeighbors(cell, cell.pos().y + (float)i);
+            processNeighbors(cell, cell.pos().y + (float) i);
         }
 
         if (cell.pos().z >= ZFAR) {

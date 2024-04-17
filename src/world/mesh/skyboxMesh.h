@@ -13,9 +13,6 @@ public:
 
     // render the mesh
     void render() override;
-
-private:
-    std::vector<Texture> mTextures;
 };
 
 

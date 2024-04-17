@@ -1,11 +1,13 @@
 #pragma once
 
 #include <vector>
+#include "texture.h"
 
 class IMesh {
 public:
-    explicit IMesh(std::vector<float>& vertices) :
-            mVertices(std::move(vertices)) {}
+    IMesh(std::vector<float>& vertices, std::vector<Texture> textures) :
+            mVertices(std::move(vertices)),
+            mTextures(std::move(textures)) {}
 
     virtual ~IMesh() = default;
 
@@ -18,4 +20,5 @@ protected:
     unsigned int mVBO{};
     // mesh Data
     std::vector<float> mVertices;
+    std::vector<Texture> mTextures;
 };

@@ -8,7 +8,7 @@
 
 class CellMesh : public IMesh {
 public:
-    explicit CellMesh(std::vector<float>& vertices);
+    explicit CellMesh(std::vector<float>& vertices, std::vector<Texture>& textures);
 
     // initializes all the buffer objects/arrays
     void setup() override;

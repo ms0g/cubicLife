@@ -89,7 +89,7 @@ private:
     };
 
     std::vector<Texture> mTextures = {
-            {texture::load(fs::path(ASSET_DIR + "glowing-rocks.jpg").c_str()),
+            {texture::load(fs::path(ASSET_DIR + "/glowing-rocks.jpg").c_str()),
                     "texture1",
                     "glowing-rocks.jpg"}
     };

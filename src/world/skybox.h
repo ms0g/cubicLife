@@ -66,12 +66,12 @@ private:
     };
 
     std::vector<std::string> mFaces = {
-            fs::path(ASSET_DIR + "skybox/right.jpg"),
-            fs::path(ASSET_DIR + "skybox/left.jpg"),
-            fs::path(ASSET_DIR + "skybox/top.jpg"),
-            fs::path(ASSET_DIR + "skybox/bottom.jpg"),
-            fs::path(ASSET_DIR + "skybox/front.jpg"),
-            fs::path(ASSET_DIR + "skybox/back.jpg")
+            fs::path(ASSET_DIR + "/skybox/right.jpg"),
+            fs::path(ASSET_DIR + "/skybox/left.jpg"),
+            fs::path(ASSET_DIR + "/skybox/top.jpg"),
+            fs::path(ASSET_DIR + "/skybox/bottom.jpg"),
+            fs::path(ASSET_DIR + "/skybox/front.jpg"),
+            fs::path(ASSET_DIR + "/skybox/back.jpg")
     };
 
     std::vector<Texture> mTextures = {

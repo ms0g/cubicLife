@@ -1,12 +1,11 @@
 #include "world.h"
 #include "glm/gtc/matrix_transform.hpp"
 #include "cell.h"
-#include "hash.hpp"
 #include "mesh/cellMesh.h"
 #include "../shader/shader.h"
 
 #define ADJ 1
-#define MAX_CELL_NUM 500
+#define MAX_CELL_NUM 2000
 
 World::World(const std::vector<glm::vec3>& initialState) {
     mMesh = std::make_unique<CellMesh>(mVertices, mTextures);
@@ -19,7 +18,8 @@ World::World(const std::vector<glm::vec3>& initialState) {
     mShader->setInt(mTextures[0].name, 0);
 
     for (auto& pos: initialState) {
-        mAliveCells.emplace(hash::hasher(pos), Cell{pos});
+        auto key = std::to_string(pos.x) + std::to_string(pos.y) + std::to_string(pos.z);
+        mAliveCells.emplace(key, Cell{pos});
     }
 }
 
@@ -50,7 +50,10 @@ void World::update() {
     for (auto& neighboringDeadCell: mNeighboringDeadCells) {
         if (neighboringDeadCell.aliveNeighborsCount() == 4) {
             neighboringDeadCell.resetAliveNeighbors();
-            mAliveCells.emplace(hash::hasher(neighboringDeadCell.pos()), std::move(neighboringDeadCell));
+            auto key = std::to_string(neighboringDeadCell.pos().x) +
+                       std::to_string(neighboringDeadCell.pos().y) +
+                       std::to_string(neighboringDeadCell.pos().z);
+            mAliveCells.emplace(key, std::move(neighboringDeadCell));
         }
     }
 
@@ -136,8 +139,8 @@ void World::checkNeighbor(Cell& currentAlive, glm::vec3 neighPos) {
     if (currentAlive == candidateCell)
         return;
 
-    uint64_t index = hash::hasher(neighPos);
-    if (auto it = mAliveCells.find(index); it != mAliveCells.end()) {
+    auto key = std::to_string(neighPos.x) + std::to_string(neighPos.y) + std::to_string(neighPos.z);
+    if (auto it = mAliveCells.find(key); it != mAliveCells.end()) {
         currentAlive.incAliveNeighbors();
         found = true;
     }

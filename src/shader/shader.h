@@ -3,6 +3,10 @@
 #include <string>
 #include <glm/glm.hpp>
 
+enum class ErrorType {
+    COMPILE,
+    LINKING
+};
 
 class Shader {
 public:
@@ -43,7 +47,7 @@ public:
 private:
     unsigned int createShader(const char** source, unsigned int type);
 
-    void checkCompileErrors(unsigned int shader, unsigned int type);
+    void checkErrors(unsigned int shader, ErrorType type);
 
     // the program ID
     unsigned int mID;

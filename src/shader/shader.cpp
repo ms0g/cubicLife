@@ -1,9 +1,18 @@
 #include "shader.h"
 #include <fstream>
 #include <sstream>
-#include <iostream>
+#include <stdexcept>
 #include "glad/glad.h" // include glad to get all the required OpenGL headers
 
+#define CHECK_ERR(ivFunc, status, infoLogFunc, errStr) {    \
+    ivFunc(shader, status, &success);                       \
+    if (!success) {                                         \
+        glDeleteShader(shader);                             \
+        infoLogFunc(shader, 1024, nullptr, infoLog);        \
+        auto errMsg = std::string(errStr) + "\n" + infoLog; \
+        throw std::runtime_error(errMsg);                   \
+    }                                                       \
+}
 
 Shader::Shader(const std::string& vertexPath, const std::string& fragmentPath) {
     // 1. retrieve the vertex/fragment source code from filePath
@@ -32,7 +41,8 @@ Shader::Shader(const std::string& vertexPath, const std::string& fragmentPath) {
         fragmentCode = fShaderStream.str();
     }
     catch (std::ifstream::failure& e) {
-        std::cout << "ERROR::SHADER::FILE_NOT_SUCCESSFULLY_READ: " << e.what() << std::endl;
+        auto errMsg = std::string("ERROR::SHADER::FILE_NOT_SUCCESSFULLY_READ: ") + e.what();
+        throw std::runtime_error(errMsg);
     }
 
     const char* vShaderCode = vertexCode.c_str();
@@ -50,7 +60,8 @@ Shader::Shader(const std::string& vertexPath, const std::string& fragmentPath) {
     glAttachShader(mID, vertex);
     glAttachShader(mID, fragment);
     glLinkProgram(mID);
-    checkCompileErrors(mID, 0);
+
+    checkErrors(mID, ErrorType::LINKING);
 
     // delete the shaders as they're linked into our program now and no longer necessary
     glDeleteShader(vertex);
@@ -127,29 +138,19 @@ unsigned int Shader::createShader(const char** source, unsigned int type) {
     glShaderSource(shader, 1, source, nullptr);
     glCompileShader(shader);
 
-    checkCompileErrors(shader, type);
+    checkErrors(shader, ErrorType::COMPILE);
 
     return shader;
 }
 
-void Shader::checkCompileErrors(unsigned int shader, unsigned int type) {
-    int success;
+void Shader::checkErrors(unsigned int shader, ErrorType type) {
+    GLint success;
     char infoLog[1024];
 
-    if (type == GL_VERTEX_SHADER || type == GL_FRAGMENT_SHADER) {
-        glGetShaderiv(shader, GL_COMPILE_STATUS, &success);
-        if (!success) {
-            glGetShaderInfoLog(shader, 1024, nullptr, infoLog);
-            std::cout << "ERROR::SHADER_COMPILATION_ERROR of type: " << type << "\n" << infoLog
-                      << "\n -- --------------------------------------------------- -- " << std::endl;
-        }
+    if (type == ErrorType::COMPILE) {
+        CHECK_ERR(glGetShaderiv, GL_COMPILE_STATUS, glGetShaderInfoLog, "ERROR::SHADER_COMPILATION_ERROR:")
     } else {
-        glGetProgramiv(shader, GL_LINK_STATUS, &success);
-        if (!success) {
-            glGetProgramInfoLog(shader, 1024, nullptr, infoLog);
-            std::cout << "ERROR::PROGRAM_LINKING_ERROR of type: " << type << "\n" << infoLog
-                      << "\n -- --------------------------------------------------- -- " << std::endl;
-        }
+        CHECK_ERR(glGetProgramiv, GL_LINK_STATUS, glGetProgramInfoLog, "ERROR::PROGRAM_LINKING_ERROR:")
     }
 }
 

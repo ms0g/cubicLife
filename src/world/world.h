@@ -1,6 +1,7 @@
 #pragma once
 
 #include <vector>
+#include <memory>
 #include <unordered_map>
 #include "glm/glm.hpp"
 #include "mesh/texture.h"
@@ -12,7 +13,7 @@ class CellMesh;
 class Shader;
 class World {
 public:
-    World(const std::vector<glm::vec3>& initialState);
+    explicit World(const std::vector<glm::vec3>& initialState);
 
     ~World();
 

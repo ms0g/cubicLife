@@ -34,7 +34,7 @@ const std::vector<glm::vec3> initialState = {
         {2.0f,  -1.0f,  2.0f},
 };
 
-int main() {
+int main(int argc, char **argv) {
     CAEngine cae;
     cae.init();
 

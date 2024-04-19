@@ -2,6 +2,7 @@
 
 #include <vector>
 #include <string>
+#include <memory>
 #include "glm/glm.hpp"
 #include "filesystem/filesystem.h"
 #include "mesh/texture.h"

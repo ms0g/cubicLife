@@ -2,7 +2,6 @@
 #include <fstream>
 #include <sstream>
 #include <stdexcept>
-#include "glad/glad.h" // include glad to get all the required OpenGL headers
 
 #define CHECK_ERR(ivFunc, status, infoLogFunc, errStr) {    \
     ivFunc(shader, status, &success);                       \
@@ -132,7 +131,7 @@ void Shader::setMat4(const std::string& name, const glm::mat4& mat) const {
     glUniformMatrix4fv(glGetUniformLocation(mID, name.c_str()), 1, GL_FALSE, &mat[0][0]);
 }
 
-unsigned int Shader::createShader(const char** source, unsigned int type) {
+unsigned int Shader::createShader(const char** source, GLuint type) {
     unsigned int shader = glCreateShader(type);
 
     glShaderSource(shader, 1, source, nullptr);
@@ -143,7 +142,7 @@ unsigned int Shader::createShader(const char** source, unsigned int type) {
     return shader;
 }
 
-void Shader::checkErrors(unsigned int shader, ErrorType type) {
+void Shader::checkErrors(GLuint shader, ErrorType type) {
     GLint success;
     char infoLog[1024];
 

@@ -2,6 +2,7 @@
 
 #include <string>
 #include <glm/glm.hpp>
+#include "glad/glad.h"
 
 enum class ErrorType {
     COMPILE,
@@ -45,9 +46,9 @@ public:
     void setMat4(const std::string& name, const glm::mat4& mat) const;
 
 private:
-    unsigned int createShader(const char** source, unsigned int type);
+    unsigned int createShader(const char** source, GLuint type);
 
-    void checkErrors(unsigned int shader, ErrorType type);
+    void checkErrors(GLuint shader, ErrorType type);
 
     // the program ID
     unsigned int mID;

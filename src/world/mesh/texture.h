@@ -2,15 +2,16 @@
 
 #include <vector>
 #include <string>
+#include "glad/glad.h"
 
 struct Texture {
-    unsigned int id;
+    GLuint id;
     std::string name;
     std::string path;
 };
 
 namespace texture {
-unsigned load(const char* path);
+GLuint load(const char* path);
 
-unsigned int loadCubemap(std::vector <std::string>& faces);
+GLuint loadCubemap(std::vector <std::string>& faces);
 }

@@ -1,5 +1,4 @@
 #include "cellMesh.h"
-#include "glad/glad.h"
 
 CellMesh::CellMesh(std::vector<float>& vertices, std::vector<Texture>& textures) :
         IMesh(vertices, textures) {}

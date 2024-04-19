@@ -1,5 +1,4 @@
 #include "skyboxMesh.h"
-#include "glad/glad.h"
 
 SkyboxMesh::SkyboxMesh(std::vector<float>& vertices, std::vector<Texture>& textures) :
         IMesh(vertices, textures) {}
@@ -26,7 +25,7 @@ void SkyboxMesh::setup() {
 }
 
 void SkyboxMesh::render() {
-    for (unsigned int i = 0; i < mTextures.size(); i++) {
+    for (int i = 0; i < mTextures.size(); i++) {
         glActiveTexture(GL_TEXTURE0 + i); // active proper texture unit before binding
         // and finally bind the texture
         glBindTexture(GL_TEXTURE_CUBE_MAP, mTextures[i].id);

@@ -1,6 +1,7 @@
 #pragma once
 
 #include <vector>
+#include "glad/glad.h"
 #include "texture.h"
 
 class IMesh {
@@ -16,8 +17,8 @@ public:
     virtual void render() = 0;
 
 protected:
-    unsigned int mVAO{};
-    unsigned int mVBO{};
+    GLuint mVAO{};
+    GLuint mVBO{};
     // mesh Data
     std::vector<float> mVertices;
     std::vector<Texture> mTextures;

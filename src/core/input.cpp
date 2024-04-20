@@ -1,5 +1,5 @@
 #include "input.h"
-#include <SDL2/SDL.h>
+#include <SDL.h>
 #include "camera.h"
 #include "../../libs/imgui/imgui_impl_sdl.h"
 

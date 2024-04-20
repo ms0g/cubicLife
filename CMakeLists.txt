@@ -25,11 +25,6 @@ if (SDL2_FOUND)
     include_directories(${SDL2_INCLUDE_DIR})
 endif ()
 
-find_package(ASSIMP REQUIRED)
-if (ASSIMP_FOUND)
-    include_directories(${ASSIMP_INCLUDE_DIR})
-endif ()
-
 set(GLM_INCLUDE_DIRS ${CMAKE_CURRENT_SOURCE_DIR}/libs/glm/include)
 set(GLAD_INCLUDE_DIRS ${CMAKE_CURRENT_SOURCE_DIR}/libs/glad/include)
 set(STB_IMAGE_INCLUDE_DIRS ${CMAKE_CURRENT_SOURCE_DIR}/libs/image/include)
@@ -62,4 +57,4 @@ target_include_directories(${PROJECT_NAME} PUBLIC
         ${KHR_INCLUDE_DIRS}
         )
 
-target_link_libraries(${PROJECT_NAME} OpenGL::GL ${SDL2_LIBRARIES} ${ASSIMP_LIBRARIES})
+target_link_libraries(${PROJECT_NAME} OpenGL::GL ${SDL2_LIBRARIES})

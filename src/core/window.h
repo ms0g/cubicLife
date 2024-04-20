@@ -1,7 +1,7 @@
 #pragma once
 
 #include <string>
-#include <SDL2/SDL.h>
+#include <SDL.h>
 #include "IWindow.hpp"
 
 class Window : public IWindow<SDL_Window> {

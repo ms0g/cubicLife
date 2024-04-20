@@ -52,5 +52,4 @@ private:
 
     // the program ID
     unsigned int mID;
-
 };

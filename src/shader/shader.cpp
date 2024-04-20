@@ -3,14 +3,13 @@
 #include <sstream>
 #include <stdexcept>
 
-#define CHECK_ERR(ivFunc, status, infoLogFunc, errStr) {    \
-    ivFunc(shader, status, &success);                       \
-    if (!success) {                                         \
-        glDeleteShader(shader);                             \
-        infoLogFunc(shader, 1024, nullptr, infoLog);        \
-        auto errMsg = std::string(errStr) + "\n" + infoLog; \
-        throw std::runtime_error(errMsg);                   \
-    }                                                       \
+#define CHECK_ERR(ivFunc, status, infoLogFunc, errstr) {                \
+    ivFunc(shader, status, &success);                                   \
+    if (!success) {                                                     \
+        glDeleteShader(shader);                                         \
+        infoLogFunc(shader, 1024, nullptr, infoLog);                    \
+        throw std::runtime_error(std::string(errstr) + "\n" + infoLog); \
+    }                                                                   \
 }
 
 Shader::Shader(const std::string& vertexPath, const std::string& fragmentPath) {
@@ -40,8 +39,7 @@ Shader::Shader(const std::string& vertexPath, const std::string& fragmentPath) {
         fragmentCode = fShaderStream.str();
     }
     catch (std::ifstream::failure& e) {
-        auto errMsg = std::string("ERROR::SHADER::FILE_NOT_SUCCESSFULLY_READ: ") + e.what();
-        throw std::runtime_error(errMsg);
+        throw std::runtime_error(std::string("ERROR::SHADER::FILE_NOT_SUCCESSFULLY_READ: ") + e.what());
     }
 
     const char* vShaderCode = vertexCode.c_str();
@@ -65,7 +63,6 @@ Shader::Shader(const std::string& vertexPath, const std::string& fragmentPath) {
     // delete the shaders as they're linked into our program now and no longer necessary
     glDeleteShader(vertex);
     glDeleteShader(fragment);
-
 }
 
 Shader::~Shader() {
@@ -90,32 +87,26 @@ void Shader::setFloat(const std::string& name, float value) const {
 
 void Shader::setVec2(const std::string& name, const glm::vec2& value) const {
     glUniform2fv(glGetUniformLocation(mID, name.c_str()), 1, &value[0]);
-
 }
 
 void Shader::setVec2(const std::string& name, float x, float y) const {
     glUniform2f(glGetUniformLocation(mID, name.c_str()), x, y);
-
 }
 
 void Shader::setVec3(const std::string& name, const glm::vec3& value) const {
     glUniform3fv(glGetUniformLocation(mID, name.c_str()), 1, &value[0]);
-
 }
 
 void Shader::setVec3(const std::string& name, float x, float y, float z) const {
     glUniform3f(glGetUniformLocation(mID, name.c_str()), x, y, z);
-
 }
 
 void Shader::setVec4(const std::string& name, const glm::vec4& value) const {
     glUniform4fv(glGetUniformLocation(mID, name.c_str()), 1, &value[0]);
-
 }
 
 void Shader::setVec4(const std::string& name, float x, float y, float z, float w) const {
     glUniform4f(glGetUniformLocation(mID, name.c_str()), x, y, z, w);
-
 }
 
 void Shader::setMat2(const std::string& name, const glm::mat2& mat) const {
@@ -124,7 +115,6 @@ void Shader::setMat2(const std::string& name, const glm::mat2& mat) const {
 
 void Shader::setMat3(const std::string& name, const glm::mat3& mat) const {
     glUniformMatrix3fv(glGetUniformLocation(mID, name.c_str()), 1, GL_FALSE, &mat[0][0]);
-
 }
 
 void Shader::setMat4(const std::string& name, const glm::mat4& mat) const {

@@ -36,7 +36,6 @@ private:
     State mState{};
     uint64_t mGenerationCount{0};
 
-
     std::unordered_map<std::string, Cell> mAliveCells;
     std::vector<std::string> mCurrentDeadCellIndexes;
     std::vector<Cell> mNeighboringDeadCells;

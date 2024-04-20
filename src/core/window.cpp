@@ -1,7 +1,6 @@
 #include "window.h"
-#include <iostream>
+#include <stdexcept>
 #include "glad/glad.h"
-
 
 Window::~Window() {
     SDL_GL_DeleteContext(mGlContext);
@@ -11,8 +10,7 @@ Window::~Window() {
 
 void Window::initImpl(const char* title, int width, int height, bool fullscreen) {
     if (SDL_Init(SDL_INIT_VIDEO) != 0) {
-        std::cerr << "Error initializing SDL" << std::endl;
-        return;
+        throw std::runtime_error("Failed to initialize SDL_VIDEO");
     }
 
     mTitle = title;
@@ -43,8 +41,7 @@ void Window::initImpl(const char* title, int width, int height, bool fullscreen)
             flags);
 
     if (!mWindow) {
-        std::cerr << "Error creating SDL Window";
-        return;
+        throw std::runtime_error("Failed to create SDL Window");
     }
 
     SDL_SetWindowFullscreen(mWindow, flags);

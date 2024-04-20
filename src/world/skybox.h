@@ -4,9 +4,9 @@
 #include <string>
 #include <memory>
 #include "glm/glm.hpp"
-#include "filesystem/filesystem.h"
 #include "mesh/texture.h"
 #include "../configs/configs.hpp"
+#include "../utils/filesystem.hpp"
 
 class Shader;
 class SkyboxMesh;

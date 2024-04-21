@@ -15,14 +15,14 @@ public:
         mAliveCellCount = aliceCellCount;
     }
 
-    void render(bool& stop, bool& next, float& speed);
+    void render(bool& stop, bool& next, bool& reset, float& speed);
 
 private:
     void renderGraphicsInfo() const;
 
     void renderWorldState() const;
 
-    void renderControlUI(bool& stop, bool& next, float& speed);
+    void renderControlUI(bool& stop, bool& next, bool& reset, float& speed);
 
     double mFPS{0.0};
     uint64_t mGenerationCount{0};

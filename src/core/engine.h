@@ -31,6 +31,7 @@ private:
     bool mIsRunning{false};
     bool mStop{false};
     bool mNext{false};
+    bool mReset{false};
     float mSpeed{0.99};
 
     // Frame

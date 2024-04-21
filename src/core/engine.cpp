@@ -70,6 +70,11 @@ void CAEngine::update(World& world) {
         mNext = false;
     }
 
+    if (mReset) {
+        world.reset();
+        mReset = false;
+    }
+
     if (!mStop) {
         int updateFrameCount = static_cast<int>(mFPS * mSpeed);
         if (mCurrentFrameCount % (updateFrameCount < 1 ? 1 : updateFrameCount) == 0)
@@ -92,7 +97,7 @@ void CAEngine::render(World& world, Skybox& skybox) {
     skybox.draw(skyview, projection);
 
 #ifdef DEBUG
-    mGui->render(mStop, mNext, mSpeed);
+    mGui->render(mStop, mNext, mReset, mSpeed);
 #endif
     // SDL swap buffers
     mWindow->swapBuffer();

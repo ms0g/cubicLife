@@ -25,7 +25,7 @@ Gui::~Gui() {
     ImGui::DestroyContext();
 }
 
-void Gui::render(bool& stop, bool& next, float& speed) {
+void Gui::render(bool& stop, bool& next, bool& reset, float& speed) {
     // Start the Dear ImGui frame
     ImGui_ImplOpenGL3_NewFrame();
     ImGui_ImplSDL2_NewFrame();
@@ -36,7 +36,7 @@ void Gui::render(bool& stop, bool& next, float& speed) {
 
     renderGraphicsInfo();
     renderWorldState();
-    renderControlUI(stop, next, speed);
+    renderControlUI(stop, next, reset, speed);
 
     //Render ImGui
     ImGui::Render();
@@ -62,8 +62,9 @@ void Gui::renderWorldState() const {
     ImGui::End();
 }
 
-void Gui::renderControlUI(bool& stop, bool& next, float& speed) {
+void Gui::renderControlUI(bool& stop, bool& next, bool& reset, float& speed) {
     static float _speed = 0.50f;
+    static int _pattern = 0;
 
     if (ImGui::Begin("Controls")) {
         if (ImGui::Button("Start")) {
@@ -77,7 +78,13 @@ void Gui::renderControlUI(bool& stop, bool& next, float& speed) {
         if (ImGui::Button("Next")) {
             next = true;
         }
-        if (ImGui::SliderFloat("Speed", &_speed, 0.01, 0.98)) {
+        ImGui::SameLine();
+        if (ImGui::Button("Reset")) {
+            reset = true;
+        }
+        ImGui::Text("Speed");
+        ImGui::SameLine();
+        if (ImGui::SliderFloat("##", &_speed, 0.01, 0.98)) {
             speed = (float)0.99 - _speed;
         }
     }

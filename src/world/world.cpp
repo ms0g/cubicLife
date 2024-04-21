@@ -69,7 +69,10 @@ void World::reset() {
 }
 
 void World::setState(std::vector<glm::vec3>& state) {
-    for (auto& pos: state) {
+    if (mCurrentState != state)
+        mCurrentState = std::move(state);
+
+    for (auto& pos: mCurrentState) {
         mAliveCells.emplace(key::createFromPosition(pos), Cell{pos});
     }
 }

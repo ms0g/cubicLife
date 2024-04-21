@@ -8,7 +8,7 @@
 #define ADJ 1
 #define MAX_CELL_NUM 2000
 
-World::World(const std::vector<glm::vec3>& initialState) {
+World::World() {
     mMesh = std::make_unique<CellMesh>(mVertices, mTextures);
     mMesh->setup();
 
@@ -17,10 +17,6 @@ World::World(const std::vector<glm::vec3>& initialState) {
 
     mShader->activate();
     mShader->setInt(mTextures[0].name, 0);
-
-    for (auto& pos: initialState) {
-        mAliveCells.emplace(key::createFromPosition(pos), Cell{pos});
-    }
 }
 
 World::~World() = default;
@@ -36,12 +32,12 @@ void World::update() {
         }
 
         if (cell.pos().z >= ZFAR) {
-            mCurrentDeadCellIndexes.push_back(cellPair.first);
+            mCurrentDeadCellKeys.push_back(cellPair.first);
             continue;
         }
 
         if (cell.aliveNeighborsCount() < 5 || cell.aliveNeighborsCount() > 6) {
-            mCurrentDeadCellIndexes.push_back(cellPair.first);
+            mCurrentDeadCellKeys.push_back(cellPair.first);
         } else {
             cell.resetAliveNeighbors();
         }
@@ -54,17 +50,28 @@ void World::update() {
         }
     }
 
-    for (auto& index: mCurrentDeadCellIndexes) {
+    for (auto& index: mCurrentDeadCellKeys) {
         auto it = mAliveCells.find(index);
         mAliveCells.erase(it);
     }
 
     mGenerationCount++;
-    mState.aliveCellCount = mAliveCells.size();
-    mState.generationCount = mGenerationCount;
+    mStateInfo.aliveCellCount = mAliveCells.size();
+    mStateInfo.generationCount = mGenerationCount;
 
     mNeighboringDeadCells.clear();
-    mCurrentDeadCellIndexes.clear();
+    mCurrentDeadCellKeys.clear();
+}
+
+void World::reset() {
+    mAliveCells.clear();
+    setState(mCurrentState);
+}
+
+void World::setState(std::vector<glm::vec3>& state) {
+    for (auto& pos: state) {
+        mAliveCells.emplace(key::createFromPosition(pos), Cell{pos});
+    }
 }
 
 void World::draw(glm::mat4 view, glm::mat4 projection) {

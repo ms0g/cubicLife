@@ -13,18 +13,22 @@ class CellMesh;
 class Shader;
 class World {
 public:
-    explicit World(const std::vector<glm::vec3>& initialState);
+    World();
 
     ~World();
 
-    struct State {
+    struct StateInfo {
         uint64_t generationCount;
         uint32_t aliveCellCount;
     };
 
-    [[nodiscard]] State state() const { return mState; }
+    [[nodiscard]] StateInfo state() const { return mStateInfo; }
 
     void update();
+
+    void reset();
+
+    void setState(std::vector<glm::vec3>& state);
 
     void draw(glm::mat4 view, glm::mat4 projection);
 
@@ -33,12 +37,13 @@ private:
 
     void checkNeighbor(Cell& currentAlive, glm::vec3 neighPos);
 
-    State mState{};
+    StateInfo mStateInfo{};
     uint64_t mGenerationCount{0};
 
     std::unordered_map<std::string, Cell> mAliveCells;
-    std::vector<std::string> mCurrentDeadCellIndexes;
+    std::vector<std::string> mCurrentDeadCellKeys;
     std::vector<Cell> mNeighboringDeadCells;
+    std::vector<glm::vec3> mCurrentState;
 
     // For instancing
     std::unique_ptr<Shader> mShader;

@@ -29,7 +29,7 @@ private:
 
     // Engine state
     bool mIsRunning{false};
-    bool mStop{false};
+    bool mStop{true};
     bool mNext{false};
     bool mReset{false};
     float mSpeed{0.99};

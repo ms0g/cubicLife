@@ -38,7 +38,6 @@ private:
     void checkNeighbor(Cell& currentAlive, glm::vec3 neighPos);
 
     StateInfo mStateInfo{};
-    uint64_t mGenerationCount{0};
 
     std::unordered_map<std::string, Cell> mAliveCells;
     std::vector<std::string> mCurrentDeadCellKeys;

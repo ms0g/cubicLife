@@ -55,9 +55,8 @@ void World::update() {
         mAliveCells.erase(it);
     }
 
-    mGenerationCount++;
     mStateInfo.aliveCellCount = mAliveCells.size();
-    mStateInfo.generationCount = mGenerationCount;
+    mStateInfo.generationCount++;
 
     mNeighboringDeadCells.clear();
     mCurrentDeadCellKeys.clear();
@@ -65,6 +64,7 @@ void World::update() {
 
 void World::reset() {
     mAliveCells.clear();
+    mStateInfo = {0};
     setState(mCurrentState);
 }
 

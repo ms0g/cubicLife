@@ -10,7 +10,7 @@ int main(int argc, char** argv) {
     Skybox skyBox{};
 
     World world{};
-    world.setState(states::cube);
+    world.setState(state::cube);
 
     cae.run(world, skyBox);
 

@@ -3,7 +3,7 @@
 #include <vector>
 #include "glm/glm.hpp"
 
-namespace states {
+namespace state {
 
 static std::vector<glm::vec3> cube = {
         {0.0f, -1.0f, 0.0f},

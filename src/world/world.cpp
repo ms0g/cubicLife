@@ -27,9 +27,7 @@ void World::update() {
     for (auto& cellPair: mAliveCells) {
         auto& cell = cellPair.second;
 
-        for (int i = -1; i <= 1; ++i) {
-            processNeighbors(cell, cell.pos().y + (float) i);
-        }
+        processNeighbors(cell);
 
         if (cell.pos().z >= ZFAR) {
             mCurrentDeadCellKeys.push_back(cellPair.first);
@@ -96,47 +94,15 @@ void World::draw(glm::mat4 view, glm::mat4 projection) {
     mMesh->render();
 }
 
-void World::processNeighbors(Cell& cell, float y) {
-    // self
-    glm::vec3 neighPos = {cell.pos().x, y, cell.pos().z};
-    checkNeighbor(cell, neighPos);
-
-    // right neighbor
-    neighPos.x = cell.pos().x + ADJ;
-    checkNeighbor(cell, neighPos);
-
-    // left neighbor
-    neighPos.x = cell.pos().x - ADJ;
-    checkNeighbor(cell, neighPos);
-
-    // forward neighbor
-    neighPos.x = cell.pos().x;
-    neighPos.z = cell.pos().z - ADJ;
-    checkNeighbor(cell, neighPos);
-
-    // backward neighbor
-    neighPos.z = cell.pos().z + ADJ;
-    checkNeighbor(cell, neighPos);
-
-    // forward right neighbor
-    neighPos.x = cell.pos().x + ADJ;
-    neighPos.z = cell.pos().z - ADJ;
-    checkNeighbor(cell, neighPos);
-
-    // forward left neighbor
-    neighPos.x = cell.pos().x - ADJ;
-    neighPos.z = cell.pos().z - ADJ;
-    checkNeighbor(cell, neighPos);
-
-    // backward right neighbor
-    neighPos.x = cell.pos().x + ADJ;
-    neighPos.z = cell.pos().z + ADJ;
-    checkNeighbor(cell, neighPos);
-
-    // backward left neighbor
-    neighPos.x = cell.pos().x - ADJ;
-    neighPos.z = cell.pos().z + ADJ;
-    checkNeighbor(cell, neighPos);
+void World::processNeighbors(Cell& cell) {
+    for (int i = -1; i < 2; ++i) {
+        for (int j = -1; j < 2; ++j) {
+            for (int k = -1; k < 2; ++k) {
+                glm::vec3 neighPos = {cell.pos().x + i, cell.pos().y + j, cell.pos().z + k};
+                checkNeighbor(cell, neighPos);
+            }
+        }
+    }
 }
 
 void World::checkNeighbor(Cell& currentAlive, glm::vec3 neighPos) {

@@ -5,7 +5,6 @@
 #include "../utils/key.hpp"
 #include "../shader/shader.h"
 
-#define ADJ 1
 #define MAX_CELL_NUM 2000
 
 World::World() {

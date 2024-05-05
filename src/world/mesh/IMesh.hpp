@@ -10,7 +10,14 @@ public:
             mVertices(std::move(vertices)),
             mTextures(std::move(textures)) {}
 
-    virtual ~IMesh() = default;
+    virtual ~IMesh() {
+        glDeleteVertexArrays(1, &mVAO);
+
+        for (auto& texture: mTextures) {
+            glDeleteTextures(1, &texture.id);
+
+        }
+    }
 
     virtual void setup() = 0;
 

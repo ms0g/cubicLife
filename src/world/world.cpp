@@ -3,7 +3,7 @@
 #include "cell.h"
 #include "mesh/cellMesh.h"
 #include "../utils/key.hpp"
-#include "../shader/shader.h"
+#include "../core/shader.h"
 
 #define MAX_CELL_NUM 2000
 

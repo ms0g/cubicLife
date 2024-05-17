@@ -1,6 +1,6 @@
 #include "skybox.h"
 #include "mesh/skyboxMesh.h"
-#include "../shader/shader.h"
+#include "../core/shader.h"
 
 Skybox::Skybox() {
     mShader = std::make_unique<Shader>(fs::path(SHADER_DIR + "/skybox.vert.glsl"),

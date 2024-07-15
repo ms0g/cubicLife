@@ -3,15 +3,6 @@
 #include <sstream>
 #include <stdexcept>
 
-#define CHECK_ERR(ivFunc, status, infoLogFunc, errstr) {                \
-    ivFunc(shader, status, &success);                                   \
-    if (!success) {                                                     \
-        glDeleteShader(shader);                                         \
-        infoLogFunc(shader, 1024, nullptr, infoLog);                    \
-        throw std::runtime_error(std::string(errstr) + "\n" + infoLog); \
-    }                                                                   \
-}
-
 Shader::Shader(const std::string& vertexPath, const std::string& fragmentPath) {
     // 1. retrieve the vertex/fragment source code from filePath
     std::string vertexCode;
@@ -45,20 +36,14 @@ Shader::Shader(const std::string& vertexPath, const std::string& fragmentPath) {
     const char* vShaderCode = vertexCode.c_str();
     const char* fShaderCode = fragmentCode.c_str();
 
-    unsigned int vertex, fragment;
+    GLuint vertex, fragment;
     // vertex shader
     vertex = createShader(&vShaderCode, GL_VERTEX_SHADER);
 
     // fragment Shader
     fragment = createShader(&fShaderCode, GL_FRAGMENT_SHADER);
 
-    // shader Program
-    mID = glCreateProgram();
-    glAttachShader(mID, vertex);
-    glAttachShader(mID, fragment);
-    glLinkProgram(mID);
-
-    checkErrors(mID, ErrorType::LINKING);
+    linkShader(vertex, fragment);
 
     // delete the shaders as they're linked into our program now and no longer necessary
     glDeleteShader(vertex);
@@ -121,33 +106,60 @@ void Shader::setMat4(const std::string& name, const glm::mat4& mat) const {
     glUniformMatrix4fv(glGetUniformLocation(mID, name.c_str()), 1, GL_FALSE, &mat[0][0]);
 }
 
-unsigned int Shader::createShader(const char** source, GLuint type) {
-    unsigned int shader = glCreateShader(type);
+GLuint Shader::createShader(const char** source, GLuint type) {
+    GLuint shader = glCreateShader(type);
 
     glShaderSource(shader, 1, source, nullptr);
     glCompileShader(shader);
 
-    checkErrors(shader, ErrorType::COMPILE);
+    // Check compiler errors
+    std::string infoLog;
+    GLint success;
+    GLint maxLength = 0;
+
+    glGetShaderiv(shader, GL_COMPILE_STATUS, &success);
+
+    if (!success) {
+        glGetShaderiv(shader, GL_INFO_LOG_LENGTH, &maxLength);
+        infoLog.resize(maxLength);
+
+        glGetShaderInfoLog(shader, maxLength, nullptr, infoLog.data());
+
+        // The program is useless now. So delete it.
+        glDeleteShader(shader);
+
+        throw std::runtime_error(std::string("ERROR::SHADER_COMPILATION_ERROR:") + "\n" + infoLog);
+    }
 
     return shader;
 }
 
-void Shader::checkErrors(GLuint shader, ErrorType type) {
+GLuint Shader::linkShader(GLuint vertex, GLuint fragment) {
+    mID = glCreateProgram();
+
+    glAttachShader(mID, vertex);
+    glAttachShader(mID, fragment);
+
+    glLinkProgram(mID);
+
+    // Check linking errors
+    std::string infoLog;
     GLint success;
-    char infoLog[1024];
+    GLint maxLength = 0;
 
-    if (type == ErrorType::COMPILE) {
-        CHECK_ERR(glGetShaderiv, GL_COMPILE_STATUS, glGetShaderInfoLog, "ERROR::SHADER_COMPILATION_ERROR:")
-    } else {
-        CHECK_ERR(glGetProgramiv, GL_LINK_STATUS, glGetProgramInfoLog, "ERROR::PROGRAM_LINKING_ERROR:")
+    glGetProgramiv(mID, GL_LINK_STATUS, &success);
+
+    if (!success) {
+        glGetProgramiv(mID, GL_INFO_LOG_LENGTH, &maxLength);
+        infoLog.resize(maxLength);
+
+        glGetProgramInfoLog(mID, maxLength, nullptr, infoLog.data());
+
+        // The program is useless now. So delete it.
+        glDeleteShader(mID);
+
+        throw std::runtime_error(std::string("ERROR::PROGRAM_LINKING_ERROR:") + "\n" + infoLog);
     }
+
+    return mID;
 }
-
-
-
-
-
-
-
-
-

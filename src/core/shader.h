@@ -1,7 +1,7 @@
 #pragma once
 
 #include <string>
-#include <glm/glm.hpp>
+#include "glm/glm.hpp"
 #include "glad/glad.h"
 
 enum class ErrorType {
@@ -15,7 +15,7 @@ public:
 
     ~Shader();
 
-    [[nodiscard]] inline unsigned int getId() const { return mID; };
+    [[nodiscard]] inline GLuint getId() const { return mID; };
 
     // use/activate the shader
     void activate() const;
@@ -46,10 +46,10 @@ public:
     void setMat4(const std::string& name, const glm::mat4& mat) const;
 
 private:
-    unsigned int createShader(const char** source, GLuint type);
+    GLuint createShader(const char** source, GLuint type);
 
-    void checkErrors(GLuint shader, ErrorType type);
+    GLuint linkShader(GLuint vertex, GLuint fragment);
 
     // the program ID
-    unsigned int mID;
+    GLuint mID{};
 };

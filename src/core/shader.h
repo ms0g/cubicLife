@@ -4,11 +4,6 @@
 #include "glm/glm.hpp"
 #include "glad/glad.h"
 
-enum class ErrorType {
-    COMPILE,
-    LINKING
-};
-
 class Shader {
 public:
     Shader(const std::string& vertexPath, const std::string& fragmentPath);

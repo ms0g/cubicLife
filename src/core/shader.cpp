@@ -112,14 +112,14 @@ GLuint Shader::createShader(const char** source, GLuint type) {
     glShaderSource(shader, 1, source, nullptr);
     glCompileShader(shader);
 
-    // Check compiler errors
-    std::string infoLog;
+    // Check compile errors
     GLint success;
-    GLint maxLength = 0;
-
     glGetShaderiv(shader, GL_COMPILE_STATUS, &success);
 
     if (!success) {
+        std::string infoLog;
+        GLint maxLength = 0;
+
         glGetShaderiv(shader, GL_INFO_LOG_LENGTH, &maxLength);
         infoLog.resize(maxLength);
 
@@ -143,13 +143,13 @@ GLuint Shader::linkShader(GLuint vertex, GLuint fragment) {
     glLinkProgram(mID);
 
     // Check linking errors
-    std::string infoLog;
     GLint success;
-    GLint maxLength = 0;
-
     glGetProgramiv(mID, GL_LINK_STATUS, &success);
 
     if (!success) {
+        std::string infoLog;
+        GLint maxLength = 0;
+
         glGetProgramiv(mID, GL_INFO_LOG_LENGTH, &maxLength);
         infoLog.resize(maxLength);
 

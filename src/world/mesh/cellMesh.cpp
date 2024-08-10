@@ -69,7 +69,7 @@ void CellMesh::render() {
     }
     // draw mesh
     glBindVertexArray(mVAO);
-    glDrawArraysInstanced(GL_TRIANGLES, 0, 36, mModelMatrices.size());
+    glDrawArraysInstanced(GL_TRIANGLES, 0, 36, (int)mModelMatrices.size());
     glBindVertexArray(0);
 
     // always good practice to set everything back to defaults once configured.

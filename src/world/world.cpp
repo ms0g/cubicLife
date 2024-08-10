@@ -11,8 +11,8 @@ World::World() {
     mMesh = std::make_unique<CellMesh>(mVertices, mTextures);
     mMesh->setup();
 
-    mShader = std::make_unique<Shader>(fs::path(SHADER_DIR + "/cell.vert.glsl"),
-                                       fs::path(SHADER_DIR + "/cell.frag.glsl"));
+    mShader = std::make_unique<Shader>(fs::path(SHADER_DIR + "/cell.vert"),
+                                       fs::path(SHADER_DIR + "/cell.frag"));
 
     mShader->activate();
     mShader->setInt(mTextures[0].name, 0);

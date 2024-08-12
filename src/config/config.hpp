@@ -15,8 +15,8 @@ const std::string ASSET_DIR = "assets";
 #define ASPECT (float) SCR_WIDTH / (float) SCR_HEIGHT
 
 // Camera Settings
-#define YAW            -90.0f
-#define PITCH          -30.0f
+#define YAW            (-90.0f)
+#define PITCH          (-30.0f)
 #define SPEED           20.0f
 #define SENSITIVITY     0.1f
 #define ZOOM            45.0f

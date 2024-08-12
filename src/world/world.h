@@ -6,7 +6,7 @@
 #include "glm/glm.hpp"
 #include "mesh/texture.h"
 #include "../utils/filesystem.hpp"
-#include "../configs/configs.hpp"
+#include "../config/config.hpp"
 
 class Cell;
 class CellMesh;

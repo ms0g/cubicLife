@@ -5,7 +5,7 @@
 #include <memory>
 #include "glm/glm.hpp"
 #include "mesh/texture.h"
-#include "../configs/configs.hpp"
+#include "../config/config.hpp"
 #include "../utils/filesystem.hpp"
 
 class Shader;

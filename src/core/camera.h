@@ -1,7 +1,7 @@
 #pragma once
 
 #include "glm/glm.hpp"
-#include "../configs/configs.hpp"
+#include "../config/config.hpp"
 
 enum CameraMovement {
     FORWARD,

@@ -28,7 +28,7 @@ public:
 
     void reset();
 
-    void setState(std::vector<glm::vec3>& state);
+    void setState(const std::vector<glm::vec3>& state);
 
     void draw(glm::mat4 view, glm::mat4 projection);
 

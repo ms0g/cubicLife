@@ -5,7 +5,7 @@
 
 namespace state {
 
-static std::vector<glm::vec3> cube = {
+static const std::vector<glm::vec3> cube = {
         {0.0f, -1.0f, 0.0f},
         {1.0f, -1.0f, 0.0f},
         {0.0f, -1.0f, 1.0f},
@@ -17,7 +17,7 @@ static std::vector<glm::vec3> cube = {
         {1.0f, 0.0f,  1.0f},
 };
 
-static std::vector<glm::vec3> oscCube = {
+static const std::vector<glm::vec3> oscCube = {
         {0.0f, 0.0f,  0.0f},
         {1.0f, 0.0f,  0.0f},
         {2.0f, 0.0f,  0.0f},

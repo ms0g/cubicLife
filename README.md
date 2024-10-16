@@ -4,10 +4,6 @@ Cubic Life is a powerful cellular automaton engine designed to simulate Conway's
 
 <img src="assets/screenshot.gif" alt="image" width="700" height="auto">
 
-## Rules
-+ A live cell that has live neighbors below 5 or above 6 dies.
-+ A dead cell that has 4 live neighbors becomes a live cell.
-
 ## Features
 + **Infinite Grid:** No grid size limitation.
 + **Conway's Game of Life:** CAEngine is specifically designed to run Conway's Game of Life, a classic cellular automaton with simple rules but complex emergent behavior.
@@ -16,6 +12,11 @@ Cubic Life is a powerful cellular automaton engine designed to simulate Conway's
 + **Visualization:** CAEngine includes built-in visualization tools to observe the evolution of the cellular automaton in real-time, providing insights into the emergent patterns and dynamics.
 + **Configurability:** Users can adjust various parameters such as initial configurations, and simulation speed to tailor the behavior of the cellular automaton to their specific needs.
 + **Cross-Platform:** CAEngine is designed to be cross-platform, ensuring compatibility with various operating systems.
+
+## Rules
++ A live cell that has live neighbors below 5 or above 6 dies.
++ A dead cell that has 4 live neighbors becomes a live cell.
+
 ## Controls
 | Key  | Action        |
 |------|---------------|

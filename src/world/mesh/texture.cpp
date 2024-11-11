@@ -5,23 +5,22 @@
 unsigned int texture::load(const char* path) {
     GLuint textureID;
 
-    int width, height, nrComponents;
-    unsigned char* data = stbi_load(path, &width, &height, &nrComponents, 0);
+    int width, height, depth;
+    unsigned char* data = stbi_load(path, &width, &height, &depth, 0);
 
     if (!data) {
         std::cerr << "Texture failed to load at path: " << path << std::endl;
-        stbi_image_free(data);
-        return 0;
+        exit(1);
     }
 
     glGenTextures(1, &textureID);
 
     GLenum format{0};
-    if (nrComponents == 1)
+    if (depth == 1)
         format = GL_RED;
-    else if (nrComponents == 3)
+    else if (depth == 3)
         format = GL_RGB;
-    else if (nrComponents == 4)
+    else if (depth == 4)
         format = GL_RGBA;
 
     glBindTexture(GL_TEXTURE_2D, textureID);
@@ -40,27 +39,26 @@ unsigned int texture::load(const char* path) {
 
 unsigned int texture::loadCubemap(std::vector<std::string>& faces) {
     GLuint textureID;
+
     glGenTextures(1, &textureID);
     glBindTexture(GL_TEXTURE_CUBE_MAP, textureID);
 
-    int width, height, nrChannels;
+    int width, height, depth;
     for (unsigned int i = 0; i < faces.size(); i++) {
+        unsigned char* data = stbi_load(faces[i].c_str(), &width, &height, &depth, 0);
 
-        unsigned char* data = stbi_load(faces[i].c_str(), &width, &height, &nrChannels, 0);
-
-        if (data) {
-            stbi_set_flip_vertically_on_load(false);
-
-            glTexImage2D(GL_TEXTURE_CUBE_MAP_POSITIVE_X + i,
-                         0, GL_RGB, width, height, 0, GL_RGB, GL_UNSIGNED_BYTE, data
-            );
-
-            stbi_image_free(data);
-        } else {
+        if (!data) {
             std::cout << "Cubemap texture failed to load at path: " << faces[i] << std::endl;
-            stbi_image_free(data);
+            exit(1);
         }
+
+        stbi_set_flip_vertically_on_load(false);
+
+        glTexImage2D(GL_TEXTURE_CUBE_MAP_POSITIVE_X + i, 0, GL_RGB, width, height, 0, GL_RGB, GL_UNSIGNED_BYTE, data);
+
+        stbi_image_free(data);
     }
+
     glTexParameteri(GL_TEXTURE_CUBE_MAP, GL_TEXTURE_MIN_FILTER, GL_LINEAR);
     glTexParameteri(GL_TEXTURE_CUBE_MAP, GL_TEXTURE_MAG_FILTER, GL_LINEAR);
     glTexParameteri(GL_TEXTURE_CUBE_MAP, GL_TEXTURE_WRAP_S, GL_CLAMP_TO_EDGE);

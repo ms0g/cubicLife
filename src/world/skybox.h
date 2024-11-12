@@ -6,7 +6,7 @@
 #include "glm/glm.hpp"
 #include "mesh/texture.h"
 #include "../config/config.hpp"
-#include "../utils/filesystem.hpp"
+#include "../core/io.hpp"
 
 class Shader;
 class SkyboxMesh;

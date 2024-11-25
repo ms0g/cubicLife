@@ -1,5 +1,4 @@
 # Cubic Life
-## Overview
 Cubic Life is a powerful cellular automaton engine designed to simulate Conway's Game of Life in 3D dimension.
 
 <img src="assets/screenshot.gif" alt="image" width="700" height="auto">

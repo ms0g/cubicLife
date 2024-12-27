@@ -29,11 +29,11 @@ Camera::Camera(float posX, float posY, float posZ, float upX, float upY, float u
 
 void Camera::update() {
     // calculate the new Front vector
-    glm::vec3 _front;
-    _front.x = cos(glm::radians(mYaw)) * cos(glm::radians(mPitch));
-    _front.y = sin(glm::radians(mPitch));
-    _front.z = sin(glm::radians(mYaw)) * cos(glm::radians(mPitch));
-    mFront = glm::normalize(_front);
+    glm::vec3 front;
+    front.x = cos(glm::radians(mYaw)) * cos(glm::radians(mPitch));
+    front.y = sin(glm::radians(mPitch));
+    front.z = sin(glm::radians(mYaw)) * cos(glm::radians(mPitch));
+    mFront = glm::normalize(front);
     // also re-calculate the Right and Up vector
     // normalize the vectors, because their length gets closer to 0 the more you look up or down which results in slower movement.
     mRight = glm::normalize(glm::cross(mFront, mWorldUp));

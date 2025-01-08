@@ -3,6 +3,10 @@ project(cae VERSION 0.1.0)
 
 set(CMAKE_CXX_STANDARD 20)
 
+if (APPLE)
+    add_compile_options(-gdwarf-4)
+endif ()
+
 set(PROFILE FALSE)
 if (PROFILE)
     set(CMAKE_C_FLAGS "${CMAKE_C_FLAGS} -O0")

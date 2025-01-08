@@ -1,22 +1,10 @@
 #include "world.h"
-#include "glm/gtc/matrix_transform.hpp"
 #include "cell.h"
-#include "mesh/cellMesh.h"
 #include "../utils/key.hpp"
-#include "../core/shader.h"
 
 #define MAX_CELL_NUM 2000
 
-World::World() {
-    mMesh = std::make_unique<CellMesh>(mVertices, mTextures);
-    mMesh->setup();
-
-    mShader = std::make_unique<Shader>(fs::path(SHADER_DIR + "/cell.vert"),
-                                       fs::path(SHADER_DIR + "/cell.frag"));
-
-    mShader->activate();
-    mShader->setInt(mTextures[0].name, 0);
-}
+World::World() = default;
 
 World::~World() = default;
 
@@ -75,22 +63,7 @@ void World::setState(const std::vector<glm::vec3>& state) {
 }
 
 void World::draw(glm::mat4 view, glm::mat4 projection) {
-    // Setup model matrices
-    std::vector<glm::mat4> modelMatrices;
-    for (auto& aliveCell: mAliveCells) {
-        glm::mat4 model = glm::mat4(1.0f);
-        model = glm::translate(model, aliveCell.second.pos());
 
-        modelMatrices.push_back(model);
-    }
-
-    mMesh->setupInstancing(modelMatrices);
-
-    mShader->activate();
-    mShader->setMat4("view", view);
-    mShader->setMat4("projection", projection);
-
-    mMesh->render();
 }
 
 void World::processNeighbors(Cell& cell) {

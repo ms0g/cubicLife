@@ -1,6 +1,5 @@
 #include "window.h"
 #include <stdexcept>
-#include "glad/glad.h"
 
 Window::~Window() {
     SDL_GL_DeleteContext(mGlContext);
@@ -50,10 +49,7 @@ void Window::initImpl(const char* title, int width, int height, bool fullscreen)
 }
 
 void Window::clearImpl(float r, float g, float b, float a) {
-    glClearColor(r, g, b, a);
-    glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
 }
-
 
 void Window::swapBuffer() {
     SDL_GL_SwapWindow(mWindow);

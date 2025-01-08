@@ -1,15 +1,12 @@
 #include "engine.h"
-#include <stdexcept>
-#include "glad/glad.h"
 #include "glm/glm.hpp"
 #include "glm/gtc/matrix_transform.hpp"
-#include "image/stb_image.h"
 #include "camera.h"
 #include "window.h"
 #include "input.h"
 #include "gui.h"
+#include "../renderer/renderer.h"
 #include "../world/world.h"
-#include "../world/skybox.h"
 
 CAEngine::CAEngine() = default;
 
@@ -19,6 +16,8 @@ void CAEngine::init() {
     mWindow = std::make_unique<Window>();
     mWindow->init("CAEngine");
 
+    mRenderer = std::make_unique<Renderer>();
+
     mCamera = std::make_unique<Camera>(glm::vec3(0.0f, 20.0f, 20.0f));
 
     mInput = std::make_unique<Input>();
@@ -26,28 +25,15 @@ void CAEngine::init() {
     mGui = std::make_unique<Gui>(mWindow->nativeHandle(),
                                  mWindow->glContext());
 #endif
-    // glad: load all OpenGL function pointers
-    if (!gladLoadGLLoader(SDL_GL_GetProcAddress)) {
-        throw std::runtime_error("Failed to initialize GLAD");
-    }
-
-    // Tell stb_image.h to flip loaded texture's on the y-axis (before loading model).
-    stbi_set_flip_vertically_on_load(true);
-
-    // Configure global opengl state
-    glEnable(GL_DEPTH_TEST);
-    glEnable(GL_CULL_FACE);
-    glCullFace(GL_BACK);
-    glFrontFace(GL_CCW);
 
     mIsRunning = true;
 }
 
-void CAEngine::run(World& world, Skybox& skybox) {
+void CAEngine::run(World& world) {
     while (mIsRunning) {
         processInput();
         update(world);
-        render(world, skybox);
+        render(world);
     }
 }
 
@@ -84,17 +70,13 @@ void CAEngine::update(World& world) {
     mCamera->update();
 }
 
-void CAEngine::render(World& world, Skybox& skybox) {
-    mWindow->clear(0.2f, 0.3f, 0.3f, 1.0f);
+void CAEngine::render(World& world) {
+    mRenderer->clear(0.2f, 0.3f, 0.3f, 1.0f);
 
     glm::mat4 view = mCamera->getViewMatrix();
     glm::mat4 projection = glm::perspective(glm::radians(mCamera->getZoom()), ASPECT, ZNEAR, ZFAR);
 
-    world.draw(view, projection);
-
-    glm::mat4 skyview = glm::mat4(glm::mat3(mCamera->getViewMatrix()));
-
-    skybox.draw(skyview, projection);
+    mRenderer->render(view, projection);
 
 #ifdef DEBUG
     mGui->render(mStop, mNext, mReset, mSpeed);

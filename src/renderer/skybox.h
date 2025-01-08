@@ -16,7 +16,7 @@ public:
 
     ~Skybox();
 
-    void draw(glm::mat4 view, glm::mat4 projection);
+    void render(glm::mat4 view, glm::mat4 projection);
 
 private:
     std::unique_ptr<SkyboxMesh> mMesh;

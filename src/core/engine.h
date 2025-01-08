@@ -3,11 +3,11 @@
 #include <memory>
 
 class World;
-class Skybox;
 class Camera;
 class Window;
 class Input;
 class Gui;
+class Renderer;
 class CAEngine {
 public:
     CAEngine();
@@ -16,14 +16,14 @@ public:
 
     void init();
 
-    void run(World& world, Skybox& skybox);
+    void run(World& world);
 
 private:
     void processInput();
 
     void update(World& world);
 
-    void render(World& world, Skybox& skybox);
+    void render(World& world);
 
     void updateFpsCounter();
 
@@ -44,6 +44,7 @@ private:
     std::unique_ptr<Gui> mGui;
     std::unique_ptr<Camera> mCamera;
     std::unique_ptr<Input> mInput;
+    std::unique_ptr<Renderer> mRenderer;
 
     float mDeltaTime{};
     uint32_t mMsPreviousFrame{0};

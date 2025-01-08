@@ -3251,7 +3251,7 @@ static void ShowDemoWindowLayout()
             "(use this as a shortcut if you are only using ImDrawList calls)\n\n"
             "(Right) Using ImDrawList::AddText() with a fine ClipRect:\n"
             "Will alter only this specific ImDrawList::AddText() rendering.\n"
-            "This is often used internally to avoid altering the clipping rectangle and minimize draw calls.");
+            "This is often used internally to avoid altering the clipping rectangle and minimize render calls.");
 
         for (int n = 0; n < 3; n++)
         {
@@ -5231,7 +5231,7 @@ static void ShowDemoWindowTables()
                 ImGui::CheckboxFlags("ImGuiTableFlags_PreciseWidths", &flags, ImGuiTableFlags_PreciseWidths);
                 ImGui::SameLine(); HelpMarker("Disable distributing remainder width to stretched columns (width allocation on a 100-wide table with 3 columns: Without this flag: 33,33,34. With this flag: 33,33,33). With larger number of columns, resizing will appear to be less smooth.");
                 ImGui::CheckboxFlags("ImGuiTableFlags_NoClip", &flags, ImGuiTableFlags_NoClip);
-                ImGui::SameLine(); HelpMarker("Disable clipping rectangle for every individual columns (reduce draw command count, items will be able to overflow into other columns). Generally incompatible with ScrollFreeze options.");
+                ImGui::SameLine(); HelpMarker("Disable clipping rectangle for every individual columns (reduce render command count, items will be able to overflow into other columns). Generally incompatible with ScrollFreeze options.");
                 ImGui::TreePop();
             }
 
@@ -5740,7 +5740,7 @@ static void ShowDemoWindowInputs()
             ImGui::Text("Hover to see mouse cursors:");
             ImGui::SameLine(); HelpMarker(
                 "Your application can render a different mouse cursor based on what ImGui::GetMouseCursor() returns. "
-                "If software cursor rendering (io.MouseDrawCursor) is set ImGui will draw the right cursor for you, "
+                "If software cursor rendering (io.MouseDrawCursor) is set ImGui will render the right cursor for you, "
                 "otherwise your backend needs to handle it.");
             for (int i = 0; i < ImGuiMouseCursor_COUNT; i++)
             {
@@ -7737,14 +7737,14 @@ static void ShowExampleAppCustomRendering(bool* p_open)
             ImGui::EndTabItem();
         }
 
-        if (ImGui::BeginTabItem("BG/FG draw lists"))
+        if (ImGui::BeginTabItem("BG/FG render lists"))
         {
             static bool draw_bg = true;
             static bool draw_fg = true;
-            ImGui::Checkbox("draw in Background draw list", &draw_bg);
-            ImGui::SameLine(); HelpMarker("The Background draw list will be rendered below every Dear ImGui windows.");
-            ImGui::Checkbox("draw in Foreground draw list", &draw_fg);
-            ImGui::SameLine(); HelpMarker("The Foreground draw list will be rendered over every Dear ImGui windows.");
+            ImGui::Checkbox("draw in Background render list", &draw_bg);
+            ImGui::SameLine(); HelpMarker("The Background render list will be rendered below every Dear ImGui windows.");
+            ImGui::Checkbox("draw in Foreground render list", &draw_fg);
+            ImGui::SameLine(); HelpMarker("The Foreground render list will be rendered over every Dear ImGui windows.");
             ImVec2 window_pos = ImGui::GetWindowPos();
             ImVec2 window_size = ImGui::GetWindowSize();
             ImVec2 window_center = ImVec2(window_pos.x + window_size.x * 0.5f, window_pos.y + window_size.y * 0.5f);

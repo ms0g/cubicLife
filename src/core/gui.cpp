@@ -34,24 +34,12 @@ void Gui::render(bool& stop, bool& next, bool& reset, float& speed) {
 //    bool show_demo_window = true;
 //    ImGui::ShowDemoWindow(&show_demo_window);
 
-    renderGraphicsInfo();
     renderWorldState();
     renderControlUI(stop, next, reset, speed);
 
     //Render ImGui
     ImGui::Render();
     ImGui_ImplOpenGL3_RenderDrawData(ImGui::GetDrawData());
-}
-
-void Gui::renderGraphicsInfo() const {
-    if (ImGui::Begin("Graphics")) {
-        ImGui::Text("%s FPS", std::to_string(mFPS).c_str());
-        ImGui::Text("OpenGL version: %s", glGetString(GL_VERSION));
-        ImGui::Text("GLSL Version: %s", glGetString(GL_SHADING_LANGUAGE_VERSION));
-        ImGui::Text("OpenGL Driver Vendor: %s", glGetString(GL_VENDOR));
-        ImGui::Text("OpenGL Renderer: %s", glGetString(GL_RENDERER));
-    }
-    ImGui::End();
 }
 
 void Gui::renderWorldState() const {

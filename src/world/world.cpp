@@ -62,10 +62,6 @@ void World::setState(const std::vector<glm::vec3>& state) {
     }
 }
 
-void World::draw(glm::mat4 view, glm::mat4 projection) {
-
-}
-
 void World::processNeighbors(Cell& cell) {
     for (int i = -1; i < 2; ++i) {
         for (int j = -1; j < 2; ++j) {

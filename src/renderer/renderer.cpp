@@ -6,6 +6,9 @@
 #include "glad/glad.h"
 #include "glm/gtc/matrix_transform.hpp"
 #include "image/stb_image.h"
+#include "../world/cell.h"
+#include "../core/io.hpp"
+#include "../config/config.hpp"
 
 Renderer::Renderer() {
     // glad: load all OpenGL function pointers
@@ -23,16 +26,18 @@ Renderer::Renderer() {
     glFrontFace(GL_CCW);
 
     std::vector<Texture> cellTextures = {
-            {texture::load(fs::path(ASSET_DIR + "/glowing-rocks.jpg").c_str()),
-             "texture1",
-             "glowing-rocks.jpg"}
+        {
+            texture::load(fs::path(ASSET_DIR + "/glowing-rocks.jpg").c_str()),
+            "texture1",
+            "glowing-rocks.jpg"
+        }
     };
 
     cellMesh = std::make_unique<CellMesh>(cellVertices, cellTextures);
     cellMesh->setup();
 
     cellShader = std::make_unique<Shader>(fs::path(SHADER_DIR + "/cell.vert"),
-                                       fs::path(SHADER_DIR + "/cell.frag"));
+                                          fs::path(SHADER_DIR + "/cell.frag"));
 
     cellShader->activate();
     cellShader->setInt(cellTextures[0].name, 0);
@@ -45,26 +50,26 @@ Renderer::Renderer() {
     std::cout << "OpenGL Renderer: " << glGetString(GL_RENDERER) << "\n";
 }
 
-void Renderer::render(glm::mat4 view, glm::mat4 projection) {
+void Renderer::render(const glm::mat4& view, const glm::mat4& projection,
+                      const std::unordered_map<std::string, Cell>& aliveCells) const {
     // Setup model matrices
-//    std::vector<glm::mat4> modelMatrices;
-//    for (auto& aliveCell: mAliveCells) {
-//        glm::mat4 model = glm::mat4(1.0f);
-//        model = glm::translate(model, aliveCell.second.pos());
-//
-//        modelMatrices.push_back(model);
-//    }
-//
-//    cellMesh->setupInstancing(modelMatrices);
-//
-//    cellShader->activate();
-//    cellShader->setMat4("view", view);
-//    cellShader->setMat4("projection", projection);
-//    cellMesh->render();
+    std::vector<glm::mat4> modelMatrices;
+    for (const auto& [_, cell]: aliveCells) {
+        glm::mat4 model = glm::mat4(1.0f);
+        model = glm::translate(model, cell.pos());
+
+        modelMatrices.push_back(model);
+    }
+
+    cellMesh->setupInstancing(modelMatrices);
+
+    cellShader->activate();
+    cellShader->setMat4("view", view);
+    cellShader->setMat4("projection", projection);
+    cellMesh->render();
 
     glm::mat4 skyview = glm::mat4(glm::mat3(view));
     skybox->render(skyview, projection);
-
 }
 
 void Renderer::clear(float r, float g, float b, float a) {

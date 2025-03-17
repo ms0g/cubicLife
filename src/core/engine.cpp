@@ -76,7 +76,7 @@ void CAEngine::render(World& world) {
     glm::mat4 view = mCamera->getViewMatrix();
     glm::mat4 projection = glm::perspective(glm::radians(mCamera->getZoom()), ASPECT, ZNEAR, ZFAR);
 
-    mRenderer->render(view, projection);
+    mRenderer->render(view, projection, world.aliveCells());
 
 #ifdef DEBUG
     mGui->render(mStop, mNext, mReset, mSpeed);

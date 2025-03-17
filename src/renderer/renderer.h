@@ -4,14 +4,15 @@
 #include "shader.h"
 #include "skybox.h"
 #include "mesh/cellMesh.h"
-#include "../core/io.hpp"
-#include "../config/config.hpp"
 
+
+class Cell;
 class Renderer {
 public:
     Renderer();
 
-    void render(glm::mat4 view, glm::mat4 projection);
+    void render(const glm::mat4& view, const glm::mat4& projection,
+        const std::unordered_map<std::string, Cell>& aliveCells) const;
 
     void clear(float r, float g, float b, float a);
 

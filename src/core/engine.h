@@ -4,9 +4,7 @@
 
 class World;
 class Camera;
-class Window;
 class Input;
-class Gui;
 class Renderer;
 class CAEngine {
 public:
@@ -40,8 +38,6 @@ private:
     uint32_t mCurrentFrameCount{0};
     uint32_t mFPS{0};
 
-    std::unique_ptr<Window> mWindow;
-    std::unique_ptr<Gui> mGui;
     std::unique_ptr<Camera> mCamera;
     std::unique_ptr<Input> mInput;
     std::unique_ptr<Renderer> mRenderer;

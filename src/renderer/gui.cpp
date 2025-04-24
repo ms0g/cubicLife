@@ -1,6 +1,5 @@
 #include "gui.h"
 #include <string>
-#include "glad/glad.h"
 #include "../../libs/imgui/imgui.h"
 #include "../../libs/imgui/imgui_impl_sdl.h"
 #include "../../libs/imgui/imgui_impl_opengl3.h"
@@ -73,7 +72,7 @@ void Gui::renderControlUI(bool& stop, bool& next, bool& reset, float& speed) {
         ImGui::Text("Speed");
         ImGui::SameLine();
         if (ImGui::SliderFloat("##", &_speed, 0.01, 0.98)) {
-            speed = (float)0.99 - _speed;
+            speed = static_cast<float>(0.99) - _speed;
         }
     }
     ImGui::End();

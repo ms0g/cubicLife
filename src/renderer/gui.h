@@ -8,9 +8,9 @@ public:
 
     ~Gui();
 
-    void setFPS(double fps) { mFPS = fps; }
+    void setFPS(const double fps) { mFPS = fps; }
 
-    void setWorldStateInfo(uint64_t generationCount, uint32_t aliceCellCount) {
+    void setWorldStateInfo(const uint64_t generationCount, const uint32_t aliceCellCount) {
         mGenerationCount = generationCount;
         mAliveCellCount = aliceCellCount;
     }
@@ -18,8 +18,6 @@ public:
     void render(bool& stop, bool& next, bool& reset, float& speed);
 
 private:
-    void renderGraphicsInfo() const;
-
     void renderWorldState() const;
 
     void renderControlUI(bool& stop, bool& next, bool& reset, float& speed);

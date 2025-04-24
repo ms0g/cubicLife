@@ -11,11 +11,16 @@
 #include "../config/config.hpp"
 
 Renderer::Renderer() {
+    mWindow = std::make_unique<Window>();
+    mWindow->init("CAEngine");
+
     // glad: load all OpenGL function pointers
     if (!gladLoadGLLoader(SDL_GL_GetProcAddress)) {
         throw std::runtime_error("Failed to initialize GLAD");
     }
 
+    mGui = std::make_unique<Gui>(mWindow->nativeHandle(),
+                                 mWindow->glContext());
     // Tell stb_image.h to flip loaded texture's on the y-axis (before loading model).
     stbi_set_flip_vertically_on_load(true);
 

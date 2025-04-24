@@ -4,13 +4,13 @@
 #include <SDL.h>
 #include "IWindow.hpp"
 
-class Window : public IWindow<SDL_Window> {
+class Window final : public IWindow<SDL_Window> {
 public:
     Window() = default;
 
     ~Window() override;
 
-    [[nodiscard]] inline SDL_GLContext glContext() const { return mGlContext; };
+    [[nodiscard]] SDL_GLContext glContext() const { return mGlContext; };
 
     void swapBuffer() override;
 

@@ -2,10 +2,6 @@
 
 #include <string>
 
-#ifndef DEBUG
-#define DEBUG
-#endif
-
 const std::string SHADER_DIR = "shaders";
 const std::string ASSET_DIR = "assets";
 

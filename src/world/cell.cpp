@@ -1,6 +1,6 @@
 #include "cell.h"
 
-Cell::Cell(glm::vec3 pos) : mPos(pos) {}
+Cell::Cell(const glm::vec3 pos) : mPos(pos) {}
 
 Cell::Cell(Cell&& other) noexcept {
     mAliveNeighbors = other.mAliveNeighbors;

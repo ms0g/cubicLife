@@ -1,4 +1,5 @@
 #include "world.h"
+#include <future>
 #include "cell.h"
 #include "../utils/key.hpp"
 
@@ -12,18 +13,15 @@ void World::update() {
     if (mAliveCells.size() >= MAX_CELL_NUM) return;
 
     for (auto& [key, cell]: mAliveCells) {
-        processNeighbors(cell);
+        auto fut = std::async(std::launch::async, [&]() {
+            processNeighbors(cell);
 
-        if (cell.pos().z >= ZFAR) {
-            mCurrentDeadCellKeys.push_back(key);
-            continue;
-        }
-
-        if (cell.aliveNeighborsCount() < 5 || cell.aliveNeighborsCount() > 6) {
-            mCurrentDeadCellKeys.push_back(key);
-        } else {
-            cell.resetAliveNeighbors();
-        }
+            if (cell.aliveNeighborsCount() < 5 || cell.aliveNeighborsCount() > 6) {
+                mCurrentDeadCellKeys.push_back(key);
+            } else {
+                cell.resetAliveNeighbors();
+            }
+        });
     }
 
     for (auto& neighboringDeadCell: mNeighboringDeadCells) {

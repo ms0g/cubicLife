@@ -6,6 +6,10 @@ class Cell {
 public:
     explicit Cell(glm::vec3 pos);
 
+    Cell(const Cell& other);
+
+    Cell& operator=(const Cell& other) = default;
+
     Cell(Cell&& other) noexcept;
 
     Cell& operator=(Cell&& other) noexcept;
@@ -19,8 +23,9 @@ public:
     void incAliveNeighbors() { mAliveNeighbors++; }
 
     bool operator==(const Cell& other) const {
-        return (abs(mPos.x - other.pos().x) < FLT_EPSILON && abs(mPos.y - other.pos().y) < FLT_EPSILON &&
-                abs(mPos.z - other.pos().z) < FLT_EPSILON);
+        return abs(mPos.x - other.pos().x) < FLT_EPSILON &&
+               abs(mPos.y - other.pos().y) < FLT_EPSILON &&
+               abs(mPos.z - other.pos().z) < FLT_EPSILON;
     }
 
 private:

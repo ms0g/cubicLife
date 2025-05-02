@@ -1,11 +1,10 @@
 #pragma once
 
+#include <future>
 #include <vector>
-#include <memory>
 #include <unordered_map>
 #include "glm/glm.hpp"
 #include "../core/io.hpp"
-#include "../config/config.hpp"
 
 class Cell;
 class CellMesh;
@@ -37,6 +36,9 @@ private:
     void checkNeighbor(Cell& currentAlive, glm::vec3 neighPos);
 
     StateInfo mStateInfo{};
+
+    std::mutex mMutex;
+    std::vector<std::future<void>> mFutures;
 
     std::unordered_map<std::string, Cell> mAliveCells;
     std::vector<std::string> mCurrentDeadCellKeys;

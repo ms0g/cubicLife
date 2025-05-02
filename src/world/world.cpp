@@ -13,15 +13,20 @@ void World::update() {
     if (mAliveCells.size() >= MAX_CELL_NUM) return;
 
     for (auto& [key, cell]: mAliveCells) {
-        auto fut = std::async(std::launch::async, [&]() {
+        mFutures.push_back(std::async(std::launch::async, [&key, &cell, this] {
             processNeighbors(cell);
 
-            if (cell.aliveNeighborsCount() < 5 || cell.aliveNeighborsCount() > 6) {
+            if (const int aliveCount = cell.aliveNeighborsCount(); aliveCount < 5 || aliveCount > 6) {
+                std::lock_guard<std::mutex> lock(mMutex);
                 mCurrentDeadCellKeys.push_back(key);
             } else {
                 cell.resetAliveNeighbors();
             }
-        });
+        }));
+    }
+
+    for (auto& future: mFutures) {
+        future.wait();
     }
 
     for (auto& neighboringDeadCell: mNeighboringDeadCells) {
@@ -41,6 +46,7 @@ void World::update() {
 
     mNeighboringDeadCells.clear();
     mCurrentDeadCellKeys.clear();
+    mFutures.clear();
 }
 
 void World::reset() {
@@ -53,7 +59,7 @@ void World::setState(const std::vector<glm::vec3>& state) {
     if (mCurrentState != state)
         mCurrentState = state;
 
-    for (auto& pos: mCurrentState) {
+    for (const auto& pos: mCurrentState) {
         mAliveCells.emplace(key::createFromPosition(pos), Cell{pos});
     }
 }
@@ -71,21 +77,29 @@ void World::processNeighbors(Cell& cell) {
 
 void World::checkNeighbor(Cell& currentAlive, const glm::vec3 neighPos) {
     auto candidateCell = Cell{neighPos};
+
     if (currentAlive == candidateCell)
         return;
 
-    if (const auto it = mAliveCells.find(key::createFromPosition(neighPos)); it != mAliveCells.end()) {
+    if (mAliveCells.contains(key::createFromPosition(neighPos))) {
         currentAlive.incAliveNeighbors();
         return;
     }
 
-    for (auto& neighboringDeadCell: mNeighboringDeadCells) {
-        if (neighboringDeadCell == candidateCell) {
-            neighboringDeadCell.incAliveNeighbors();
-            return;
+    {
+        std::lock_guard<std::mutex> lock(mMutex);
+        for (auto& neighboringDeadCell: mNeighboringDeadCells) {
+            if (neighboringDeadCell == candidateCell) {
+                neighboringDeadCell.incAliveNeighbors();
+                return;
+            }
         }
     }
 
     candidateCell.incAliveNeighbors();
-    mNeighboringDeadCells.push_back(candidateCell);
+
+    {
+        std::lock_guard<std::mutex> lock(mMutex);
+        mNeighboringDeadCells.push_back(std::move(candidateCell));
+    }
 }

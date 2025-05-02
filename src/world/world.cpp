@@ -70,28 +70,22 @@ void World::processNeighbors(Cell& cell) {
 }
 
 void World::checkNeighbor(Cell& currentAlive, const glm::vec3 neighPos) {
-    bool found = false;
-
     auto candidateCell = Cell{neighPos};
     if (currentAlive == candidateCell)
         return;
 
     if (const auto it = mAliveCells.find(key::createFromPosition(neighPos)); it != mAliveCells.end()) {
         currentAlive.incAliveNeighbors();
-        found = true;
+        return;
     }
 
-    if (!found) {
-        for (auto& neighboringDeadCell: mNeighboringDeadCells) {
-            if (neighboringDeadCell == candidateCell) {
-                found = true;
-                neighboringDeadCell.incAliveNeighbors();
-                break;
-            }
-        }
-        if (!found) {
-            candidateCell.incAliveNeighbors();
-            mNeighboringDeadCells.push_back(std::move(candidateCell));
+    for (auto& neighboringDeadCell: mNeighboringDeadCells) {
+        if (neighboringDeadCell == candidateCell) {
+            neighboringDeadCell.incAliveNeighbors();
+            return;
         }
     }
+
+    candidateCell.incAliveNeighbors();
+    mNeighboringDeadCells.push_back(candidateCell);
 }

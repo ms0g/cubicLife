@@ -1,12 +1,11 @@
 #pragma once
 
-#include <string>
 #include <vector>
 #include "glm/glm.hpp"
 #include "IMesh.hpp"
 #include "texture.h"
 
-class CellMesh : public IMesh {
+class CellMesh final : public IMesh {
 public:
     explicit CellMesh(std::vector<float>& vertices, std::vector<Texture>& textures);
 

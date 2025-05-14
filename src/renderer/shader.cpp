@@ -106,8 +106,8 @@ void Shader::setMat4(const std::string& name, const glm::mat4& mat) const {
     glUniformMatrix4fv(glGetUniformLocation(mID, name.c_str()), 1, GL_FALSE, &mat[0][0]);
 }
 
-GLuint Shader::createShader(const char** source, GLuint type) {
-    GLuint shader = glCreateShader(type);
+GLuint Shader::createShader(const char** source, const GLuint type) {
+    const GLuint shader = glCreateShader(type);
 
     glShaderSource(shader, 1, source, nullptr);
     glCompileShader(shader);
@@ -124,7 +124,6 @@ GLuint Shader::createShader(const char** source, GLuint type) {
         infoLog.resize(maxLength);
 
         glGetShaderInfoLog(shader, maxLength, nullptr, infoLog.data());
-
         // The program is useless now. So delete it.
         glDeleteShader(shader);
 
@@ -134,7 +133,7 @@ GLuint Shader::createShader(const char** source, GLuint type) {
     return shader;
 }
 
-GLuint Shader::linkShader(GLuint vertex, GLuint fragment) {
+GLuint Shader::linkShader(const GLuint vertex, const GLuint fragment) {
     mID = glCreateProgram();
 
     glAttachShader(mID, vertex);
@@ -154,7 +153,6 @@ GLuint Shader::linkShader(GLuint vertex, GLuint fragment) {
         infoLog.resize(maxLength);
 
         glGetProgramInfoLog(mID, maxLength, nullptr, infoLog.data());
-
         // The program is useless now. So delete it.
         glDeleteShader(mID);
 

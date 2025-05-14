@@ -1,11 +1,10 @@
 #pragma once
 
 #include <vector>
-#include <string>
 #include "IMesh.hpp"
 #include "texture.h"
 
-class SkyboxMesh : public IMesh {
+class SkyboxMesh final : public IMesh {
 public:
     SkyboxMesh(std::vector<float>& vertices, std::vector<Texture>& textures);
 

@@ -1,6 +1,6 @@
 #include "skyboxMesh.h"
 
-SkyboxMesh::SkyboxMesh(std::vector<float>& vertices, std::vector<Texture>& textures) :
+SkyboxMesh::SkyboxMesh(std::vector<float>& vertices, const std::vector<Texture>& textures) :
         IMesh(vertices, textures) {}
 
 void SkyboxMesh::setup() {
@@ -18,14 +18,14 @@ void SkyboxMesh::setup() {
     // Set the vertex attribute pointers
 
     // vertex Positions
-    glVertexAttribPointer(0, 3, GL_FLOAT, GL_FALSE, 3 * sizeof(float), (void*) 0);
+    glVertexAttribPointer(0, 3, GL_FLOAT, GL_FALSE, 3 * sizeof(float), static_cast<void*>(nullptr));
     glEnableVertexAttribArray(0);
 
     glBindVertexArray(0);
 }
 
-void SkyboxMesh::render() {
-    for (int i = 0; i < mTextures.size(); i++) {
+void SkyboxMesh::draw() {
+    for (size_t i = 0; i < mTextures.size(); i++) {
         glActiveTexture(GL_TEXTURE0 + i); // active proper texture unit before binding
         // and finally bind the texture
         glBindTexture(GL_TEXTURE_CUBE_MAP, mTextures[i].id);

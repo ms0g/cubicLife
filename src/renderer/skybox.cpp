@@ -81,5 +81,5 @@ void Skybox::render(const glm::mat4& view, const glm::mat4& projection) {
     mShader->setMat4("view", view);
     mShader->setMat4("projection", projection);
 
-    mMesh->render();
+    mMesh->draw();
 }

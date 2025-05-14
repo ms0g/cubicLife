@@ -44,7 +44,7 @@ unsigned int texture::loadCubemap(std::vector<std::string>& faces) {
     glBindTexture(GL_TEXTURE_CUBE_MAP, textureID);
 
     int width, height, depth;
-    for (unsigned int i = 0; i < faces.size(); i++) {
+    for (size_t i = 0; i < faces.size(); i++) {
         unsigned char* data = stbi_load(faces[i].c_str(), &width, &height, &depth, 0);
 
         if (!data) {

@@ -6,12 +6,12 @@
 
 class SkyboxMesh final : public IMesh {
 public:
-    SkyboxMesh(std::vector<float>& vertices, std::vector<Texture>& textures);
+    SkyboxMesh(std::vector<float>& vertices, const std::vector<Texture>& textures);
 
     void setup() override;
 
     // render the mesh
-    void render() override;
+    void draw() override;
 };
 
 

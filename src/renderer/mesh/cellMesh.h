@@ -7,7 +7,7 @@
 
 class CellMesh final : public IMesh {
 public:
-    explicit CellMesh(std::vector<float>& vertices, std::vector<Texture>& textures);
+    explicit CellMesh(std::vector<float>& vertices, const std::vector<Texture>& textures);
 
     // initializes all the buffer objects/arrays
     void setup() override;
@@ -15,7 +15,7 @@ public:
     void setupInstancing(std::vector<glm::mat4>& modelMatrices);
 
     // render the mesh
-    void render() override;
+    void draw() override;
 
 private:
     std::vector<glm::mat4> mModelMatrices;

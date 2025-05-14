@@ -116,9 +116,9 @@ void Renderer::render(const glm::mat4& view, const glm::mat4& projection,
     cellShader->activate();
     cellShader->setMat4("view", view);
     cellShader->setMat4("projection", projection);
-    cellMesh->render();
+    cellMesh->draw();
 
-    glm::mat4 skyview = glm::mat4(glm::mat3(view));
+    auto skyview = glm::mat4(glm::mat3(view));
     skybox->render(skyview, projection);
 }
 

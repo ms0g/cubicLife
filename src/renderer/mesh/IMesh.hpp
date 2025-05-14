@@ -21,7 +21,7 @@ public:
 
     virtual void setup() = 0;
 
-    virtual void render() = 0;
+    virtual void draw() = 0;
 
 protected:
     GLuint mVAO{};
